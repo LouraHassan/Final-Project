@@ -6,7 +6,7 @@ function ManagerHomePage() {
   return ( 
     <div>
       
-      <DepCard Employees="25" Shortage="2" Surplus="0"/>
+      <DepCard Employees={25} Shortage={2} Surplus={0}/>
       <br></br>
       <PositionCard Position="Senior Project Manager" Department="HR" Experience="5"/>
     </div>

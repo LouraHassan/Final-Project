@@ -8,6 +8,8 @@ export default {
   theme: {
     extend: {},
     fontFamily: {
+      'title': ['Karla'],
+      'text' :  ['Merriweather']
     },
   },
   plugins: [

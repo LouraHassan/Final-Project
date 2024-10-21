@@ -1,7 +1,6 @@
 import React from 'react'
 
-function DepCard({Employees,Shortage,Surplus}) {
-  console.log({Employees,Shortage,Surplus});
+function DepCard(props) {
 
   return (
     <div className='flex flex-col justify-between w-[43vh] h-[31vh] p-5  shadow-xl'>
@@ -13,15 +12,15 @@ function DepCard({Employees,Shortage,Surplus}) {
       <div className='flex justify-between'>
         <div className='flex flex-col'>
         <h2>Employees</h2>
-        <h1 className='text-secondary text-center'>{Employees}</h1>
+        <h1 className='text-secondary text-center'>{props.Employees}</h1>
       </div> 
       <div className='flex flex-col'>
         <h2>Shortage</h2>
-        <h1 className='text-error text-center'>{Shortage}</h1>
+        <h1 className='text-error text-center'>{props.Shortage}</h1>
       </div> 
       <div className='flex flex-col'>
         <h2>Surplus</h2>
-        <h1 className='text-accent text-center'>{Surplus}</h1>
+        <h1 className='text-accent text-center'>{props.Surplus}</h1>
       </div> 
       </div>
       <div className='flex flex-col'>
