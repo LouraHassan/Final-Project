@@ -7,10 +7,10 @@ const Router = createBrowserRouter([
 //         path: '/',
 //         element: <App></App>
     // }
-    {
-        path: '/admin',
-        element: <AdminHomePage></AdminHomePage>
-    }
+    // {
+    //     path: '/admin',
+    //     element: <AdminHomePage></AdminHomePage>
+    // }
 ])
 
 export default Router
