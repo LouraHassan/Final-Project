@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Footer() {
   return (
     <footer className="p-20 bg-neutral text-neutral-content">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row items-center justify-between">
         <div className="flex items-center">
           <p className="text-2xl">MergeNet</p>
           <svg

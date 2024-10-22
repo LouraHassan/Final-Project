@@ -1,14 +1,15 @@
 import React from 'react'
 import EmpList from '../Components/EmpList'
 import Nav from '../Components/Nav'
+import PositionCard from '../Components/PositionCard'
 function AdminDeptPage() {
   return (
     <div>
       <Nav></Nav>
-      <div className='p-5 flex flex-col items-start'>
+      <div className='p-10 flex flex-col items-start'>
 
-        <p className='font-title text-2xl font-bold'>Department Name</p>
-        <div className='self-center flex justify-between items-center lg:w-[80vw] border-2 border-black'>
+        <p className='font-title text-2xl font-bold'>Human Resources</p>
+        <div className='self-center flex flex-col md:flex-row md:justify-between items-center md:w-[80vw] '>
 
           <div className='m-2 self-start'>
             <p className='text-accent font-title text-lg'>Manager</p>
@@ -28,23 +29,23 @@ function AdminDeptPage() {
             <p className='text-xl m-2 font-semibold'>manager name</p>
             </div>
           </div>
-          <div className='flex border-2 border-black self-center text-lg'>
+          <div className='flex  self-center text-lg'>
             <div className={`flex flex-col items-center m-2`}>
               <p>Employees</p>
               <p>{10}</p>
             </div>
             <div className={`flex flex-col items-center m-2`}>
-              <p>Employees</p>
-              <p>{10}</p>
+              <p>Shortage</p>
+              <p>{4}</p>
             </div>
             <div className={`flex flex-col items-center m-2`}>
-              <p>Employees</p>
-              <p>{10}</p>
+              <p>Surplus</p>
+              <p>{0}</p>
             </div>
           </div>
                 </div>
 
-        <div className="overflow-x-auto lg:w-[80vw] bg-slate-100 lg:self-center lg:m-4 shadow-md shadow-gray-300 rounded-lg" >
+        <div className="overflow-x-auto w-full md:w-[80vw] bg-white md:self-center md:m-4 shadow-md shadow-gray-300 rounded-lg" >
           <table className="table">
             <thead>
               <tr className="font-title text-lg">
@@ -80,15 +81,19 @@ function AdminDeptPage() {
             </tbody>
           </table>
         </div>
-        <div className='my-4'>
           <p className='text-xl font-title font-bold text-secondary'>Needed Positions</p>
-          <div className='grid lg:grid-cols-4'>
+        <div className='my-4 flex flex-col items-center  self-center'>
+          <div className='grid md:grid-cols-2 lg:grid-cols-4 lg:w-[80vw]  gap-4'>
+            <PositionCard></PositionCard>
+            <PositionCard></PositionCard>
+            <PositionCard></PositionCard>
+            <PositionCard></PositionCard>
 
           </div>
         </div>
-        <div className='my-4 flex flex-col lg:items-start lg:w-full'>
-          <p className='text-xl font-title font-bold text-secondary'>Employees who may be reassigned</p>
-          <div className="overflow-x-auto lg:w-[80vw] bg-slate-100 lg:self-center lg:m-4 shadow-md shadow-gray-300 rounded-lg" >
+        <div className='my-8 flex flex-col lg:items-start w-full '>
+          <p className='text-xl font-title font-bold text-secondary my-2'>Employees who may be reassigned</p>
+          <div className="overflow-x-auto w-full md:w-[80vw] bg-white md:self-center md:m-4 shadow-md shadow-gray-300 rounded-lg" >
           <table className="table">
             <thead>
               <tr className="font-title text-lg">

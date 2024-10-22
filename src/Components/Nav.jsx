@@ -9,11 +9,14 @@ function Nav() {
         </Link>
         <ul className="menu menu-horizontal px-1 hidden lg:flex">
           <li>
-            <a>Item 1</a>
+            <a>Departments</a>
           </li>
 
           <li>
-            <a>Item 3</a>
+            <a>Managers</a>
+          </li>
+          <li>
+            <a>Employees</a>
           </li>
         </ul>
       </div>

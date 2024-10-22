@@ -15,9 +15,9 @@ function Home() {
       >
         <div className="z-0 absolute inset-0 bg-black opacity-60 "></div>
         <div className="z-10 flex flex-col items-center lg:w-[60vw] justify-between">
-          <p className="text-5xl text-white my-4 text-center">Streamline Employee Placement Across Departments After Mergers</p>
-          <p className="text-2xl text-white my-4 text-center">Manage employee roles, track department needs, and optimize talent allocation seamlessly</p>
-          <Link to={`/signup`} className="btn my-10 btn-secondary btn-lg">Start Now!</Link>
+          <p className="text-3xl text-left mx-6 md:text-5xl text-white my-4 md:text-center">Streamline Employee Placement Across Departments After Mergers</p>
+          <p className="text-xl text-left mx-6 md:text-2xl text-white my-4 md:text-center">Manage employee roles, track department needs, and optimize talent allocation seamlessly</p>
+          <Link to={`/signup`} className="btn self-start mx-6 my-10 btn-secondary btn-lg md:self-center">Start Now!</Link>
         </div>
       </div>
 
@@ -36,56 +36,11 @@ function Home() {
             </p>
           </div>
           <div className=" flex items-center justify-around">
+          
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="50"
-              height="50"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="icon icon-tabler icons-tabler-outline icon-tabler-circles text-accent rotate-90 m-2"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M12 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-              <path d="M6.5 17m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-              <path d="M17.5 17m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="50"
-              height="50"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              className="icon icon-tabler icons-tabler-outline icon-tabler-user text-accent"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-              <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="50"
-              height="50"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="icon icon-tabler icons-tabler-filled icon-tabler-circles text-accent rotate-90 m-2"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M6.5 12a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
-              <path d="M17.5 12a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
-              <path d="M12 2a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="50"
-              height="50"
+              width="80"
+              height="80"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -109,7 +64,7 @@ function Home() {
         <p className="text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block">
           HOW IT WORKS
         </p>
-        <div className="grid lg:grid-cols-3 my-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 my-5">
           <div>
             <div className="flex items-center">
               <p className="font-bold text-2xl m-4 text-accent">1</p>
@@ -265,7 +220,7 @@ function Home() {
         <p className="self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block">
           KEY FEATURES
         </p>
-        <div className="grid lg:grid-cols-4 gap-20 lg:w-[80vw] my-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-20 lg:w-[80vw] my-5">
           <div className="p-5 bg-secondary text-secondary-content flex flex-col items-center rounded shadow justify-between">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -376,7 +331,7 @@ function Home() {
         <p className="self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block">
           BENEFITS
         </p>
-        <div className="grid lg:grid-cols-3 gap-20 lg:w-[80vw] my-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-20 lg:w-[80vw] my-5">
           <div className="p-5 flex flex-col rounded">
             <p className="text-xl font-title tracking-wider font-semibold text-neutral">
               For Recruiters
@@ -480,7 +435,7 @@ function Home() {
           </div>
           <div className="collapse collapse-arrow bg-base-200 my-4">
             <input type="radio" name="faq" />
-            <div className="collapse-title text-xl font-medium">
+            <div className="collapse-title  text-xl font-title font-semibold">
               Can employees update their own skills?
             </div>
             <div className="collapse-content">
@@ -492,7 +447,7 @@ function Home() {
           </div>
           <div className="collapse collapse-arrow bg-base-200 my-4">
             <input type="radio" name="faq" />
-            <div className="collapse-title text-xl font-medium">
+            <div className="collapse-title text-xl font-title font-semibold">
               How do managers post vacancies?
             </div>
             <div className="collapse-content">
@@ -525,12 +480,12 @@ function Home() {
           <input
             type="text"
             placeholder="Subject"
-            className="input input-bordered lg:w-[40vw] my-2"
+            className="input input-bordered w-full lg:w-[40vw] my-2"
           />
           <textarea
             type="text"
             placeholder="Subject"
-            className="textarea textarea-bordered lg:w-[40vw] my-2"
+            className="textarea textarea-bordered w-full lg:w-[40vw] my-2"
             rows={8}
             style={{ resize: "none" }}
           />
