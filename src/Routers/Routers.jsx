@@ -32,13 +32,10 @@ const Router = createBrowserRouter([
         path: '/admin/position',
         element: <AdminPositionPage></AdminPositionPage>
     },
-//     {
-//       path: '/Login',
-//       element: <Login/>
-// },    {
-//        path: '/Signup',
-//        element: <Signup/>
-// },
+    {
+      path: '/Login',
+      element: <Login/>
+},   
 
  {
        path: '/Maneger',

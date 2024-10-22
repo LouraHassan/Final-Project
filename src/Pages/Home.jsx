@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from "../Components/Footer";
 import HomeNav from "../Components/HomeNav";
-
+import { Link } from "react-router-dom";
 function Home() {
   return (
       <div className="w-full">
@@ -17,7 +17,7 @@ function Home() {
         <div className="z-10 flex flex-col items-center lg:w-[60vw] justify-between">
           <p className="text-5xl text-white my-4 text-center">Streamline Employee Placement Across Departments After Mergers</p>
           <p className="text-2xl text-white my-4 text-center">Manage employee roles, track department needs, and optimize talent allocation seamlessly</p>
-          <button className="btn my-10 btn-secondary btn-lg">Start Now!</button>
+          <Link to={`/signup`} className="btn my-10 btn-secondary btn-lg">Start Now!</Link>
         </div>
       </div>
 
