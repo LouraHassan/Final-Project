@@ -1,13 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import Signup from "../Pages/Signup";
 import Login from "../Pages/Login";
-import ManegerHomePage from '../Pages/ManagerHomePage'
+import ManagerHomePage from '../Pages/ManagerHomePage'
 import PositionsPage from "../Pages/PositionsPage";
 import App from "../App";
 import Home from "../Pages/Home";
 import AdminHomePage from "../Pages/AdminHomePage";
 import AdminDeptPage from "../Pages/AdminDeptPage";
 import AdminPositionPage from "../Pages/AdminPositionPage";
+import EmployeePage from "../Pages/EmployeePage";
 
 const Router = createBrowserRouter([
 
@@ -38,12 +39,16 @@ const Router = createBrowserRouter([
 },
 
  {
-       path: '/Maneger',
-       element: <ManegerHomePage/>
+       path: '/Manager',
+       element: <ManagerHomePage/>
 },
 {
        path: '/Position',
        element: <PositionsPage/>
+},
+{
+       path: '/Employee',
+       element: <EmployeePage/>
 }
 
 
