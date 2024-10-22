@@ -1,9 +1,11 @@
-import React from "react";
+import React from 'react'
 
-function Login() {
+function Signup() {
   return (
     <div>
-      <div className="flex ">
+
+
+<div className="flex ">
         <div className=" flex justify-center   items-center h-[100vh] w-[50%]">
           <div className="card   bg-base-100 w-96 shadow-xl">
             <div className="card-body justify-around items-center text-center  h-[52vh]">
@@ -70,8 +72,14 @@ function Login() {
           />
         </div>
       </div>
+
+
+
+
+
+      
     </div>
-  );
+  )
 }
 
-export default Login;
+export default Signup
