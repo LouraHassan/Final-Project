@@ -4,6 +4,7 @@ import Home from "../Pages/Home";
 import AdminHomePage from "../Pages/AdminHomePage";
 import AdminDeptPage from "../Pages/AdminDeptPage";
 import AdminPositionPage from "../Pages/AdminPositionPage";
+import Signup from "../Pages/Signup";
 
 const Router = createBrowserRouter([
     {
@@ -11,7 +12,11 @@ const Router = createBrowserRouter([
         element: <Home></Home>
     },
     {
-        path: '/admin',
+        path: '/signup',
+        element: <Signup></Signup>
+    },
+    {
+        path: '/admin/:id',
         element: <AdminHomePage></AdminHomePage>
     },
     {

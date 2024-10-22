@@ -38,7 +38,7 @@ export default {
         
 "base-100": "#ECECEC",
         
-"base-200": "#cdcdcd",
+"base-200": "#e4e4e4",
         
 "base-300": "#afafaf",
         
