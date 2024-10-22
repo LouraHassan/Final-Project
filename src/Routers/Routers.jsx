@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import Signup from "../Pages/Signup";
 import Login from "../Pages/Login";
 import ManegerHomePage from '../Pages/ManagerHomePage'
 import PositionsPage from "../Pages/PositionsPage";
@@ -8,6 +7,7 @@ import Home from "../Pages/Home";
 import AdminHomePage from "../Pages/AdminHomePage";
 import AdminDeptPage from "../Pages/AdminDeptPage";
 import AdminPositionPage from "../Pages/AdminPositionPage";
+import Signup from "../Pages/Signup";
 
 const Router = createBrowserRouter([
 
@@ -17,8 +17,11 @@ const Router = createBrowserRouter([
         element: <Home></Home>
     },
     {
-
-        path: '/admin',
+        path: '/signup',
+        element: <Signup></Signup>
+    },
+    {
+        path: '/admin/:id',
         element: <AdminHomePage></AdminHomePage>
     },
     {
@@ -29,13 +32,13 @@ const Router = createBrowserRouter([
         path: '/admin/position',
         element: <AdminPositionPage></AdminPositionPage>
     },
-    {
-      path: '/Login',
-      element: <Login/>
-},    {
-       path: '/Signup',
-       element: <Signup/>
-},
+//     {
+//       path: '/Login',
+//       element: <Login/>
+// },    {
+//        path: '/Signup',
+//        element: <Signup/>
+// },
 
  {
        path: '/Maneger',
