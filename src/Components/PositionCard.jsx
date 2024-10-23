@@ -27,14 +27,21 @@ function PositionCard(props) {
           <SkillTip text="team-work"></SkillTip>
           <SkillTip text="Critical-thinking"></SkillTip>
           <SkillTip text="Critical-thinking"></SkillTip>
-        </div>
 
-      </div>
-      <Link to="/Position">
-        <button className=" btn btn-accent w-[100%] text-white font-text p-2  ">
-          View more
-        </button>
-      </Link>
+        </div>
+        <br />
+
+
+        
+        <Link to="/Position">
+          <button className=" btn btn-accent w-[100%] text-white font-text p-2  ">
+            View more
+          </button>
+        </Link>
+    
+
+
+    </div>
     </div>
   );
 }
