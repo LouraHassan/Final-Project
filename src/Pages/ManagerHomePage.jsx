@@ -138,7 +138,7 @@ function ManagerHomePage() {
                   New Post
                 </button>
               </div>
-              <div className="flex flex-wrap justify-around gap-4 mt-4 ">
+              <div className="grid lg:grid-cols-3 justify-around gap-4 mt-4 ">
                 {positions.map((position, index) => (
                   <PositionCard
                     key={index}

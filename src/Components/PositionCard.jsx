@@ -31,24 +31,8 @@ function PositionCard(props) {
         </div>
         <br />
 
-        <div className="flex flex-col justify-around  h-auto">
-          <h2 className="text-[2vh] mb-2">
-            <span className="font-text text-[2vh] font-bold ">Department:</span>{" "}
-            Project Management
-          </h2>
-          <h2 className="text-[2vh]">
-            <span className="font-text text-[2vh] font-bold">Experience: </span>
-            2 years
-          </h2>
 
-          <div className="flex flex-wrap my-4 items-center">
-            <p>Skills: </p>
-            <SkillTip text="Critical-thinking"></SkillTip>
-            <SkillTip text="team-work"></SkillTip>
-            <SkillTip text="Critical-thinking"></SkillTip>
-            <SkillTip text="Critical-thinking"></SkillTip>
-          </div>
-        </div>
+        
         <Link to="/Position">
           <button className=" btn btn-accent w-[100%] text-white font-text p-2  ">
             View more
@@ -56,11 +40,6 @@ function PositionCard(props) {
         </Link>
     
 
-      <Link to="/Position">
-        <button className=" btn btn-accent w-[100%] text-white font-text p-2  ">
-          View more
-        </button>
-      </Link>
 
     </div>
     </div>

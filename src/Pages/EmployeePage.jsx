@@ -7,8 +7,8 @@ function EmployeePage() {
     <div>
       <Nav4 />
 
-      <div className="flex flex-col h-[30vh]">
-        <div className="flex justify-center items-center">
+      <div className="flex flex-col h-[30vh] p-10">
+        <div className="flex ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="100"
@@ -26,43 +26,61 @@ function EmployeePage() {
             <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
           </svg>
         </div>
-        <div className="flex flex-col justify-center items-center ">
+        <div className="flex flex-col  ">
           <h1 className="font-title text-secondary font-bold text-[4vh]">
             Ahmed Almousa
           </h1>
           <h2 className="font-text text-accent font-bold mb-3 ">
-              Business Analyst
+            Business Analyst
+          </h2>
+        </div>
+        <div className="flex flex-col  ">
+          <h2 className="font-text ">
+            <span className="font-bold font-title text-[2.8vh]">
+              Department:{" "}
+            </span>
+            Human Resources
+          </h2>
+          <h2 className="font-text ">
+            <span className="font-bold font-title text-[2.8vh]">Manager: </span>
+            Saad Almousa
+          </h2>
+          <h2 className="font-text ">
+              <span className="font-bold font-title text-[2.8vh]">
+                Experience:
+              </span>{" "}
+              2 years
             </h2>
-
+          <div className="flex flex-wrap my-4 items-center justify-center w-[60vh]">
+            <p>
+              <span className="font-bold font-title text-[2.8vh]">Skills:</span>{" "}
+            </p>
+            <SkillTip text="Critical-thinking"></SkillTip>
+            <SkillTip text="team-work"></SkillTip>
+            <SkillTip text="Critical-thinking"></SkillTip>
+            <SkillTip text="Critical-thinking"></SkillTip>
+            <SkillTip text="Critical-thinking"></SkillTip>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-edit"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+              <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+              <path d="M16 5l3 3" />
+            </svg>
+          </div>
         </div>
-<div className="flex flex-col justify-center items-center ">
-<h2 className="font-text ">
-          <span className="font-bold font-title text-[2.8vh]">
-            Department:{" "}
-          </span>
-          Human Resources
-        </h2>
-        <h2 className="font-text ">
-          <span className="font-bold font-title text-[2.8vh]">Manager: </span>
-          Saad Almousa
-        </h2>
-        <div className="flex flex-wrap my-4 items-center justify-center w-[60vh]">
-          <p>
-            <span className="font-bold font-title text-[2.8vh]">Skills:</span>{" "}
-          </p>
-          <SkillTip text="Critical-thinking"></SkillTip>
-          <SkillTip text="team-work"></SkillTip>
-          <SkillTip text="Critical-thinking"></SkillTip>
-          <SkillTip text="Critical-thinking"></SkillTip>
-          <SkillTip text="Critical-thinking"></SkillTip>
-        </div>
-</div>
-
-
-</div>
-
       </div>
-
+    </div>
   );
 }
 
