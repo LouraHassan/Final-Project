@@ -1,11 +1,9 @@
 import React from "react";
 import SkillTip from "./SkillTip";
 import { Link } from "react-router-dom";
-import SkillTip from "./SkillTip";
 function PositionCard(props) {
   return (
     <div className="flex flex-col justify-around  p-5 bg-white rounded-md shadow-md">
-    <div className="flex flex-col justify-around bg-slate-100 w-[45vh] h-auto p-5  shadow-lg max-md:w-[100%]">
       <div className="flex justify-between">
         <h1 className="text-secondary font-bold text-[3vh] ">
           Senior Project Manager
@@ -37,7 +35,6 @@ function PositionCard(props) {
           View more
         </button>
       </Link>
-    </div>
     </div>
   );
 }

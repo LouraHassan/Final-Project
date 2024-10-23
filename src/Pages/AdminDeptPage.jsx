@@ -36,11 +36,11 @@ function AdminDeptPage() {
             </div>
             <div className={`flex flex-col items-center m-2`}>
               <p>Shortage</p>
-              <p>{4}</p>
+              <p className='text-error'>{4}</p>
             </div>
             <div className={`flex flex-col items-center m-2`}>
               <p>Surplus</p>
-              <p>{0}</p>
+              <p className='text-warning'>{0}</p>
             </div>
           </div>
                 </div>
