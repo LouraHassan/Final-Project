@@ -31,7 +31,7 @@ const Router = createBrowserRouter([
         element: <AdminHomePage></AdminHomePage>
     },
     {
-        path: '/admin/department',
+        path: '/admin/department/:id',
         element: <AdminDeptPage></AdminDeptPage>
     },
     {
@@ -44,7 +44,7 @@ const Router = createBrowserRouter([
 },   
 
  {
-       path: '/Manager',
+       path: '/Manager/:id',
        element: <ManagerHomePage/>
 },
 {
@@ -52,7 +52,7 @@ const Router = createBrowserRouter([
        element: <PositionsPage/>
 },
 {
-       path: '/Employee',
+       path: '/Employee/:id',
        element: <EmployeePage/>
 }
 

@@ -1,13 +1,48 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+const LoginAPI = `http://localhost:3000/login`;
 function Login() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [warningText, setWarningText] = useState("");
+
+  const loginAction = () => {
+    if (email == "" || password == "") {
+      setWarningText("");
+    } else {
+      axios
+        .post(LoginAPI, {
+          email: email,
+          password: password,
+        })
+        .then((res) => {
+          console.log(res);
+          
+          localStorage.setItem("accountId", res.data.id);
+          localStorage.setItem("accountType", res.data.accountType);
+          localStorage.setItem("company", res.data.company);
+          localStorage.setItem("token", res.data.token);
+          if (res.data.accountType === "admin") {
+            navigate(`/admin/${res.data.id}`);
+          } else if (res.data.accountType === 'manager') {
+            navigate(`/Manager/${res.data.id}`)
+          } else if (res.data.accountType === 'employee') {
+            navigate(`/Employee/${res.data.id}`)
+          }
+        })
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-center items-center  bg-[#30475e] w-full h-screen ">
         <div className="flex justify-center items-center justify-around rounded-lg bg-white h-[70%] max-md:h-auto max-sm:h-auto ">
           <div className=" flex justify-center items-center">
             <div className="p-16 flex flex-col items-center relative   ">
-              <Link to={`/Manager`}>
+              <Link to={`/`}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="30"
@@ -39,7 +74,13 @@ function Login() {
                       <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
                       <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
                     </svg>
-                    <input type="text" className="grow" placeholder="Email" />
+                    <input
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      type="text"
+                      className="grow"
+                      placeholder="Email"
+                    />
                   </label>
                   <label className="input input-bordered flex items-center gap-2">
                     <svg
@@ -55,6 +96,8 @@ function Login() {
                       />
                     </svg>
                     <input
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       type="password"
                       className="grow"
                       placeholder="password"
@@ -64,7 +107,10 @@ function Login() {
                     Forgot Password?
                   </h1>
                   <div className="card-actions">
-                    <button className="btn  btn-accent text-white w-[30vh]">
+                    <button
+                      onClick={loginAction}
+                      className="btn  btn-accent text-white w-[30vh]"
+                    >
                       Login
                     </button>
                   </div>

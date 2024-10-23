@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EmpList from "../Components/EmpList";
 import Select from "react-select";
 import EmpCard from "../Components/EmpCard";
@@ -8,21 +8,96 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const AccountsAPI = `http://localhost:3000/account/`
+const createAccountsAPI = `http://localhost:3000/createAccount?company=${localStorage.getItem('company')}`
+const managersAPI = `http://localhost:3000/account/type/manager?company=${localStorage.getItem('company')}`
+const employeeAPI = `http://localhost:3000/account/type/employee?company=${localStorage.getItem('company')}`
+const CreateDeptAPI = `http://localhost:3000/department?company=${localStorage.getItem('company')}`
+const DepartmentsAPI = `http://localhost:3000/department?company=${localStorage.getItem('company')}`
 export default function AdminHomePage() {
 
     const {id} = useParams()
     const [user, setUser] = useState()
+    const [managerArr, setManagerArr] = useState([])
+    const [employeeArr, setEmployeeArr] = useState([])
+    const [departmentArr, setDepartmentsArr] = useState([])
+
     const [selectedEmployees, setSelectedEmployees] = useState([]);
     
     //? for creating manager account 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
+const [warningText, setWarningText] = useState('')
     const [deptName, setDeptName] = useState('')
-
+const [manager , setManager] = useState('')
+    useEffect(() => {
+        getUser()
+    }, [])
+    useEffect(() => {
+        getManagers()
+        getEmployee()
+        getDepartments()
+    }, [])
+    
+    useEffect(() => {
+        console.log(manager);
+        
+    },[manager])
     const getUser = () => {
-        axios.get(AccountsAPI+id+`?company=${localStorage.getItem('company')}`)
+        axios.get(AccountsAPI + id + `?company=${localStorage.getItem('company')}`, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+              }
+        }).then(res => {
+            setUser(res.data)
+            console.log(res);
+            
+        })
+    }
+    const getManagers = () => {
+        axios.get(managersAPI, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+              }
+        }).then(res => {
+            console.log(res);
+            setManagerArr(res.data)
+        })
+    }
+
+    const getEmployee = () => {
+        axios.get(employeeAPI, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+              }
+        }).then(res => {
+            console.log(res);
+            setEmployeeArr(res.data)
+            
+        })
+    }
+    const getDepartments = () => {
+        axios.get(DepartmentsAPI, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+              }
+        }).then(res => {
+            console.log(res);
+            setDepartmentsArr(res.data)
+        })
+    }
+    const createDeptAction = () => {
+        axios.post(CreateDeptAPI, {
+            name: deptName,
+            manager: manager
+        }, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+              }  
+        }).then(res => {
+            console.log(res);
+            
+        })
     }
   const employeeOptions = [
     { value: "1", label: "Employee 1" },
@@ -30,10 +105,51 @@ export default function AdminHomePage() {
     { value: "3", label: "Employee 3" },
     { value: "4", label: "Employee 4" },
     { value: "5", label: "Employee 5" },
-  ];
+    ];
+    
+    const CreateManager = () => {
+        if (name == '' || email == '' || password == '') {
+            setWarningText('')
+        } else {
+            axios.post(createAccountsAPI, {
+                name: name,
+                email: email,
+                password: password,
+                accountType: 'manager'
+            }, {
+                headers: {
+                    'Authorization': localStorage.getItem('token')
+                  }
+            }).then(res => {
+                setName('')
+                setEmail('')
+                setPassword('')
+                console.log(res);  
+            })
+        }
+    }
 
- 
-    console.log(localStorage.getItem('token'));
+    const CreateEmployee = () => {
+        if (name == '' || email == '' || password == '') {
+            setWarningText('')
+        } else {
+            axios.post(createAccountsAPI, {
+                name: name,
+                email: email,
+                password: password,
+                accountType: 'employee'
+            }, {
+                headers: {
+                    'Authorization': localStorage.getItem('token')
+                  }
+            }).then(res => {
+                setName('')
+                setEmail('')
+                setPassword('')
+                console.log(res);  
+            })
+        }
+ }
     
   return (
       <div>
@@ -244,7 +360,7 @@ export default function AdminHomePage() {
   <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="input input-bordered w-full max-w-xs" />
  
                   </label>
-                <button className="btn btn-secondary btn-wide m-4">Create account</button>
+                <button onClick={CreateManager} className="btn btn-secondary btn-wide m-4">Create account</button>
               </div>
             </div>
           </dialog>
@@ -280,7 +396,7 @@ export default function AdminHomePage() {
   <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="input input-bordered w-full max-w-xs" />
  
                   </label>
-                <button className="btn btn-secondary btn-wide m-4">Create account</button>
+                <button onClick={CreateEmployee} className="btn btn-secondary btn-wide m-4">Create account</button>
               </div>
             </div>
           </dialog>
@@ -305,11 +421,10 @@ export default function AdminHomePage() {
   <div className="label">
     <span className="label-text">Select Manager</span>
   </div>
-  <select className="select select-bordered">
-    <option disabled selected>select</option>
-    <option>Star Wars</option>
-    <option>Harry Potter</option>
-    <option>Lord of the Rings</option>
+                              <select value={manager} onChange={(e) => setManager(e.target.value)} className="select select-bordered">
+                                  {managerArr.map(manager => {
+                                      return (<option value={manager._id}>{manager.name}</option>)
+                                  })}
    
   </select>
  
@@ -325,10 +440,12 @@ export default function AdminHomePage() {
                                   <option value="4">manager 4</option>
 
                                   </select>
-                <button className="btn btn-secondary">Add Department</button>
+                <button onClick={createDeptAction} className="btn btn-secondary">Add Department</button>
               </div>
             </div>
-          </dialog>
+              </dialog>
+              
+              <EmpCard name='Ahmad' years={4} skills={['team', 'management' ]}></EmpCard>
         </div>
  
            

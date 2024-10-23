@@ -1,8 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import EmpList from '../Components/EmpList'
 import Nav from '../Components/Nav'
 import PositionCard from '../Components/PositionCard'
+import axios from 'axios'
+import { useParams } from 'react-router-dom'
+const DepartmentAPI =`http://localhost:3000/department/id/`
 function AdminDeptPage() {
+const {id} = useParams()
+  const [department, setDepartment] = useState([])
+  useEffect(() => {
+ getDept() 
+},[])
+  const getDept = () => {
+    axios.get(DepartmentAPI + id, {
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }  
+    }).then(res => {
+      console.log(res);
+      setDepartment(res.data)
+    })
+  }
   return (
     <div>
       <Nav></Nav>
