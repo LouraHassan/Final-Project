@@ -116,7 +116,7 @@ function PositionsPage() {
 
           <br></br>
         </div>
-        <div className="flex flex-col max-md:justify-center max-md:items-center gap-2 m-4 max-md:w-[90%] px-10">
+        <div className="flex flex-col max-md:justify-center max-md:items-center gap-3 m-4 max-md:w-[90%] px-3">
           <PositionCard />
           <PositionCard />
           <PositionCard />
