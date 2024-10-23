@@ -159,8 +159,11 @@ const [manager , setManager] = useState('')
       
         <p className="font-title text-xl font-bold text-secondary my-4">Departments</p>
               <div className="flex flex-col items-center w-full">
-              <div className="grid grid-cols-1 justify-items-center md:grid-cols-2 lg:grid-cols-3 gap-4  lg:w-[80vw]">
-             <DepCard Employees={6} Shortage={2} Surplus={0}></DepCard>
+                  <div className="grid grid-cols-1 justify-items-center md:grid-cols-2 lg:grid-cols-3 gap-4  lg:w-[80vw]">
+                      {departmentArr.map(dept => {
+                          return(<DepCard id={dept._id} name={dept.name} manager={dept.manager?.name || 'No manager'} employees={dept.employees?.length || 0} shortage={dept.positions?.length || 0} surplus={dept.neededEmployees?.length || 0}></DepCard>)
+                      })}
+             <DepCard id Employees={6} Shortage={2} Surplus={0}></DepCard>
                   <DepCard Employees={6} Shortage={2} Surplus={0}></DepCard>
                   <DepCard Employees={6} Shortage={2} Surplus={0}></DepCard>
                   

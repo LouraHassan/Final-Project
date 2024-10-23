@@ -3,18 +3,18 @@ import { Link } from "react-router-dom";
 function DepCard(props) {
   return (
     <Link
-      to={`/admin/department`}
+      to={`/admin/department/${props.id}`}
       className="flex flex-col justify-between p-5 bg-white  shadow-md  rounded-md"
     >
       <div className="flex flex-col">
         <h2 className="text-accent">Department</h2>
-        <h1 className="text-secondary font-bold">Human Resources</h1>
+        <h1 className="text-secondary font-bold">{props.name}</h1>
       </div>
       <div className="flex justify-between">
         <div className="flex flex-col m-4">
           <h2>Employees</h2>
           <h1 className="text-secondary text-center text-[3vh]">
-            {props.Employees}
+            {props.employees}
           </h1>
         </div>
         <div className="flex flex-col m-4">
@@ -40,7 +40,7 @@ function DepCard(props) {
           </div>
 
           <h1 className="text-error text-center text-[3vh]">
-            {props.Shortage}
+            {props.shortage}
           </h1>
         </div>
         <div className="flex flex-col m-4">
@@ -66,7 +66,7 @@ function DepCard(props) {
           </div>
 
           <h1 className="text-accent text-center text-[3vh]">
-            {props.Surplus}
+            {props.surplus}
           </h1>
         </div>
       </div>
@@ -85,7 +85,7 @@ function DepCard(props) {
             <path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
             <path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
           </svg>
-          <h1 className="text-secondary font-bold mx-2">Saad Almousa</h1>
+          <h1 className="text-secondary font-bold mx-2">{props.manager}</h1>
         </div>
       </div>
     </Link>
