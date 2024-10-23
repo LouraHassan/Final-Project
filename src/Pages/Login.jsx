@@ -1,70 +1,78 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 function Login() {
   return (
     <div>
       <div className="flex justify-center items-center  bg-[#30475e] w-full h-screen ">
-        <div className="flex justify-center items-center justify-around rounded-lg bg-base-100 h-[70%] max-md:h-auto max-sm:h-auto ">
+        <div className="flex justify-center items-center justify-around rounded-lg bg-white h-[70%] max-md:h-auto max-sm:h-auto ">
           <div className=" flex justify-center items-center">
-            <div className="card   bg-base-100 w-96 shadow-xl max-md:w-[100%]">
-              <div className="card-body justify-around items-center text-center h-[52vh]">
-                <h1 className="font-title font-bold text-secondary text-[3vh]">
-                  Login
-                </h1>
-                <label className="input input-bordered flex items-center gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                    className="h-4 w-4 opacity-70"
-                  >
-                    <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
-                    <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
-                  </svg>
-                  <input type="text" className="grow" placeholder="Email" />
-                </label>
-                <label className="input input-bordered flex items-center gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                    className="h-4 w-4 opacity-70"
-                  >
-                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-                  </svg>
-                  <input type="text" className="grow" placeholder="Username" />
-                </label>
-                <label className="input input-bordered flex items-center gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                    className="h-4 w-4 opacity-70"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <input
-                    type="password"
-                    className="grow"
-                    placeholder="password"
-                  />
-                </label>
-                <h1 className="text-[2vh] flex justify-start w-[70%] hover:text-blue-800">
-                  Forgot Password?
-                </h1>
-                <div className="card-actions">
-                  <button className="btn  btn-secondary text-white w-[30vh]">
+            <div className="p-16 flex flex-col items-center relative   ">
+              <Link to={`/Manager`}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  className="icon  icon-tabler icons-tabler-outline icon-tabler-chevron-left text-secondary absolute top-4 left-4"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M15 6l-6 6l6 6" />
+                </svg>
+              </Link>
+              <div className="card   bg-white w-96 max-md:w-[100%]">
+                <div className="card-body justify-around items-center text-center h-[52vh]">
+                  <h1 className="font-title font-bold text-secondary text-[3vh]">
                     Login
-                  </button>
+                  </h1>
+                  <label className="input input-bordered flex items-center gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill="currentColor"
+                      className="h-4 w-4 opacity-70"
+                    >
+                      <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
+                      <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
+                    </svg>
+                    <input type="text" className="grow" placeholder="Email" />
+                  </label>
+                  <label className="input input-bordered flex items-center gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill="currentColor"
+                      className="h-4 w-4 opacity-70"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <input
+                      type="password"
+                      className="grow"
+                      placeholder="password"
+                    />
+                  </label>
+                  <h1 className="text-[2vh] flex justify-start w-[70%] hover:text-blue-800">
+                    Forgot Password?
+                  </h1>
+                  <div className="card-actions">
+                    <button className="btn  btn-accent text-white w-[30vh]">
+                      Login
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className=" flex justify-center w-[35%]  max-md:hidden max-sm:hidden">
+          <div className=" flex justify-center w-[40%]  max-md:hidden max-sm:hidden">
             <div>
               <h1 className="font-title font-bold text-secondary text-[6vh] text-center ">
                 welcome back

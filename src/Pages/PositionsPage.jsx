@@ -7,7 +7,7 @@ function PositionsPage() {
   return (
     <div>
       <Nav3 />
-      <div className="flex justify-center justify-around mt-5 mb-5  max-md:flex-col max-md:justify-center max-md:items-center ">
+      <div className="flex justify-center justify-around mt-5 mb-5  m-8 max-md:flex-col max-md:justify-center max-md:items-center ">
         <div className="flex flex-col w-[70%] h-auto justify-around border shadow-2xl p-6 max-md:w-[90%] ">
           <div className="flex justify-between">
             <h1 className="font-title font-bold text-secondary text-[4vh]">

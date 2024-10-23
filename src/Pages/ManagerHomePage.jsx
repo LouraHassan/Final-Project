@@ -126,8 +126,8 @@ function ManagerHomePage() {
             </div>
           </div>
           <div className="flex justify-around bg-gray-200 w-[100%] p-6  ">
-            <div className="flex flex-col justify-around pt-10 pb-10   ">
-              <div className="flex justify-between   ">
+            <div className="flex flex-col justify-around pt-10 pb-10 w-[88%] max-md:w-[90%] ">
+              <div className="flex justify-between w-[97%]  ">
                 <h1 className="font-title font-bold text-[3vh] text-secondary">
                   Posted Positions
                 </h1>
