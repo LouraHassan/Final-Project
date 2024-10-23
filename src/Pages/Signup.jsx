@@ -38,7 +38,8 @@ function Signup() {
           console.log(res);
           localStorage.setItem("accountId", res.data.id);
           localStorage.setItem("accountType", "admin");
-          localStorage.setItem("token", res.data.token);
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem('company', res.data.company._id)
           navigate(`/admin/${res.data.id}`);
         });
     }

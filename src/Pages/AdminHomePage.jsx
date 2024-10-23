@@ -4,7 +4,13 @@ import Select from "react-select";
 import EmpCard from "../Components/EmpCard";
 import DepCard from "../Components/DepCard";
 import Nav from "../Components/Nav";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+
+const AccountsAPI = `http://localhost:3000/account/`
 export default function AdminHomePage() {
+
+    const {id} = useParams()
     const [user, setUser] = useState()
     const [selectedEmployees, setSelectedEmployees] = useState([]);
     
@@ -14,6 +20,10 @@ export default function AdminHomePage() {
     const [password, setPassword] = useState('')
 
     const [deptName, setDeptName] = useState('')
+
+    const getUser = () => {
+        axios.get(AccountsAPI+id+`?company=${localStorage.getItem('company')}`)
+    }
   const employeeOptions = [
     { value: "1", label: "Employee 1" },
     { value: "2", label: "Employee 2" },
@@ -22,9 +32,7 @@ export default function AdminHomePage() {
     { value: "5", label: "Employee 5" },
   ];
 
-  const handleSelectChange = (selectedOptions) => {
-    setSelectedEmployees(selectedOptions || []);
-    };
+ 
     console.log(localStorage.getItem('token'));
     
   return (
