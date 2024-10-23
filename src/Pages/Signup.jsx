@@ -69,6 +69,13 @@ function Signup() {
           <h1 className="font-title font-bold text-secondary text-[3vh] mb-3">
             Signup
           </h1>
+          <p
+            className={`text-error text-sm self-start ${
+              warningText != "" ? "p-4" : "p-2"
+            }`}
+          >
+            {warningText}
+          </p>
           <div className="flex flex-col items-center gap-3">
             {/* <label className="form-control w-full max-w-xs">
               <div className="label">
@@ -223,16 +230,10 @@ function Signup() {
                 className="input  w-full max-w-xs"
               />
             </label> */}
-            <p
-              className={`text-error text-sm self-start ${
-                warningText != "" ? "p-4" : "p-2"
-              }`}
-            >
-              {warningText}
-            </p>
+
             <button
               onClick={signupAction}
-              className="btn btn-accent m-2 lg:w-[16vw] "
+              className="btn btn-accent m-2 lg:w-[16vw] max-sm:w-[16vw] sm:w-[16vw]  "
             >
               Signup
             </button>
