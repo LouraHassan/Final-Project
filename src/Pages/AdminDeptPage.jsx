@@ -90,10 +90,10 @@ function AdminDeptPage() {
         </p>
         <div className="my-4 flex flex-col items-center  self-center">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 lg:w-[80vw]  gap-4">
+            {/* <PositionCard></PositionCard>
             <PositionCard></PositionCard>
             <PositionCard></PositionCard>
-            <PositionCard></PositionCard>
-            <PositionCard></PositionCard>
+            <PositionCard></PositionCard> */}
           </div>
         </div>
         <div className="my-8 flex flex-col lg:items-start w-full ">
