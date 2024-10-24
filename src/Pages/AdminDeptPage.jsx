@@ -52,11 +52,11 @@ function AdminDeptPage() {
           <div className="flex  self-center text-lg">
             <div className={`flex flex-col items-center m-2`}>
               <p>Employees</p>
-              <p>{10}</p>
+              <p>{department.employees?.length || 0}</p>
             </div>
             <div className={`flex flex-col items-center m-2`}>
               <p>Shortage</p>
-              <p className="text-error">{4}</p>
+              <p className="text-error">{department.positions?.length || 0}</p>
             </div>
             <div className={`flex flex-col items-center m-2`}>
               <p>Surplus</p>
@@ -76,36 +76,12 @@ function AdminDeptPage() {
             <tbody>
               {department.employees?.length > 0 ? (
                 department.employees.map((employee) => {
-                  return <EmpList key={employee._id} name={employee.name} />;
+                  return <EmpList key={employee._id} name={employee.name} position={employee.positionTitle || 'position not defined'} />;
                 })
               ) : (
                 <p>No employees available</p>
               )}
-              <EmpList
-                id="1"
-                name="Ahmed Alghamdi"
-                position="Business Analyst"
-              ></EmpList>
-              <EmpList
-                id="1"
-                name="Ahmed Alghamdi"
-                position="Business Analyst"
-              ></EmpList>
-              <EmpList
-                id="1"
-                name="Ahmed Alghamdi"
-                position="Business Analyst"
-              ></EmpList>{" "}
-              <EmpList
-                id="1"
-                name="Ahmed Alghamdi"
-                position="Business Analyst"
-              ></EmpList>{" "}
-              <EmpList
-                id="1"
-                name="Ahmed Alghamdi"
-                position="Business Analyst"
-              ></EmpList>
+             
             </tbody>
           </table>
         </div>

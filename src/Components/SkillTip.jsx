@@ -2,7 +2,7 @@ import React from 'react'
 
 function SkillTip(props) {
   return (
-    <p className='border-2 border-accent p-1 w-fit rounded-md text-accent m-1 bg-white'>{props.text}</p>
+    <p className=' p-2 w-fit rounded-full text-secondary m-1 bg-base-100 text-xs'>{props.text}</p>
 
   )
 }

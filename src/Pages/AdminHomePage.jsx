@@ -27,6 +27,8 @@ export default function AdminHomePage() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [position, setPosition] = useState('')
+
 const [warningText, setWarningText] = useState('')
     const [deptName, setDeptName] = useState('')
 const [manager , setManager] = useState('')
@@ -130,11 +132,12 @@ const [manager , setManager] = useState('')
     }
 
     const CreateEmployee = () => {
-        if (name == '' || email == '' || password == '') {
+        if (name == '' || email == '' || password == '' || position == '') {
             setWarningText('')
         } else {
             axios.post(createAccountsAPI, {
                 name: name,
+                positionTitle: position,
                 email: email,
                 password: password,
                 accountType: 'employee'
@@ -163,10 +166,7 @@ const [manager , setManager] = useState('')
                       {departmentArr.map(dept => {
                           return(<DepCard id={dept._id} name={dept.name} manager={dept.manager?.name || 'No manager'} employees={dept.employees?.length || 0} shortage={dept.positions?.length || 0} surplus={dept.neededEmployees?.length || 0}></DepCard>)
                       })}
-             <DepCard id Employees={6} Shortage={2} Surplus={0}></DepCard>
-                  <DepCard Employees={6} Shortage={2} Surplus={0}></DepCard>
-                  <DepCard Employees={6} Shortage={2} Surplus={0}></DepCard>
-                  
+           
               </div>
           <button
             className="btn btn-accent m-4"
@@ -204,34 +204,15 @@ const [manager , setManager] = useState('')
             <thead>
               <tr className="font-title text-lg">
                 <th>Manager Name</th>
-                <th>Position</th>
+                <th>Department</th>
              
               </tr>
             </thead>
-            <tbody>
-              <EmpList
-                id="1"
-                name="Ahmed Alghamdi"
-                position="Human Resources Manager"
-                          ></EmpList>
-                           <EmpList
-                id="1"
-                name="Ahmed Alghamdi"
-                position="Business Analyst"
-              ></EmpList>
-                           <EmpList
-                id="1"
-                name="Ahmed Alghamdi"
-                position="Business Analyst"
-              ></EmpList>             <EmpList
-              id="1"
-              name="Ahmed Alghamdi"
-              position="Business Analyst"
-            ></EmpList>             <EmpList
-            id="1"
-            name="Ahmed Alghamdi"
-            position="Business Analyst"
-          ></EmpList>
+                          <tbody>
+                              {managerArr.map(manager => {
+                                  return(<EmpList id={manager._id} name={manager.name} position={'manager'}></EmpList>)
+                              })}
+                    
             </tbody>
           </table>
                   </div>
@@ -274,30 +255,11 @@ const [manager , setManager] = useState('')
              
               </tr>
             </thead>
-            <tbody>
-              <EmpList
-                id="1"
-                name="Ahmed Alghamdi"
-                position="Business Analyst"
-                          ></EmpList>
-                           <EmpList
-                id="1"
-                name="Ahmed Alghamdi"
-                position="Business Analyst"
-              ></EmpList>
-                           <EmpList
-                id="1"
-                name="Ahmed Alghamdi"
-                position="Business Analyst"
-              ></EmpList>             <EmpList
-              id="1"
-              name="Ahmed Alghamdi"
-              position="Business Analyst"
-            ></EmpList>             <EmpList
-            id="1"
-            name="Ahmed Alghamdi"
-            position="Business Analyst"
-          ></EmpList>
+                          <tbody>
+                              {employeeArr.map(emp => {
+                                  return(<EmpList id={emp._id} name={emp.name} position={emp.positionTitle}></EmpList>)
+                              })}
+            
             </tbody>
           </table>
                   </div>
@@ -359,8 +321,10 @@ const [manager , setManager] = useState('')
                   <label className="form-control w-full max-w-xs">
   <div className="label">
     <span className="label-text">Password</span>
-  </div>
+                                  </div>
+                                  <form method="dialog">
   <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="input input-bordered w-full max-w-xs" />
+      </form>
  
                   </label>
                 <button onClick={CreateManager} className="btn btn-secondary btn-wide m-4">Create account</button>
@@ -387,6 +351,13 @@ const [manager , setManager] = useState('')
                 
                   <label className="form-control w-full max-w-xs">
   <div className="label">
+    <span className="label-text">Position</span>
+  </div>
+  <input value={position} onChange={(e) => setPosition(e.target.value)} type="text" className="input input-bordered w-full max-w-xs" />
+ 
+                              </label>
+                              <label className="form-control w-full max-w-xs">
+  <div className="label">
     <span className="label-text">Email</span>
   </div>
   <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" className="input input-bordered w-full max-w-xs" />
@@ -398,8 +369,10 @@ const [manager , setManager] = useState('')
   </div>
   <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="input input-bordered w-full max-w-xs" />
  
-                  </label>
+                              </label>
+                              <form method="dialog">
                 <button onClick={CreateEmployee} className="btn btn-secondary btn-wide m-4">Create account</button>
+      </form>
               </div>
             </div>
           </dialog>
@@ -426,7 +399,10 @@ const [manager , setManager] = useState('')
   </div>
                               <select value={manager} onChange={(e) => setManager(e.target.value)} className="select select-bordered">
                                   {managerArr.map(manager => {
-                                      return (<option value={manager._id}>{manager.name}</option>)
+                                      if (manager.department == null) {
+                                          
+                                          return (<option value={manager._id}>{manager.name}</option>)
+                                        }
                                   })}
    
   </select>
