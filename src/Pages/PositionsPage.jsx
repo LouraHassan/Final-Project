@@ -2,18 +2,22 @@ import React from "react";
 import Nav3 from "../Components/Nav3";
 import SkillTip from "../Components/SkillTip";
 import PositionCard from "../Components/PositionCard";
+import { useState } from "react";
 
 function PositionsPage() {
+  const [open, setOpen] = useState(false);
+
   return (
     <div>
       <Nav3 />
-      <div className="flex justify-center justify-around mt-5 mb-5  m-8 max-md:flex-col max-md:justify-center max-md:items-center ">
-        <div className="flex flex-col w-[70%] h-auto justify-around border shadow-2xl p-6 max-md:w-[90%] ">
+      <div className="flex  justify-around mt-5 mb-5  m-8 max-md:flex-col max-md:justify-center max-md:items-center ">
+        <div className="flex flex-col w-[70%] bg-white h-auto justify-around border shadow-2xl p-6 max-md:w-[90%] ">
           <div className="flex justify-between">
             <h1 className="font-title font-bold text-secondary text-[4vh]">
               Senior Project Manager
             </h1>
-            <svg
+            {/* <svg
+              onClick={() => setOpen(true)}
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -29,7 +33,61 @@ function PositionsPage() {
               <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
               <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
               <path d="M16 5l3 3" />
-            </svg>
+            </svg> */}
+            {open && (
+              <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-60  ">
+                <div className="bg-white p-6 rounded-lg w-[45%] h-[%]">
+                  <h2 className="font-title font-bold text-secondary text-[4vh]">
+                    Edit Position
+                  </h2>
+
+                  <label className="font-title text-accent font-bold">
+                    position name:{" "}
+                  </label>
+                  <input type="text" className="border p-2 mt-2 w-full" />
+
+                  <label className="font-title text-accent font-bold">
+                    Department name:
+                  </label>
+                  <input type="text" className="border p-2 mt-2 w-full" />
+
+                  <label className="font-title text-accent font-bold">
+                    Estimated Salary:
+                  </label>
+
+                  <input type="text" className="border p-2 mt-2 w-full" />
+
+                  <label className="font-title text-accent font-bold">
+                    Experience years:
+                  </label>
+
+                  <input type="text" className="border p-2 mt-2 w-full" />
+
+                  <div className="flex flex-col justify-around h-[35vh]">
+                    <label className="font-title text-accent font-bold">
+                      Key Responsibilities:
+                    </label>
+                    <textarea className="textarea textarea-bordered bg-white textarea-lg  max-w-m"></textarea>
+                    <label className="font-title text-accent font-bold">
+                      Job overview:
+                    </label>
+                    <textarea className="textarea textarea-bordered bg-white textarea-lg max-w-m"></textarea>
+                  </div>
+
+                  <div className="flex justify-end mt-4 ">
+                    <button
+                      className="btn bg-[#30465e] text-white p-4 mr-2"
+                      onClick={() => setOpen(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button className="btn  btn-accent text-white p-4">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col justify-around h-[28vh]">

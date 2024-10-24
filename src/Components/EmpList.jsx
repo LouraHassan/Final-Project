@@ -4,7 +4,7 @@ function EmpList(props) {
   const [editMode, setEditMode] = useState(false);
     const [isReassignible, setIsReassignible] = useState(false)
     // const accountType = localStorage.getItem('accountType', accountType)
-    const accountType = 'admin'
+    const accountType = 'manager'
     const [isManager, setIsManager] = useState(accountType == 'manager')
   // useEffect(() => {
   //     if (editMode) {
