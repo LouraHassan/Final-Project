@@ -1,7 +1,7 @@
 import React from "react";
 import Nav4 from "../Components/Nav4";
 import SkillTip from "../Components/SkillTip";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 function EmployeePage() {
   const [open, setOpen] = useState(false);
@@ -10,17 +10,27 @@ function EmployeePage() {
   const [about, setAbout] = useState(
     "We are looking for a highly skilled and experienced Senior Project Manager to lead complex projects from initiation to completion. The Senior Project Manager will be responsible for overseeing project teams, ensuring that all project objectives are met, managing risks, and maintaining communication with stakeholders. This role requires exceptional leadership, organizational, and communication skills, the ability to manage multiple projects simultaneously."
   );
-  const [education, setEducation] = useState("");
-
+  const [education, setEducation] = useState(
+    "We are looking for a highly skilled and experienced Senior Project Manager to lead complex projects from initiation to completion. The Senior Project Manager will be responsible for overseeing project teams, ensuring that all project objectives are met, managing risks, and maintaining communication with stakeholders. This role requires exceptional leadership, organizational, and communication skills, along with the ability to manage multiple projects simultaneously."
+  );
+const textareaRef = useRef(null)
   const [yearsStyle, setYearsStyle] = useState("bg-transparent ");
   const [aboutStyle, setAboutStyle] = useState("bg-transparent ");
+  const [educationStyle, setEducationStyle] = useState("bg-transparent ");
 
   const editaction = () => {
     setEditmood(false);
     setYearsStyle("input input-bordered");
     setAboutStyle("textarea textarea-bordered");
+    setEducationStyle("textarea textarea-bordered");
   };
-
+const textareaHeight = () => {
+  const textarea = textareaRef.current;
+  if(textarea){
+    textarea.style.height = 'auto',
+textarea.style.height = `${textarea.scrollHeight}px`
+  }
+}
   return (
     <div>
       <Nav4 />
@@ -238,24 +248,26 @@ function EmployeePage() {
           </div>
           <h2 className="font-title text-accent text-[3vh]">About me</h2>
           <textarea
+          ref={textareaRef}
+          rows={4}
             value={about}
-            onChange={(e) => setAbout(e.target.value)}
+            onChange={(e) => {
+              setAbout(e.target.value)
+              textareaHeight()
+            }
+          }
             className={aboutStyle}
             disabled={editmood}
+            style={{ resize:'none'}}
           ></textarea>
-          <h1 className="font-title text-accent text-[3vh] ">Education</h1>
 
-          <p className="font-text w-[90%]">
-            <span className="font-bold text-[2.3vh]">
-              Lead Project Planning:
-            </span>
-            Define project scope, goals, deliverables, and success criteria.
-            Develop detailed project plans, timelines, and budgets. Define
-            project scope, goals, deliverables, and success criteria. Develop
-            detailed project plans, timelines, and budgets. Define project
-            scope, goals, deliverables, and success criteria. Develop detailed
-            project plans, timelines, and budgets.
-          </p>
+          <h2 className="font-title text-accent text-[3vh]">Education</h2>
+          <textarea
+            value={education}
+            onChange={(e) => setEducation(e.target.value)}
+            className={educationStyle}
+            disabled={editmood}
+          ></textarea>
 
           <div className="flex flex-wrap my-4 items-center mt-7">
             <p>
