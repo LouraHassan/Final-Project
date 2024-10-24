@@ -7,7 +7,7 @@ function PositionCard({ Position, Department, Experience, onEdit }) {
     <div className="flex flex-col justify-around  p-5 bg-white rounded-md shadow-md">
       <div className="flex justify-between">
         <h1 className="text-secondary font-bold text-[3vh] ">
-          {Position || "Senior Project Manager"} {/* عرض اسم الوظيفة */}
+          {Position} {/* عرض اسم الوظيفة */}
         </h1>
         {/* إضافة زر التعديل */}
         <svg

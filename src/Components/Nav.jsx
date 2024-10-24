@@ -1,9 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 function Nav() {
+  const navigate = useNavigate()
   const accountType = localStorage.getItem('accountType')
-const [isAdmin, setIsAdmin] = useState(localStorage.getItem('accountType') == accountType)
+const [isAdmin, setIsAdmin] = useState(accountType == 'admin')
+  console.log(localStorage.getItem('accountType'));
   
+  
+  const LogoutAction = () => {
+    localStorage.removeItem("accountId");
+    localStorage.removeItem("accountType");
+    localStorage.removeItem("company");
+    localStorage.removeItem("token");
+    navigate(`/`)
+  }
   return (
     <div className="navbar bg-secondary sticky top-0 text-secondary-content z-10">
       <div className="navbar-start">
@@ -15,12 +25,12 @@ const [isAdmin, setIsAdmin] = useState(localStorage.getItem('accountType') == ac
             <Link to={isAdmin?`/admin/${localStorage.getItem('accountId')}`: accountType == 'manager'? `/Manager/${localStorage.getItem('accountId')}`:`/Employee/${localStorage.getItem('accountId')}`}>Dashboard</Link>
           </li>
 
-          <li>
+          {/* <li>
             <a>Managers</a>
           </li>
           <li>
             <a>Employees</a>
-          </li>
+          </li> */}
         </ul>
       </div>
       <div className="navbar-center hidden lg:flex"></div>
@@ -52,7 +62,7 @@ const [isAdmin, setIsAdmin] = useState(localStorage.getItem('accountType') == ac
             className="dropdown-content menu bg-base-100 text-neutral rounded-box z-[1] w-52 p-2 shadow"
           >
             <li>
-              <Link to={`/`} className="text-error">
+              <Link onClick={LogoutAction} className="text-error">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"

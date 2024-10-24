@@ -399,10 +399,11 @@ const [manager , setManager] = useState('')
   </div>
                               <select value={manager} onChange={(e) => setManager(e.target.value)} className="select select-bordered">
                                   {managerArr.map(manager => {
-                                      if (manager.department == null) {
-                                          
+                                                  console.log(manager._id);
+                                                  
                                           return (<option value={manager._id}>{manager.name}</option>)
-                                        }
+                                        
+                                        
                                   })}
    
   </select>

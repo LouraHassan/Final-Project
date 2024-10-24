@@ -1,5 +1,5 @@
 import React from "react";
-import Nav3 from "../Components/Nav3";
+import Nav from "../Components/Nav";
 import SkillTip from "../Components/SkillTip";
 import PositionCard from "../Components/PositionCard";
 import { useState } from "react";
@@ -9,7 +9,7 @@ function PositionsPage() {
 
   return (
     <div>
-      <Nav3 />
+      <Nav />
       <div className="flex  justify-around mt-5 mb-5  m-8 max-md:flex-col max-md:justify-center max-md:items-center ">
         <div className="flex flex-col w-[70%] bg-white h-auto justify-around border shadow-2xl p-6 max-md:w-[90%] ">
           <div className="flex justify-between">

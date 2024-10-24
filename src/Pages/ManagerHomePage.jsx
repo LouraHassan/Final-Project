@@ -1,22 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PositionCard from "../Components/PositionCard";
-import Nav2 from "../Components/Nav2";
+import Nav from "../Components/Nav";
 import DepCard from "../Components/DepCard";
 import EmpList from "../Components/EmpList";
-
+import axios from "axios";
+import { useParams } from "react-router-dom";
+const AccountsAPI = `http://localhost:3000/account/`;
+const AddPositionAPI = `http://localhost:3000/position?company=${localStorage.getItem(
+  "company"
+)}`;
 function ManagerHomePage() {
+  const { id } = useParams();
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    getUser();
+  }, []);
+  const getUser = () => {
+    axios
+      .get(AccountsAPI + id + `?company=${localStorage.getItem("company")}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setUser(res.data);
+      });
+  };
+
   const [positions, setPositions] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [experience, setExperience] = useState([]);
   const [newPosition, setNewPosition] = useState("");
   const [newDepartment, setNewDepartment] = useState("");
   const [newExperience, setNewExperience] = useState("");
+  const [jobType, setJobType] = useState("");
+const [skills, setSkills] = useState([])
   const [newSalary, setNewSalary] = useState("");
   const [newKey, setNewKey] = useState("");
   const [newOverview, setNewOverview] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
-
+  const [warningText, setWarningText] = useState("");
   const openDialog = (index = null) => {
     if (index !== null) {
       setNewPosition(positions[index]);
@@ -66,10 +92,44 @@ function ManagerHomePage() {
       closeDialog();
     }
   };
+  console.log(jobType);
 
+  const addPositionAction = () => {
+    if (
+      newPosition == "" ||
+      newExperience == "" ||
+      newKey == "" ||
+      newOverview == "" ||
+      newSalary == ""
+    ) {
+      setWarningText("you must fill all the fields");
+    } else {
+      axios
+        .post(
+          AddPositionAPI,
+          {
+            title: newPosition,
+            description: newOverview,
+            department: user.department._id,
+            expectedSalary: newSalary,
+            experienceYears: newExperience,
+            requirments: newKey,
+            jobType: jobType,
+          },
+          {
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        });
+    }
+  };
   return (
     <div>
-      <Nav2 />
+      <Nav />
       <div className="flex">
         <div className="flex w-[100%]">
           <div className="flex flex-col border justify-start items-center p-15 mt-10 w-auto ml-5 shadow-2xl bg-[#30465e] pt-10 rounded-xl h-[51vh]">
@@ -89,18 +149,18 @@ function ManagerHomePage() {
             </div>
             <div className="flex flex-col justify-center">
               <h2 className="font-title mt-4 text-center w-[40vh] text-white font-bold text-[4vh]">
-                Ahmed Almousa
+                {user.name}
               </h2>
               <div className="mt-3 ml-3">
                 <h1 className="font-text text-accent text-center">
-                  Human Resources
+                  {user.department.name}
                 </h1>
               </div>
             </div>
           </div>
           <div className="flex flex-col w-[75%] mt-10">
             <h2 className="font-title font-bold text-[3vh] text-secondary ml-5">
-              Number of employees: 05
+              Number of employees:{user.department.employees?.length || 0}
             </h2>
             <div className="flex justify-center">
               <div className="overflow-x-auto lg:w-[80vw] bg-slate-100 lg:self-center lg:m-4 shadow-md shadow-gray-300 rounded-lg">
@@ -112,6 +172,9 @@ function ManagerHomePage() {
                     </tr>
                   </thead>
                   <tbody>
+                    {user.department.employees.map(emp => {
+                      return(<EmpList id={emp._id} name={emp.name}></EmpList>)
+                    })}
                     <EmpList
                       id="1"
                       name="Ahmed Alghamdi"
@@ -155,15 +218,20 @@ function ManagerHomePage() {
                   </button>
                 </div>
                 <div className="grid lg:grid-cols-3 justify-around gap-4 mt-4">
-                  {positions.map((position, index) => (
-                    <PositionCard
-                      key={index}
-                      Position={position}
-                      Department={departments[index]}
-                      Experience={experience[index]}
-                      onEdit={() => openDialog(index)}
-                    />
-                  ))}
+                  {user.department &&
+                  user.department.positions &&
+                  user.department.positions.length > 0 ? (
+                    user.department.positions.map((position, index) => (
+                      <PositionCard
+                        key={index}
+                        Position={position.title}
+                        Department={user.department.name}
+                        Experience={position.experienceYears}
+                      />
+                    ))
+                  ) : (
+                    <p>No positions available</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -182,7 +250,7 @@ function ManagerHomePage() {
                   type="text"
                   value={newPosition}
                   onChange={(e) => setNewPosition(e.target.value)}
-                  className="border p-2 mt-2 w-full"
+                  className="input input-bordered p-2 mt-2 w-full"
                 />
                 <label className="font-title text-accent font-bold">
                   Department Name:
@@ -191,7 +259,7 @@ function ManagerHomePage() {
                   type="text"
                   value={newDepartment}
                   onChange={(e) => setNewDepartment(e.target.value)}
-                  className="border p-2 mt-2 w-full"
+                  className="input input-bordered p-2 mt-2 w-full"
                 />
                 <label className="font-title text-accent font-bold">
                   Estimated Salary:
@@ -200,7 +268,7 @@ function ManagerHomePage() {
                   type="text"
                   value={newSalary}
                   onChange={(e) => setNewSalary(e.target.value)}
-                  className="border p-2 mt-2 w-full"
+                  className="input input-bordered p-2 mt-2 w-full"
                 />
                 <label className="font-title text-accent font-bold">
                   Experience Years:
@@ -209,16 +277,27 @@ function ManagerHomePage() {
                   type="text"
                   value={newExperience}
                   onChange={(e) => setNewExperience(e.target.value)}
-                  className="border p-2 mt-2 w-full"
+                  className="input input-bordered p-2 mt-2 w-full"
                 />
                 <div className="flex flex-col justify-around h-[35vh]">
+                  <select
+                    name=""
+                    id=""
+                    value={jobType}
+                    onChange={(e) => setJobType(e.target.value)}
+                    className="select select-bordered"
+                  >
+                  <option value={"Not-specified"}>Select type</option>
+                    <option value={"Full-Time"}> Full-Time</option>
+                    <option value={"Part-Time"}>Part-Time</option>
+                  </select>
                   <label className="font-title text-accent font-bold">
                     Key Responsibilities:
                   </label>
                   <textarea
                     value={newKey}
                     onChange={(e) => setNewKey(e.target.value)}
-                    className="textarea resize-none textarea-bordered bg-white textarea-lg max-w-m"
+                    className="textarea resize-none textarea-bordered  textarea-lg max-w-m"
                   ></textarea>
                   <label className="font-title text-accent font-bold">
                     Job Overview:
@@ -226,10 +305,10 @@ function ManagerHomePage() {
                   <textarea
                     value={newOverview}
                     onChange={(e) => setNewOverview(e.target.value)}
-                    className="textarea resize-none textarea-bordered bg-white textarea-lg max-w-m"
+                    className="textarea resize-none textarea-bordered  textarea-lg max-w-m"
                   ></textarea>
                 </div>
-
+                <p>{warningText}</p>
                 <div className="flex justify-end mt-4">
                   <button
                     className="btn bg-[#30465e] text-white p-4 mr-2"
@@ -239,7 +318,7 @@ function ManagerHomePage() {
                   </button>
                   <button
                     className="btn btn-accent text-white p-4"
-                    onClick={handleSubmit}
+                    onClick={addPositionAction}
                   >
                     {editIndex !== null ? "Update" : "Submit"}
                   </button>
