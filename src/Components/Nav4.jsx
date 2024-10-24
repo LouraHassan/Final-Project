@@ -72,7 +72,7 @@ function Nav4() {
             className="dropdown-content menu bg-base-100 text-neutral rounded-box z-[1] w-52 p-2 shadow"
           >
             <li>
-              <p className="text-error">
+            <Link to={`/`} className="text-error">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -91,7 +91,7 @@ function Nav4() {
                   <path d="M18 15l3 -3" />
                 </svg>
                 Logout
-              </p>
+              </Link>
             </li>
           </ul>
         </div>
