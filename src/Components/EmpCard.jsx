@@ -1,10 +1,30 @@
 import {useState} from 'react'
 import SkillTip from './SkillTip'
-
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+const AssignEmpAPI = `http://localhost:3000/fillPosition?company=${localStorage.getItem("company")}`
 function EmpCard(props) {
+  const navigate = useNavigate()
   const [skills, setSkills] = useState(props.skills)
-  console.log(skills);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   
+
+
+  const assignAction = () => {
+    axios.post(AssignEmpAPI, {
+      employeeId: props.id,
+      positionId: props.positionId
+    },
+      {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+      }).then(res => {
+      console.log(res);
+        setIsDialogOpen(false);
+        navigate(`/admin/${localStorage.getItem('accountId')}`)
+    })
+  }
   return (
     <>
     <div className='bg-secondary text-secondary-content p-4 rounded-lg flex flex-col justify-between'>
@@ -30,40 +50,51 @@ function EmpCard(props) {
       <p className='font-text my-2'>Experience: {props.years} years</p>
       <div className='flex flex-wrap'>
         <p className='font-text my-2'>Skills: </p>
-        {skills.map(skill => {
-          return ( <SkillTip text={skill}></SkillTip>)
+        {skills &&skills.map(skill => {
+          return ( <SkillTip text={skill} editMode={true}></SkillTip>)
         })}
        
 
       </div>
-      <button className='btn btn-accent btn-wide self-end'  onClick={() =>
-              document.getElementById("confirmDialog").showModal()
-            }>Assign</button>
+      <button className='btn btn-accent btn-wide self-end' onClick={() => setIsDialogOpen(true)}>Assign</button>
 
     </div>
-      <dialog id="confirmDialog" className="modal">
-            <div className="modal-box flex flex-col items-center">
-              <form method="dialog">
-                <button className="btn text-neutral btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                  ✕
-                </button>
-              </form>
-              <h3 className="font-bold text-xl text-neutral font-title">Employee Assignment Confirmation</h3>
-              <div className="self-start flex flex-col my-4 font-semibold text-lg font-title">
-            <p className='text-neutral'>Employee: {props.name}</p>
-            <p className='text-neutral'>Previous position: {props.pPosition}</p>
-            <p className='text-neutral'>New position: {props.pPosition}</p>
-            <p className='text-neutral'>Department: {props.pPosition}</p>
-            <p className='text-neutral'>Manager: {props.pPosition}</p>
-          </div>
-          <div className='flex'>
-          <form method="dialog">
-<button className='btn btn-outline btn-accent lg:w-[10vw] m-2'>Cancel</button>
-      </form>
-                <button className="btn btn-secondary lg:w-[10vw] m-2">Confirm</button>
-          </div>
+    {isDialogOpen && (
+        <dialog open className="modal">
+          <div className="modal-box flex flex-col items-center">
+            <button
+              className="btn text-neutral btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              onClick={() => setIsDialogOpen(false)}
+            >
+              ✕
+            </button>
+            <h3 className="font-bold text-xl text-neutral font-title">
+              Employee Assignment Confirmation
+            </h3>
+            <div className="self-start flex flex-col my-4 font-semibold text-lg font-title">
+              <p className="text-neutral">Employee: {props.name}</p>
+              <p className="text-neutral">Previous position: {props.pPosition}</p>
+              <p className="text-neutral">New position: {props.nPosition}</p>
+              <p className="text-neutral">Department: {props.department}</p>
+              <p className="text-neutral">Manager: {props.manager}</p>
             </div>
-      </dialog>
+            <div className="flex">
+              <button
+                className="btn btn-outline btn-accent lg:w-[10vw] m-2"
+                onClick={() => setIsDialogOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={assignAction}
+                className="btn btn-secondary lg:w-[10vw] m-2"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </dialog>
+      )}
       </>
   )
 }

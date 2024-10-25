@@ -1,10 +1,12 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
+const updateExcessAPI = `http://localhost:3000/account/excess/`
 function EmpList(props) {
   const [editMode, setEditMode] = useState(false);
-    const [isReassignible, setIsReassignible] = useState(false)
-    // const accountType = localStorage.getItem('accountType', accountType)
-    const accountType = 'manager'
+    const [isReassignible, setIsReassignible] = useState(props.excess ? 'Yes' : 'No')
+  
+    const accountType = localStorage.getItem('accountType')
     const [isManager, setIsManager] = useState(accountType == 'manager')
   // useEffect(() => {
   //     if (editMode) {
@@ -18,7 +20,22 @@ function EmpList(props) {
   const cancelEdit = () => {
     setEditMode(false);
   };
-  const saveAction = () => {};
+    const saveAction = () => { 
+        axios.put(updateExcessAPI + props.id, {
+            excess: isReassignible == 'Yes'? true : false
+        }, {
+            headers: {
+                Authorization: localStorage.getItem("token"),
+              },
+        }).then(res => {
+            console.log(res);
+            setEditMode(false)
+        })
+    };
+    
+    const changeExcess = (e) => {
+        setIsReassignible(e.target.checked ? 'Yes' : 'No');
+    }
   return (
     <tr>
       <td>
@@ -46,8 +63,13 @@ function EmpList(props) {
       </td>
       <td>
         <p className="font-text">{props.position}</p>
+          </td>
+          
+          <td className={isManager ? '' : 'hidden'}>{isReassignible}
+              {editMode?  <input type="checkbox" className="toggle"  onChange={changeExcess} 
+      checked={isReassignible === 'Yes'} /> : <></>}
+        
       </td>
-      <td className={isManager? '': 'hidden'}>{!isReassignible? 'No' : 'Yes'}</td>
       <th className={isManager? '': 'hidden'}>
         <button
           onClick={editAction}

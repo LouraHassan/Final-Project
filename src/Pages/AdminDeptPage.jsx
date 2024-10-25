@@ -8,9 +8,16 @@ const DepartmentAPI = `http://localhost:3000/department/id/`;
 function AdminDeptPage() {
   const { id } = useParams();
   const [department, setDepartment] = useState([]);
+  const [positionsArr , setPositionsArr] = useState([])
   useEffect(() => {
     getDept();
   }, []);
+
+  useEffect(() => {
+    setPositionsArr(department.positions)
+  }, [department])
+  console.log(positionsArr);
+  
   const getDept = () => {
     axios
       .get(DepartmentAPI + id, {
@@ -60,7 +67,7 @@ function AdminDeptPage() {
             </div>
             <div className={`flex flex-col items-center m-2`}>
               <p>Surplus</p>
-              <p className="text-warning">{0}</p>
+              <p className="text-warning">{department.surplusCount}</p>
             </div>
           </div>
         </div>
@@ -90,6 +97,19 @@ function AdminDeptPage() {
         </p>
         <div className="my-4 flex flex-col items-center  self-center">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 lg:w-[80vw]  gap-4">
+
+            {positionsArr && positionsArr.map((position, index) => {
+              if (!position.status) {
+                return (<PositionCard
+                  key={index}
+                  id={position._id}
+                  Position={position.title}
+                  Department={department.name}
+                  Experience={position.experienceYears}
+                  skills={position?.skills || ''}
+                ></PositionCard>)
+             }
+            })}
             {/* <PositionCard></PositionCard>
             <PositionCard></PositionCard>
             <PositionCard></PositionCard>

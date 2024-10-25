@@ -42,6 +42,7 @@ function ManagerHomePage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [position, setPosition] = useState('')
+console.log(user.department?._id);
 
 
   const CreateEmployee = () => {
@@ -54,7 +55,7 @@ function ManagerHomePage() {
             email: email,
             password: password,
           accountType: 'employee',
-          department: user.department
+          department: user.department._id
         }, {
             headers: {
                 'Authorization': localStorage.getItem('token')
@@ -135,7 +136,7 @@ function ManagerHomePage() {
       closeDialog();
     }
   };
-  console.log(jobType);
+console.log(localStorage.getItem('department'));
 
   const addPositionAction = () => {
     if (
@@ -174,6 +175,8 @@ function ManagerHomePage() {
           setNewKey('')
           setNewOverview('')
           setSkills([])
+          // document.getElementById("createDepartmentDialog").close();
+
         });
     }
   };
@@ -227,14 +230,19 @@ function ManagerHomePage() {
                     <tr className="font-title text-lg">
                       <th>Employee Name</th>
                       <th>Position</th>
+                      <th>Can be reassigned?</th>
+
                     </tr>
                   </thead>
                   <tbody>
                     {user.department &&
                     user.department.employees &&
                     user.department.employees.length > 0 ? (
-                      user.department.employees.map((emp) => {
-                        return <EmpList id={emp._id} name={emp.name}></EmpList>;
+                        user.department.employees.map((emp) => {
+                          if (emp.accountType != 'manager') {
+                          
+                            return <EmpList id={emp._id} name={emp.name} position={emp.positionTitle} excess={emp.excess}></EmpList>;
+                          }
                       })
                     ) : (
                       <p>No positions yet</p>
@@ -283,20 +291,25 @@ function ManagerHomePage() {
                   </button>
                 </div>
                 <div className="grid lg:grid-cols-3 justify-around gap-4 mt-4">
+                  {}
                   {user.department &&
                   user.department.positions &&
                   user.department.positions.length > 0 ? (
-                    user.department.positions.map((position, index) => (
-                      <PositionCard
-                        key={index}
-                        id={position._id}
-                        Position={position.title}
-                        Department={user.department.name}
-                        Experience={position.experienceYears}
-                        skills={position?.skills || ''}
-
-                      />
-                    ))
+                      user.department.positions.map((position, index) => {
+                        if (!position.status) {
+                          return ( <PositionCard
+                            key={index}
+                            id={position._id}
+                            Position={position.title}
+                            Department={user.department.name}
+                            Experience={position.experienceYears}
+                            skills={position?.skills || ''}
+    
+                          />)
+                        }
+                      }
+                     
+                      )
                   ) : (
                     <p>No positions yet</p>
                   )}
@@ -324,18 +337,7 @@ function ManagerHomePage() {
      
 
                 />
-                <label className="font-title text-accent font-bold">
-                  Department Name:
-                </label>
-                <input
-                  type="text"
-                  value={newDepartment}
-                  onChange={(e) => setNewDepartment(e.target.value)}
-
-                  className="input input-bordered p-2 mt-2 w-full"
-
-                 
-                />
+               
                 <label className="font-title text-accent font-bold">
                   Estimated Salary:
                 </label>

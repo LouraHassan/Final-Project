@@ -28,7 +28,7 @@ function PositionCard({ Position, Department, Experience, onEdit, id, skills }) 
         <div className="flex flex-wrap my-4 items-center">
           <p>Skills: </p>
           {skills && skills.map(skill => {
-            return (<SkillTip text={skill}></SkillTip>)
+            return (<SkillTip text={skill}   editMode={true}></SkillTip>)
           })}
         
         </div>

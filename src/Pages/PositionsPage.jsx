@@ -3,32 +3,43 @@ import Nav from "../Components/Nav";
 import SkillTip from "../Components/SkillTip";
 import PositionCard from "../Components/PositionCard";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import EmpCard from "../Components/EmpCard";
 const positionAPI = `http://localhost:3000/position/`;
-const allPositionsAPI = `http://localhost:3000/position/department/${localStorage.getItem("department")}`;
-const SkillsOptionsAPI = `http://localhost:3000/skills`
-
+const allPositionsAPI = `http://localhost:3000/position/department/${localStorage.getItem(
+  "department"
+)}`;
+const SkillsOptionsAPI = `http://localhost:3000/skills`;
+const deletePositionAPI = `http://localhost:3000/position/`;
 const updateAPI = `http://localhost:3000/position/`;
+const bestEmpAPI = `http://localhost:3000/chat/`;
 function PositionsPage() {
+  console.log(localStorage.getItem("department"));
+
+  const navigate = useNavigate();
   const { id } = useParams();
+  const accountType = localStorage.getItem("accountType");
+  const [isManager, setIsManager] = useState(accountType == "manager");
   const [position, setPosition] = useState([]);
   const [positionArr, setPositionArr] = useState([]);
   const [open, setOpen] = useState(false);
   const [jobType, setJobType] = useState("");
   const [editMode, setEditMode] = useState(true);
   const [skillsArr, setSkillsArr] = useState([]);
+  const [bestEmp, setBestEmp] = useState([]);
   const [editModeInput, setEditModeInput] = useState(
     "bg-transparent text-black"
   );
   const [editModeSelect, setEditModeSelect] = useState("bg-transparent");
-  const [skillsOptions, setSkillsOptions] = useState([])
+  const [skillsOptions, setSkillsOptions] = useState([]);
   const [skillInput, setSkillInput] = useState("");
 
   useEffect(() => {
     getPosition();
     getAllPositions();
-    getOptions()
+    getOptions();
+    getBestEmp();
   }, [id]);
 
   useEffect(() => {
@@ -50,10 +61,17 @@ function PositionsPage() {
   };
 
   const getOptions = () => {
-    axios.get(SkillsOptionsAPI).then(res => {
-  setSkillsOptions(res.data.skills)
-})
-  }
+    axios.get(SkillsOptionsAPI).then((res) => {
+      setSkillsOptions(res.data.skills);
+    });
+  };
+
+  const getBestEmp = () => {
+    axios.get(bestEmpAPI + id).then((res) => {
+      console.log(res);
+      setBestEmp(res.data);
+    });
+  };
   const editAction = () => {
     setEditMode(false);
     setEditModeInput("input input-bordered");
@@ -67,7 +85,21 @@ function PositionsPage() {
     setJobType(position.jobType);
     setSkillsArr(position.skills);
   };
-  const deleteAction = () => {};
+  const deleteAction = () => {
+    axios
+      .delete(
+        deletePositionAPI + id + `?company=${localStorage.getItem("company")}`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate(`/Manager/${localStorage.getItem("accountId")}`);
+      });
+  };
   const saveEditAction = () => {
     axios
       .put(
@@ -101,25 +133,30 @@ function PositionsPage() {
             <h1 className="font-title font-bold text-secondary text-[4vh]">
               {position.title}
             </h1>
-            <svg
-              onClick={editAction}
-              // onClick={() => setOpen(true)}
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="icon icon-tabler icons-tabler-outline icon-tabler-edit"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-              <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-              <path d="M16 5l3 3" />
-            </svg>
+            {isManager ? (
+              <svg
+                onClick={editAction}
+                // onClick={() => setOpen(true)}
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-edit"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                <path d="M16 5l3 3" />
+              </svg>
+            ) : (
+              <></>
+            )}
+
             {open && (
               <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-60  ">
                 <div className="bg-white p-6 rounded-lg w-[45%] h-[%]">
@@ -238,17 +275,25 @@ function PositionsPage() {
             <p>
               <span className="font-bold font-title text-[2.8vh]">Skills:</span>{" "}
             </p>
-            <select name="skills" value={skillInput} onChange={(e) => {
-                     const selectedSkill = e.target.value;
-                    setSkillInput(selectedSkill)
-                    setSkillInput('')
-                    return(<SkillTip text={selectedSkill}></SkillTip>)
-                  }} className="select select-bordered">
-                    {skillsOptions.map(skill => {
-                      return (<option value={skill}>{skill}</option>)
-                  })}
-                    <option value=""></option>
-                  </select>
+            <select
+              name="skills"
+              value={skillInput}
+              onChange={(e) => {
+                const selectedSkill = e.target.value;
+                setSkillInput(selectedSkill);
+
+                if (selectedSkill) {
+                  setSkillsArr((prevSkills) => [selectedSkill, ...prevSkills]);
+                  setSkillInput("");
+                }
+              }}
+              className={editMode ? `hidden` : `select select-bordered`}
+            >
+              {skillsOptions.map((skill) => {
+                return <option value={skill}>{skill}</option>;
+              })}
+              <option value=""></option>
+            </select>
             {skillsArr &&
               skillsArr.map((skill) => {
                 const handleDelete = () => {
@@ -271,13 +316,40 @@ function PositionsPage() {
             >
               cancel
             </button>
-            <button
-              onClick={deleteAction}
+            {!position.status ? (
+              <button
+                onClick={() =>
+                  document.getElementById("deletePositionDialog").showModal()
+                }
+                className="btn btn-outline btn-error btn-sm"
+              >
+                Delete
+              </button>
+            ) : (
+              <></>
+            )}
+            {/* <button
+              onClick={()=>document.getElementById('deletePositionDialog').showModal()}
               className="btn btn-outline btn-error btn-sm"
             >
               Delete
-            </button>
-
+            </button> */}
+            <dialog id="deletePositionDialog" className="modal">
+              <div className="modal-box">
+                <form method="dialog">
+                  <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                    ✕
+                  </button>
+                </form>
+                <h3 className="font-bold text-lg">Deleting Position</h3>
+                <p className="py-4">
+                  Are you sure from deleting this position?
+                </p>
+                <button className="btn btn-error" onClick={deleteAction}>
+                  Delete Position
+                </button>
+              </div>
+            </dialog>
             <button
               onClick={saveEditAction}
               className="btn btn-secondary btn-sm"
@@ -304,6 +376,32 @@ function PositionsPage() {
           })}
         </div>
       </div>
+      {!isManager ? (
+        <div className="lg:w-[80vw] p-10">
+          <p>Best match employees</p>
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+            {bestEmp &&
+              bestEmp.map((emp, index) => {
+                return (
+                  <EmpCard
+                    key={index}
+                    id={emp._id}
+                    positionId={position?._id}
+                    name={emp.name}
+                    years={emp.yearsOfExperience}
+                    skills={emp.skills}
+                    pPosition={emp.positionTitle}
+                    nPosition={position.title}
+                    department={position?.department?.name}
+                    manager={position?.department?.manager?.name}
+                  ></EmpCard>
+                );
+              })}
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
