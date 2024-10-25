@@ -48,7 +48,7 @@ const Router = createBrowserRouter([
        element: <ManagerHomePage/>
 },
 {
-       path: '/Position',
+       path: '/Position/:id',
        element: <PositionsPage/>
 },
 {

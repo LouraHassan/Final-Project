@@ -25,6 +25,8 @@ function Login() {
           localStorage.setItem("accountType", res.data.accountType);
           localStorage.setItem("company", res.data.company);
           localStorage.setItem("token", res.data.token);
+          localStorage.setItem("department", res.data.department._id);
+
           if (res.data.accountType === "admin") {
             navigate(`/admin/${res.data.id}`);
           } else if (res.data.accountType === 'manager') {

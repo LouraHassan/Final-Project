@@ -12,6 +12,8 @@ const [isAdmin, setIsAdmin] = useState(accountType == 'admin')
     localStorage.removeItem("accountType");
     localStorage.removeItem("company");
     localStorage.removeItem("token");
+    localStorage.removeItem("department");
+
     navigate(`/`)
   }
   return (

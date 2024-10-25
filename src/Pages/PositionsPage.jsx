@@ -1,12 +1,97 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Nav from "../Components/Nav";
 import SkillTip from "../Components/SkillTip";
 import PositionCard from "../Components/PositionCard";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+const positionAPI = `http://localhost:3000/position/`;
+const allPositionsAPI = `http://localhost:3000/position/department/${localStorage.getItem("department")}`;
+const SkillsOptionsAPI = `http://localhost:3000/skills`
 
+const updateAPI = `http://localhost:3000/position/`;
 function PositionsPage() {
+  const { id } = useParams();
+  const [position, setPosition] = useState([]);
+  const [positionArr, setPositionArr] = useState([]);
   const [open, setOpen] = useState(false);
+  const [jobType, setJobType] = useState("");
+  const [editMode, setEditMode] = useState(true);
+  const [skillsArr, setSkillsArr] = useState([]);
+  const [editModeInput, setEditModeInput] = useState(
+    "bg-transparent text-black"
+  );
+  const [editModeSelect, setEditModeSelect] = useState("bg-transparent");
+  const [skillsOptions, setSkillsOptions] = useState([])
+  const [skillInput, setSkillInput] = useState("");
 
+  useEffect(() => {
+    getPosition();
+    getAllPositions();
+    getOptions()
+  }, [id]);
+
+  useEffect(() => {
+    setJobType(position.jobType);
+    setSkillsArr(position.skills);
+  }, [position]);
+  const getPosition = () => {
+    axios.get(positionAPI + id).then((res) => {
+      console.log(res);
+      setPosition(res.data);
+    });
+  };
+
+  const getAllPositions = () => {
+    axios.get(allPositionsAPI).then((res) => {
+      console.log(res);
+      setPositionArr(res.data);
+    });
+  };
+
+  const getOptions = () => {
+    axios.get(SkillsOptionsAPI).then(res => {
+  setSkillsOptions(res.data.skills)
+})
+  }
+  const editAction = () => {
+    setEditMode(false);
+    setEditModeInput("input input-bordered");
+    setEditModeSelect("select select-bordered");
+  };
+
+  const cancelEditAction = () => {
+    setEditMode(true);
+    setEditModeInput("bg-transparent");
+    setEditModeSelect("bg-transparent");
+    setJobType(position.jobType);
+    setSkillsArr(position.skills);
+  };
+  const deleteAction = () => {};
+  const saveEditAction = () => {
+    axios
+      .put(
+        updateAPI + id + `?company=${localStorage.getItem("company")}`,
+        {
+          jobType: jobType,
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        setEditMode(true);
+      });
+  };
+
+  const handleDelete2 = (skillToDelete) => {
+    setSkillsArr((prevSkills) =>
+      prevSkills.filter((skill) => skill !== skillToDelete)
+    );
+  };
   return (
     <div>
       <Nav />
@@ -14,10 +99,11 @@ function PositionsPage() {
         <div className="flex flex-col w-[70%] bg-white h-auto justify-around border shadow-2xl p-6 max-md:w-[90%] ">
           <div className="flex justify-between">
             <h1 className="font-title font-bold text-secondary text-[4vh]">
-              Senior Project Manager
+              {position.title}
             </h1>
-            {/* <svg
-              onClick={() => setOpen(true)}
+            <svg
+              onClick={editAction}
+              // onClick={() => setOpen(true)}
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -33,7 +119,7 @@ function PositionsPage() {
               <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
               <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
               <path d="M16 5l3 3" />
-            </svg> */}
+            </svg>
             {open && (
               <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-60  ">
                 <div className="bg-white p-6 rounded-lg w-[45%] h-[%]">
@@ -95,89 +181,127 @@ function PositionsPage() {
               <span className="font-bold font-title text-[2.8vh]">
                 Department:{" "}
               </span>
-              HR
+              {position?.department?.name}
             </h2>
             <h2 className="font-text ">
               <span className="font-bold font-title text-[2.8vh]">
                 Job Type:{" "}
-              </span>{" "}
-              Full-Time
+              </span>
+              <select
+                name=""
+                id=""
+                value={jobType}
+                onChange={(e) => setJobType(e.target.value)}
+                className={editModeSelect}
+                disabled={editMode}
+                style={
+                  editMode
+                    ? {
+                        color: "black",
+                        opacity: 1,
+                        appearance: "none",
+                        WebkitAppearance: "none",
+                        MozAppearance: "none",
+                        background: "none",
+                        paddingRight: "1rem",
+                      }
+                    : {}
+                }
+              >
+                <option value={"Not-specified"}>Select type</option>
+                <option value={"Full-Time"}> Full-Time</option>
+                <option value={"Part-Time"}>Part-Time</option>
+              </select>
             </h2>
             <h2 className="font-text ">
               <span className="font-bold font-title text-[2.8vh]">
                 Experience:
               </span>{" "}
-              2 years
+              {position.experienceYears} years
             </h2>
             <h2 className="font-text ">
               <span className="font-bold font-title text-[2.8vh]">
                 Estimated Salary:{" "}
               </span>{" "}
-              16,000 SR
+              {position.expectedSalary} SR
             </h2>
           </div>
           <h2 className="font-title text-accent text-[3vh]">Job overview</h2>
-          <p className="font-text w-[90%]">
-            We are looking for a highly skilled and experienced Senior Project
-            Manager to lead complex projects from initiation to completion. The
-            Senior Project Manager will be responsible for overseeing project
-            teams, ensuring that all project objectives are met, managing risks,
-            and maintaining communication with stakeholders. This role requires
-            exceptional leadership, organizational, and communication skills,
-            along with the ability to manage multiple projects simultaneously.
-          </p>
+          <p className="font-text w-[90%]">{position.description}</p>
           <h1 className="font-title text-accent text-[3vh]">
             Key Responsibilities
           </h1>
 
-          <p className="font-text w-[90%]">
-            <span className="font-bold text-[2.3vh]">
-              Lead Project Planning:
-            </span>
-            Define project scope, goals, deliverables, and success criteria.
-            Develop detailed project plans, timelines, and budgets.
-          </p>
-          <p className="font-text w-[90%]">
-            <span className="font-bold text-[2.3vh]">
-              Stakeholder Management:
-            </span>
-            Engage with internal and external stakeholders to set expectations,
-            provide updates, and manage feedback throughout the project
-            lifecycle.
-          </p>
-          <p className="font-text w-[90%]">
-            <span className="font-bold text-[2.3vh]">Resource Management:</span>
-            Assign tasks, manage workloads, and ensure optimal utilization of
-            team resources.
-          </p>
-          <p className="font-text w-[90%]">
-            <span className="font-bold text-[2.3vh]">Risk Management:</span>{" "}
-            Identify project risks, develop mitigation strategies, and implement
-            risk control measures to minimize disruptions.
-          </p>
-          <p className="font-text w-[90%]">
-            <span className="font-bold text-[2.3vh]">Monitor Progress: </span>{" "}
-            Track project performance, ensuring that milestones are met on time
-            and within budget. Adjust plans as necessary to address roadblocks
-            or changes in project scope.
-          </p>
+          <p className="font-text w-[90%]">{position.requirments}</p>
+
           <div className="flex flex-wrap my-4 items-center">
             <p>
               <span className="font-bold font-title text-[2.8vh]">Skills:</span>{" "}
             </p>
-            <SkillTip text="Critical-thinking"></SkillTip>
-            <SkillTip text="team-work"></SkillTip>
-            <SkillTip text="Critical-thinking"></SkillTip>
-            <SkillTip text="Critical-thinking"></SkillTip>
-            <SkillTip text="Critical-thinking"></SkillTip>
-          </div>
+            <select name="skills" value={skillInput} onChange={(e) => {
+                     const selectedSkill = e.target.value;
+                    setSkillInput(selectedSkill)
+                    setSkillInput('')
+                    return(<SkillTip text={selectedSkill}></SkillTip>)
+                  }} className="select select-bordered">
+                    {skillsOptions.map(skill => {
+                      return (<option value={skill}>{skill}</option>)
+                  })}
+                    <option value=""></option>
+                  </select>
+            {skillsArr &&
+              skillsArr.map((skill) => {
+                const handleDelete = () => {
+                  handleDelete2(skill);
+                };
 
+                return (
+                  <SkillTip
+                    text={skill}
+                    onDelete={handleDelete}
+                    editMode={editMode}
+                  ></SkillTip>
+                );
+              })}
+          </div>
+          <div className={`self-end ${editMode ? "hidden" : ""}`}>
+            <button
+              onClick={cancelEditAction}
+              className="btn btn-outline btn-accent btn-sm"
+            >
+              cancel
+            </button>
+            <button
+              onClick={deleteAction}
+              className="btn btn-outline btn-error btn-sm"
+            >
+              Delete
+            </button>
+
+            <button
+              onClick={saveEditAction}
+              className="btn btn-secondary btn-sm"
+            >
+              Save
+            </button>
+          </div>
           <br></br>
         </div>
         <div className="flex flex-col max-md:justify-center max-md:items-center gap-3 m-4 max-md:w-[90%] px-3">
-          <PositionCard />
-          <PositionCard />
-          <PositionCard />
+          {positionArr.map((el, index) => {
+            if (el._id != position._id) {
+              return (
+                <PositionCard
+                  key={index}
+                  id={el._id}
+                  Position={el.title}
+                  Department={el.department.name}
+                  Experience={el.experienceYears}
+                  skills={el?.skills || ""}
+                ></PositionCard>
+              );
+            }
+          })}
         </div>
       </div>
     </div>

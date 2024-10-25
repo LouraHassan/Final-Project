@@ -5,16 +5,19 @@ import DepCard from "../Components/DepCard";
 import EmpList from "../Components/EmpList";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import SkillTip from "../Components/SkillTip";
 const AccountsAPI = `http://localhost:3000/account/`;
-const AddPositionAPI = `http://localhost:3000/position?company=${localStorage.getItem(
-  "company"
-)}`;
+const AddPositionAPI = `http://localhost:3000/position?company=${localStorage.getItem("company")}`;
+const SkillsOptionsAPI = `http://localhost:3000/skills`
+const createAccountsAPI = `http://localhost:3000/createAccount/manager?company=${localStorage.getItem('company')}`
+
 function ManagerHomePage() {
   const { id } = useParams();
   const [user, setUser] = useState([]);
-
+  const [skillsOptions, setSkillsOptions] = useState([])
   useEffect(() => {
     getUser();
+    getOptions()
   }, []);
   const getUser = () => {
     axios
@@ -29,6 +32,44 @@ function ManagerHomePage() {
       });
   };
 
+  const getOptions = () => {
+    axios.get(SkillsOptionsAPI).then(res => {
+  setSkillsOptions(res.data.skills)
+})
+  }
+
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [position, setPosition] = useState('')
+
+
+  const CreateEmployee = () => {
+    if (name == '' || email == '' || password == '' || position == '') {
+        setWarningText('')
+    } else {
+        axios.post(createAccountsAPI, {
+            name: name,
+            positionTitle: position,
+            email: email,
+            password: password,
+          accountType: 'employee',
+          department: user.department
+        }, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+              }
+        }).then(res => {
+          setName('')
+          setPosition('')
+            setEmail('')
+          setPassword('')
+          console.log(res); 
+          getUser();
+          document.getElementById("employeeAccountDialog").close();
+        })
+    }
+}
   const [positions, setPositions] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [experience, setExperience] = useState([]);
@@ -36,7 +77,9 @@ function ManagerHomePage() {
   const [newDepartment, setNewDepartment] = useState("");
   const [newExperience, setNewExperience] = useState("");
   const [jobType, setJobType] = useState("");
-const [skills, setSkills] = useState([])
+  const [skillInput, setSkillInput] = useState("");
+  const [skills, setSkills] = useState([]);
+
   const [newSalary, setNewSalary] = useState("");
   const [newKey, setNewKey] = useState("");
   const [newOverview, setNewOverview] = useState("");
@@ -115,6 +158,7 @@ const [skills, setSkills] = useState([])
             experienceYears: newExperience,
             requirments: newKey,
             jobType: jobType,
+            skills: skills
           },
           {
             headers: {
@@ -124,9 +168,23 @@ const [skills, setSkills] = useState([])
         )
         .then((res) => {
           console.log(res);
+          setNewPosition('')
+          setNewExperience('')
+          setNewExperience('')
+          setNewKey('')
+          setNewOverview('')
+          setSkills([])
         });
     }
   };
+
+  const addSkillAction = () => {
+    if (skillInput != '') {
+      
+      setSkills([skillInput, ...skills])
+      setSkillInput('')
+    }
+  }
   return (
     <div>
       <Nav />
@@ -149,18 +207,18 @@ const [skills, setSkills] = useState([])
             </div>
             <div className="flex flex-col justify-center">
               <h2 className="font-title mt-4 text-center w-[40vh] text-white font-bold text-[4vh]">
-                {user.name}
+                {user?.name}
               </h2>
               <div className="mt-3 ml-3">
                 <h1 className="font-text text-accent text-center">
-                  {user.department.name}
+                  {user?.department?.name}
                 </h1>
               </div>
             </div>
           </div>
           <div className="flex flex-col w-[75%] mt-10">
             <h2 className="font-title font-bold text-[3vh] text-secondary ml-5">
-              Number of employees:{user.department.employees?.length || 0}
+              Number of employees:{user?.department?.employees?.length || 0}
             </h2>
             <div className="flex justify-center">
               <div className="overflow-x-auto lg:w-[80vw] bg-slate-100 lg:self-center lg:m-4 shadow-md shadow-gray-300 rounded-lg">
@@ -172,39 +230,46 @@ const [skills, setSkills] = useState([])
                     </tr>
                   </thead>
                   <tbody>
-                    {user.department.employees.map(emp => {
-                      return(<EmpList id={emp._id} name={emp.name}></EmpList>)
-                    })}
-                    <EmpList
-                      id="1"
-                      name="Ahmed Alghamdi"
-                      position="Business Analyst"
-                    ></EmpList>
-                    <EmpList
-                      id="1"
-                      name="Ahmed Alghamdi"
-                      position="Business Analyst"
-                    ></EmpList>
-                    <EmpList
-                      id="1"
-                      name="Ahmed Alghamdi"
-                      position="Business Analyst"
-                    ></EmpList>
-                    <EmpList
-                      id="1"
-                      name="Ahmed Alghamdi"
-                      position="Business Analyst"
-                    ></EmpList>
-                    <EmpList
-                      id="1"
-                      name="Ahmed Alghamdi"
-                      position="Business Analyst"
-                    ></EmpList>
+                    {user.department &&
+                    user.department.employees &&
+                    user.department.employees.length > 0 ? (
+                      user.department.employees.map((emp) => {
+                        return <EmpList id={emp._id} name={emp.name}></EmpList>;
+                      })
+                    ) : (
+                      <p>No positions yet</p>
+                    )}
+                  
                   </tbody>
                 </table>
               </div>
             </div>
-            <div className="flex justify-around   w-[100%] ">
+            <button
+            className="btn btn-outline btn-secondary self-start my-2"
+            onClick={() =>
+              document.getElementById("employeeAccountDialog").showModal()
+            }
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              className="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+              <path d="M16 19h6" />
+              <path d="M19 16v6" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+            </svg>
+            Create Employee account
+          </button>            <div className="flex justify-around   w-[100%] ">
               <div className="flex flex-col justify-around pt-10 pb-10 w-[96%] max-md:w-[90%]">
                 <div className="flex justify-between w-[97%]">
                   <h1 className="font-title font-bold text-[3vh] text-secondary">
@@ -224,13 +289,16 @@ const [skills, setSkills] = useState([])
                     user.department.positions.map((position, index) => (
                       <PositionCard
                         key={index}
+                        id={position._id}
                         Position={position.title}
                         Department={user.department.name}
                         Experience={position.experienceYears}
+                        skills={position?.skills || ''}
+
                       />
                     ))
                   ) : (
-                    <p>No positions available</p>
+                    <p>No positions yet</p>
                   )}
                 </div>
               </div>
@@ -287,7 +355,7 @@ const [skills, setSkills] = useState([])
                     onChange={(e) => setJobType(e.target.value)}
                     className="select select-bordered"
                   >
-                  <option value={"Not-specified"}>Select type</option>
+                    <option value={"Not-specified"}>Select type</option>
                     <option value={"Full-Time"}> Full-Time</option>
                     <option value={"Part-Time"}>Part-Time</option>
                   </select>
@@ -307,6 +375,26 @@ const [skills, setSkills] = useState([])
                     onChange={(e) => setNewOverview(e.target.value)}
                     className="textarea resize-none textarea-bordered  textarea-lg max-w-m"
                   ></textarea>
+                  <select name="skills" value={skillInput} onChange={(e) => {
+                     const selectedSkill = e.target.value;
+                    setSkillInput(selectedSkill)
+                    setSkills([selectedSkill, ...skills])
+                    setSkillInput('')
+                
+                  }} className="select select-bordered">
+                    {skillsOptions.map(skill => {
+                      return (<option value={skill}>{skill}</option>)
+                  })}
+                    <option value=""></option>
+                  </select>
+                
+                 
+                  <div className="flex flex-wrap">
+                    
+                  {skills.map(el => {
+                    return(<SkillTip text={el}></SkillTip>)
+                  })}
+                  </div>
                 </div>
                 <p>{warningText}</p>
                 <div className="flex justify-end mt-4">
@@ -328,6 +416,50 @@ const [skills, setSkills] = useState([])
           )}
         </div>
       </div>
+      <dialog id="employeeAccountDialog" className="modal">
+            <div className="modal-box flex flex-col items-center">
+              <form method="dialog">
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                  ✕
+                </button>
+              </form>
+              <h3 className="font-bold text-lg">Creating Employee Account</h3>
+                          <div className=" flex flex-col items-center m-5 ">
+                              <label className="form-control w-full max-w-xs">
+  <div className="label">
+    <span className="label-text">Name</span>
+  </div>
+  <input value={name} onChange={(e) => setName(e.target.value)} type="text" className="input input-bordered w-full " />
+ 
+                  </label>
+                
+                  <label className="form-control w-full max-w-xs">
+  <div className="label">
+    <span className="label-text">Position</span>
+  </div>
+  <input value={position} onChange={(e) => setPosition(e.target.value)} type="text" className="input input-bordered w-full max-w-xs" />
+ 
+                              </label>
+                              <label className="form-control w-full max-w-xs">
+  <div className="label">
+    <span className="label-text">Email</span>
+  </div>
+  <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" className="input input-bordered w-full max-w-xs" />
+ 
+                  </label>
+                  <label className="form-control w-full max-w-xs">
+  <div className="label">
+    <span className="label-text">Password</span>
+  </div>
+  <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="input input-bordered w-full max-w-xs" />
+ 
+                              </label>
+                              <form method="dialog">
+                <button onClick={CreateEmployee} className="btn btn-secondary btn-wide m-4">Create account</button>
+      </form>
+              </div>
+            </div>
+          </dialog>
     </div>
   );
 }
