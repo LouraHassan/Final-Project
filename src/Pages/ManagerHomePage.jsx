@@ -250,7 +250,11 @@ const [skills, setSkills] = useState([])
                   type="text"
                   value={newPosition}
                   onChange={(e) => setNewPosition(e.target.value)}
+
                   className="input input-bordered p-2 mt-2 w-full"
+
+     
+
                 />
                 <label className="font-title text-accent font-bold">
                   Department Name:
@@ -259,7 +263,10 @@ const [skills, setSkills] = useState([])
                   type="text"
                   value={newDepartment}
                   onChange={(e) => setNewDepartment(e.target.value)}
+
                   className="input input-bordered p-2 mt-2 w-full"
+
+                 
                 />
                 <label className="font-title text-accent font-bold">
                   Estimated Salary:
@@ -268,7 +275,9 @@ const [skills, setSkills] = useState([])
                   type="text"
                   value={newSalary}
                   onChange={(e) => setNewSalary(e.target.value)}
+
                   className="input input-bordered p-2 mt-2 w-full"
+
                 />
                 <label className="font-title text-accent font-bold">
                   Experience Years:
@@ -277,7 +286,9 @@ const [skills, setSkills] = useState([])
                   type="text"
                   value={newExperience}
                   onChange={(e) => setNewExperience(e.target.value)}
+
                   className="input input-bordered p-2 mt-2 w-full"
+
                 />
                 <div className="flex flex-col justify-around h-[35vh]">
                   <select
