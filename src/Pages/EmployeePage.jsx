@@ -14,6 +14,7 @@ function EmployeePage() {
     "We are looking for a highly skilled and experienced Senior Project Manager to lead complex projects from initiation to completion. The Senior Project Manager will be responsible for overseeing project teams, ensuring that all project objectives are met, managing risks, and maintaining communication with stakeholders. This role requires exceptional leadership, organizational, and communication skills, along with the ability to manage multiple projects simultaneously."
   );
 const textareaRef = useRef(null)
+const textareaRef2 = useRef(null)
   const [yearsStyle, setYearsStyle] = useState("bg-transparent ");
   const [aboutStyle, setAboutStyle] = useState("bg-transparent ");
   const [educationStyle, setEducationStyle] = useState("bg-transparent ");
@@ -29,6 +30,13 @@ const textareaHeight = () => {
   if(textarea){
     textarea.style.height = 'auto',
 textarea.style.height = `${textarea.scrollHeight}px`
+  }
+}
+const textareaHeight2 = () => {
+  const textarea2 = textareaRef2.current;
+  if(textarea2){
+    textarea2.style.height = 'auto',
+textarea2.style.height = `${textarea2.scrollHeight}px`
   }
 }
   return (
@@ -263,10 +271,16 @@ textarea.style.height = `${textarea.scrollHeight}px`
 
           <h2 className="font-title text-accent text-[3vh]">Education</h2>
           <textarea
+           ref={textareaRef2}
+           rows={4}
             value={education}
-            onChange={(e) => setEducation(e.target.value)}
+            onChange={(e) =>{
+              setEducation(e.target.value)
+              textareaHeight2()
+            } }
             className={educationStyle}
             disabled={editmood}
+            style={{ resize:'none'}}
           ></textarea>
 
           <div className="flex flex-wrap my-4 items-center mt-7">
