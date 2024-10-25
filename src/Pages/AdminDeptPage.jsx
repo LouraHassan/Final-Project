@@ -63,7 +63,7 @@ function AdminDeptPage() {
             </div>
             <div className={`flex flex-col items-center m-2`}>
               <p>Shortage</p>
-              <p className="text-error">{department.positions?.length || 0}</p>
+              <p className="text-error">{department.positions ?  department.positions.filter(position => position.status === false).length : 0}</p>
             </div>
             <div className={`flex flex-col items-center m-2`}>
               <p>Surplus</p>
@@ -83,7 +83,12 @@ function AdminDeptPage() {
             <tbody>
               {department.employees?.length > 0 ? (
                 department.employees.map((employee) => {
-                  return <EmpList key={employee._id} name={employee.name} position={employee.positionTitle || 'position not defined'} />;
+                  if (employee.accountType !== 'manager') {
+                    if(!employee.excess){
+
+                      return <EmpList key={employee._id} name={employee.name} position={employee.positionTitle || 'position not defined'} />;
+                    }
+                  }
                 })
               ) : (
                 <p>No employees available</p>
@@ -92,6 +97,8 @@ function AdminDeptPage() {
             </tbody>
           </table>
         </div>
+        <div className={department.positions?.filter(position => position.status === false).length == 0 ? 'hidden': ''}>
+
         <p className="text-xl font-title font-bold text-secondary">
           Needed Positions
         </p>
@@ -107,20 +114,47 @@ function AdminDeptPage() {
                   Department={department.name}
                   Experience={position.experienceYears}
                   skills={position?.skills || ''}
-                ></PositionCard>)
-             }
-            })}
+                  ></PositionCard>)
+                }
+              })}
             {/* <PositionCard></PositionCard>
             <PositionCard></PositionCard>
             <PositionCard></PositionCard>
             <PositionCard></PositionCard> */}
           </div>
         </div>
+            </div>
+          {department.employees?.filter(employee => employee.excess == true).length > 0 ? 
         <div className="my-8 flex flex-col lg:items-start w-full ">
           <p className="text-xl font-title font-bold text-secondary my-2">
             Employees who may be reassigned
           </p>
-          <div className="overflow-x-auto w-full md:w-[80vw] bg-white md:self-center md:m-4 shadow-md shadow-gray-300 rounded-lg">
+              <div className="overflow-x-auto w-full md:w-[80vw] bg-white md:self-center md:m-4 shadow-md shadow-gray-300 rounded-lg">
+              <table className="table">
+                <thead>
+                  <tr className="font-title text-lg">
+                    <th>Employee Name</th>
+                    <th>Position</th>
+                  </tr>
+                </thead>
+                <tbody>
+              {department.employees?.length > 0 ? (
+                department.employees.map((employee) => {
+                  
+                  if(employee.excess){
+                    return <EmpList key={employee._id} name={employee.name} position={employee.positionTitle || 'position not defined'} />;
+                  }
+                })
+              ) : (
+                <p>No employees available</p>
+              )}
+               
+                </tbody>
+              </table>
+              </div>
+            </div> : <></>
+          }
+          {/* <div className="overflow-x-auto w-full md:w-[80vw] bg-white md:self-center md:m-4 shadow-md shadow-gray-300 rounded-lg">
             <table className="table">
               <thead>
                 <tr className="font-title text-lg">
@@ -129,20 +163,20 @@ function AdminDeptPage() {
                 </tr>
               </thead>
               <tbody>
-                <EmpList
-                  id="1"
-                  name="Ahmed Alghamdi"
-                  position="Business Analyst"
-                ></EmpList>
-                <EmpList
-                  id="1"
-                  name="Ahmed Alghamdi"
-                  position="Business Analyst"
-                ></EmpList>
+            {department.employees?.length > 0 ? (
+                department.employees.map((employee) => {
+                 
+                    if(employee.excess){
+                      return <EmpList key={employee._id} name={employee.name} position={employee.positionTitle || 'position not defined'} />;
+                  }
+                })
+              ) : (
+                <p>No employees available</p>
+              )}
+             
               </tbody>
             </table>
-          </div>
-        </div>
+          </div> */}
       </div>
     </div>
   );

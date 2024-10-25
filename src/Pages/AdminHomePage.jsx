@@ -30,7 +30,6 @@ export default function AdminHomePage() {
   const [employeeArr, setEmployeeArr] = useState([]);
   const [departmentArr, setDepartmentsArr] = useState([]);
 
-  const [selectedEmployees, setSelectedEmployees] = useState([]);
 
   //? for creating manager account
   const [name, setName] = useState("");
@@ -221,8 +220,8 @@ export default function AdminHomePage() {
                   name={dept.name}
                   manager={dept.manager?.name || "No manager"}
                   employees={dept.employees?.length || 0}
-                  shortage={dept.positions?.length || 0}
-                  surplus={dept.neededEmployees?.length || 0}
+                  shortage={dept.positions ?  dept.positions.filter(position => position.status === false).length : 0 }
+                  surplus={dept.surplusCount || 0}
                 ></DepCard>
               );
             })}
