@@ -7,7 +7,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import EmpCard from "../Components/EmpCard";
 const positionAPI = `http://localhost:3000/position/`;
-const allPositionsAPI = `http://localhost:3000/position/department/${localStorage.getItem(
+const allPositionsAPI = `http://localhost:3000/position/department/${sessionStorage.getItem(
   "department"
 )}`;
 const SkillsOptionsAPI = `http://localhost:3000/skills`;
@@ -15,11 +15,11 @@ const deletePositionAPI = `http://localhost:3000/position/`;
 const updateAPI = `http://localhost:3000/position/`;
 const bestEmpAPI = `http://localhost:3000/chat/`;
 function PositionsPage() {
-  console.log(localStorage.getItem("department"));
+  console.log(sessionStorage.getItem("department"));
 
   const navigate = useNavigate();
   const { id } = useParams();
-  const accountType = localStorage.getItem("accountType");
+  const accountType = sessionStorage.getItem("accountType");
   const [isManager, setIsManager] = useState(accountType == "manager");
   const [position, setPosition] = useState([]);
   const [positionArr, setPositionArr] = useState([]);
@@ -88,28 +88,28 @@ function PositionsPage() {
   const deleteAction = () => {
     axios
       .delete(
-        deletePositionAPI + id + `?company=${localStorage.getItem("company")}`,
+        deletePositionAPI + id + `?company=${sessionStorage.getItem("company")}`,
         {
           headers: {
-            Authorization: localStorage.getItem("token"),
+            Authorization: sessionStorage.getItem("token"),
           },
         }
       )
       .then((res) => {
         console.log(res);
-        navigate(`/Manager/${localStorage.getItem("accountId")}`);
+        navigate(`/Manager/${sessionStorage.getItem("accountId")}`);
       });
   };
   const saveEditAction = () => {
     axios
       .put(
-        updateAPI + id + `?company=${localStorage.getItem("company")}`,
+        updateAPI + id + `?company=${sessionStorage.getItem("company")}`,
         {
           jobType: jobType,
         },
         {
           headers: {
-            Authorization: localStorage.getItem("token"),
+            Authorization: sessionStorage.getItem("token"),
           },
         }
       )

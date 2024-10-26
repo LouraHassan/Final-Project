@@ -37,6 +37,7 @@ const textareaRef = useRef(null)
   const [skillInput, setSkillInput] = useState("");
   const [passwordChanged, setPasswordChanged] = useState()
   const [notifications, setNotifications] = useState([])
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getUser();
@@ -55,26 +56,35 @@ setPasswordChanged(user.passwordChanged)
   
   
   const getUser = () => {
+    setLoading(true);
     axios
-      .get(AccountsAPI + id + `?company=${localStorage.getItem("company")}`, {
+      .get(AccountsAPI + id + `?company=${sessionStorage.getItem("company")}`, {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: sessionStorage.getItem("token"),
         },
       })
       .then((res) => {
         console.log(res);
         setUser(res.data);
-      });
+      }).finally(() => {
+        setLoading(false);
+      })
   };
   const getOptions = () => {
+    setLoading(true);
     axios.get(SkillsOptionsAPI).then(res => {
   setSkillsOptions(res.data.skills)
+}).finally(() => {
+  setLoading(false);
 })
   }
   const getNotifications = () => {
+    setLoading(true);
     axios.get(notificationAPI).then(res => {
       console.log(res.data);
     setNotifications(res.data)
+  }).finally(() => {
+    setLoading(false);
   })
 }
 
@@ -110,6 +120,7 @@ textarea2.style.height = `${textarea2.scrollHeight}px`
     setSkillsArr(user.skills || []);
   };
   const saveEditAction = () => {
+    setLoading(true);
     axios.put(updateEmpAPI + id, {
       yearsOfExperience: years,
       aboutMe: about,
@@ -117,7 +128,7 @@ textarea2.style.height = `${textarea2.scrollHeight}px`
       skills: skillsArr
     }, {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: sessionStorage.getItem("token"),
       },
     }).then(res => {
     console.log(res);
@@ -125,6 +136,8 @@ textarea2.style.height = `${textarea2.scrollHeight}px`
       setYearsStyle("bg-transparent");
       setAboutStyle("bg-transparent");
       setEducationStyle("bg-transparent");
+  }).finally(() => {
+    setLoading(false);
   })
   };
 
@@ -135,6 +148,7 @@ textarea2.style.height = `${textarea2.scrollHeight}px`
   };
 
   const updatePasswordAction = () => {
+    setLoading(true);
     if (newPassword == '' || confirmPassword == '') {
   
     } else {
@@ -142,26 +156,38 @@ textarea2.style.height = `${textarea2.scrollHeight}px`
         user_password: newPassword,
       }, {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: sessionStorage.getItem("token"),
         },
       }).then(res => {
         console.log(res);
         document.getElementById("passwordDialog").close();
         getUser();
+      }).finally(() => {
+        setLoading(false);
       })
 }
   }
 
   const dismissAction = (reqId) => {
+    setLoading(true);
     axios.put(updateAPI+reqId, {
       accountId: id
   }).then(res => {
       console.log(res.data);
       getNotifications()
+  }).finally(() => {
+    setLoading(false);
   })
   }
   return (
     <div>
+         {loading ? (
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+        <span className="loading loading-dots bg-accent"></span>
+      </div>
+    </div>
+  ) : null}
       <Nav />
 
       <div className="flex  justify-center p-5 ">
@@ -279,7 +305,26 @@ textarea2.style.height = `${textarea2.scrollHeight}px`
           </div>
         </div>
         <div className="flex flex-col w-full">
-        {!passwordChanged?   <div role="alert" className="alert border-2 border-warning bg-white ">
+        {notifications.employees?.map(el => {
+        if (!el.isClosedByEmployee) {
+          const handleDismiss = () => {
+            dismissAction(el._id)
+
+          }
+          return (<NotificationCard text={`Your position has been update to ${el.newPosition}`} onDismiss={handleDismiss} style={'border-info'} icon={  <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            className="stroke-info h-6 w-6 shrink-0">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>} />)
+        }
+      })}
+        {!passwordChanged?   <div role="alert" className="alert border-2 border-warning m-2 bg-white ">
         <svg
     xmlns="http://www.w3.org/2000/svg"
     className="h-6 w-6 shrink-0 stroke-current text-warning"
@@ -503,15 +548,6 @@ textarea2.style.height = `${textarea2.scrollHeight}px`
           </div>
       </div>
       
-      {notifications.employees?.map(el => {
-        if (!el.isClosedByEmployee) {
-          const handleDismiss = () => {
-            dismissAction(el._id)
-
-          }
-          return (<NotificationCard text={el.employeeName} accountId={id} id={el._id} onDismiss={handleDismiss} />)
-        }
-      })}
     </div>
   );
 }

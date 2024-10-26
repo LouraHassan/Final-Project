@@ -3,4 +3,52 @@
 @tailwind components;
 @tailwind utilities;
 
+.custom-shape-divider-bottom-1729943384 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-bottom-1729943384 svg {
+    position: relative;
+    display: block;
+    width: calc(176% + 1.3px);
+    height: 320px;
+}
+
+.custom-shape-divider-bottom-1729943384 .shape-fill {
+    fill: #30475E;
+}
+
+
+.custom-shape-divider-bottom-1729945068 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-bottom-1729945068 svg {
+    position: relative;
+    display: block;
+    width: calc(274% + 1.3px);
+    height: 331px;
+}
+
+.custom-shape-divider-bottom-1729945068 .shape-fill {
+    fill: #30475E;
+}
+
+/** For mobile devices **/
+@media (max-width: 767px) {
+    .custom-shape-divider-bottom-1729945068 svg {
+        width: calc(274% + 1.3px);
+        height: 448px;
+    }
+}
 

@@ -8,19 +8,19 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const AccountsAPI = `http://localhost:3000/account/`;
-const createAccountsAPI = `http://localhost:3000/createAccount?company=${localStorage.getItem(
+const createAccountsAPI = `http://localhost:3000/createAccount?company=${sessionStorage.getItem(
   "company"
 )}`;
-const managersAPI = `http://localhost:3000/account/type/manager?company=${localStorage.getItem(
+const managersAPI = `http://localhost:3000/account/type/manager?company=${sessionStorage.getItem(
   "company"
 )}`;
-const employeeAPI = `http://localhost:3000/account/type/employee?company=${localStorage.getItem(
+const employeeAPI = `http://localhost:3000/account/type/employee?company=${sessionStorage.getItem(
   "company"
 )}`;
-const CreateDeptAPI = `http://localhost:3000/department?company=${localStorage.getItem(
+const CreateDeptAPI = `http://localhost:3000/department?company=${sessionStorage.getItem(
   "company"
 )}`;
-const DepartmentsAPI = `http://localhost:3000/department?company=${localStorage.getItem(
+const DepartmentsAPI = `http://localhost:3000/department?company=${sessionStorage.getItem(
   "company"
 )}`;
 export default function AdminHomePage() {
@@ -29,7 +29,7 @@ export default function AdminHomePage() {
   const [managerArr, setManagerArr] = useState([]);
   const [employeeArr, setEmployeeArr] = useState([]);
   const [departmentArr, setDepartmentsArr] = useState([]);
-
+  const [loading, setLoading] = useState(false);
 
   //? for creating manager account
   const [name, setName] = useState("");
@@ -38,6 +38,9 @@ export default function AdminHomePage() {
   const [position, setPosition] = useState("");
   const [department, setDepartment] = useState();
   const [warningText, setWarningText] = useState("");
+  const [warningText2, setWarningText2] = useState("");
+  const [warningText3, setWarningText3] = useState("");
+
   const [deptName, setDeptName] = useState("");
   const [manager, setManager] = useState("");
   useEffect(() => {
@@ -52,60 +55,73 @@ export default function AdminHomePage() {
   useEffect(() => {
     console.log(manager);
   }, [manager]);
-  const getUser = () => {
+    const getUser = () => {
+        setLoading(true);
     axios
-      .get(AccountsAPI + id + `?company=${localStorage.getItem("company")}`, {
+      .get(AccountsAPI + id + `?company=${sessionStorage.getItem("company")}`, {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: sessionStorage.getItem("token"),
         },
       })
       .then((res) => {
         setUser(res.data);
         console.log(res);
+      }).finally(() => {
+        setLoading(false);
       });
   };
-  const getManagers = () => {
+    const getManagers = () => {
+        setLoading(true);
     axios
       .get(managersAPI, {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: sessionStorage.getItem("token"),
         },
       })
       .then((res) => {
         console.log(res);
         setManagerArr(res.data);
+      }).finally(() => {
+        setLoading(false);
       });
   };
 
-  const getEmployee = () => {
+    const getEmployee = () => {
+        setLoading(true);
     axios
       .get(employeeAPI, {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: sessionStorage.getItem("token"),
         },
       })
       .then((res) => {
         console.log(res);
         setEmployeeArr(res.data);
+      }).finally(() => {
+        setLoading(false);
       });
   };
-  const getDepartments = () => {
+    const getDepartments = () => {
+        setLoading(true);
     axios
       .get(DepartmentsAPI, {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: sessionStorage.getItem("token"),
         },
       })
       .then((res) => {
         console.log(res);
         setDepartmentsArr(res.data);
+      }).finally(() => {
+        setLoading(false);
       });
   };
-    const createDeptAction = () => {
-        if (manager == 'Not selected' || deptName == '' || manager == '') {
-          setWarningText('you have to select manager')
-        }
-        setWarningText('')
+  const createDeptAction = () => {
+    setLoading(true);
+    if (manager == "Not selected" || deptName == "" || manager == "") {
+      setWarningText("you have to select manager");
+    }
+    setWarningText("");
     axios
       .post(
         CreateDeptAPI,
@@ -115,27 +131,31 @@ export default function AdminHomePage() {
         },
         {
           headers: {
-            Authorization: localStorage.getItem("token"),
+            Authorization: sessionStorage.getItem("token"),
           },
         }
       )
       .then((res) => {
-          console.log(res);
+        console.log(res);
           document.getElementById("createDepartmentDialog").close();
-
-      }).catch(err => {
-          console.log(err.response);
-          setWarningText(err.response.data.msg)
-      } )
-        
+          setDeptName('')
+          setManager('')
+      })
+      .catch((err) => {
+        console.log(err.response);
+        setWarningText(err.response.data.msg);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
-  
 
   const CreateManager = () => {
+    setLoading(true);
     if (name == "" || email == "" || password == "") {
-      setWarningText("You have to fill all the fields");
+      setWarningText2("You have to fill all the fields");
     } else {
-        setWarningText('')
+      setWarningText2("");
 
       axios
         .post(
@@ -148,7 +168,7 @@ export default function AdminHomePage() {
           },
           {
             headers: {
-              Authorization: localStorage.getItem("token"),
+              Authorization: sessionStorage.getItem("token"),
             },
           }
         )
@@ -156,26 +176,30 @@ export default function AdminHomePage() {
           setName("");
           setEmail("");
           setPassword("");
-            console.log(res);
-            document.getElementById("managerAccountDialog").close();
-
-        }).catch(err => {
-            setWarningText(err.response.data.msg)
+          console.log(res);
+          document.getElementById("managerAccountDialog").close();
         })
+        .catch((err) => {
+          setWarningText2(err.response.data.msg);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   };
 
   const CreateEmployee = () => {
+    setLoading(true);
     if (name == "" || email == "" || password == "" || position == "") {
-        setWarningText("You have to fill all the fields");
+      setWarningText3("You have to fill all the fields");
     } else {
-        setWarningText('')
+      setWarningText3("");
       axios
         .post(
           createAccountsAPI,
           {
-              name: name,
-              department: department,
+            name: name,
+            department: department,
             positionTitle: position,
             email: email,
             password: password,
@@ -183,7 +207,7 @@ export default function AdminHomePage() {
           },
           {
             headers: {
-              Authorization: localStorage.getItem("token"),
+              Authorization: sessionStorage.getItem("token"),
             },
           }
         )
@@ -191,17 +215,27 @@ export default function AdminHomePage() {
           setName("");
           setEmail("");
           setPassword("");
-            console.log(res);
-            document.getElementById("employeeAccountDialog").close();
-
-        }).catch(err => {
-            setWarningText(err.response.data.msg)
+          console.log(res);
+          document.getElementById("employeeAccountDialog").close();
         })
+        .catch((err) => {
+          setWarningText3(err.response.data.msg);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   };
 
   return (
     <div>
+     {loading ? (
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+        <span className="loading loading-dots bg-accent"></span>
+      </div>
+    </div>
+  ) : null}
       <Nav></Nav>
       <div className="py-5 px-16 flex flex-col items-start">
         <p className="font-title text-2xl font-bold text-secondary my-4">
@@ -220,7 +254,13 @@ export default function AdminHomePage() {
                   name={dept.name}
                   manager={dept.manager?.name || "No manager"}
                   employees={dept.employees?.length || 0}
-                  shortage={dept.positions ?  dept.positions.filter(position => position.status === false).length : 0 }
+                  shortage={
+                    dept.positions
+                      ? dept.positions.filter(
+                          (position) => position.status === false
+                        ).length
+                      : 0
+                  }
                   surplus={dept.surplusCount || 0}
                 ></DepCard>
               );
@@ -362,7 +402,14 @@ export default function AdminHomePage() {
         </div>
 
         <div>
-          <dialog id="managerAccountDialog" className="modal">
+                  <dialog id="managerAccountDialog" className="modal">
+                  {loading ? (
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+        <span className="loading loading-dots bg-accent"></span>
+      </div>
+    </div>
+  ) : null}
             <div className="modal-box flex flex-col items-center">
               <form method="dialog">
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -406,8 +453,8 @@ export default function AdminHomePage() {
                       className="input input-bordered w-full max-w-xs"
                     />
                   </form>
-                              </label>
-                              <p className="text-error ">{warningText}</p>
+                </label>
+                <p className="text-error text-sm m-4">{warningText2}</p>
 
                 <button
                   onClick={CreateManager}
@@ -419,7 +466,14 @@ export default function AdminHomePage() {
             </div>
           </dialog>
 
-          <dialog id="employeeAccountDialog" className="modal">
+                  <dialog id="employeeAccountDialog" className="modal">
+                  {loading ? (
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+        <span className="loading loading-dots bg-accent"></span>
+      </div>
+    </div>
+  ) : null}
             <div className="modal-box flex flex-col items-center">
               <form method="dialog">
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -460,12 +514,12 @@ export default function AdminHomePage() {
                     onChange={(e) => setDepartment(e.target.value)}
                     type="text"
                     className="select select-bordered w-full max-w-xs"
-                                  >
-                                      <option value={'not selected'}>Select department</option>
-                                      {departmentArr && departmentArr.map(dept => {
-                                          return (<option value={dept._id}>{dept.name}</option>)
-                        })}              
-
+                  >
+                    <option value={"not selected"}>Select department</option>
+                    {departmentArr &&
+                      departmentArr.map((dept) => {
+                        return <option value={dept._id}>{dept.name}</option>;
+                      })}
                   </select>
                 </label>
                 <label className="form-control w-full max-w-xs">
@@ -489,21 +543,27 @@ export default function AdminHomePage() {
                     type="password"
                     className="input input-bordered w-full max-w-xs"
                   />
-                              </label>
-                              <p className="text-error ">{warningText}</p>
+                </label>
+                <p className="text-error text-sm m-4">{warningText3}</p>
 
-                  <button
-                    onClick={CreateEmployee}
-                    className="btn btn-secondary btn-wide m-4"
-                  >
-                    Create account
-                  </button>
-                
+                <button
+                  onClick={CreateEmployee}
+                  className="btn btn-secondary btn-wide m-4"
+                >
+                  Create account
+                </button>
               </div>
             </div>
           </dialog>
         </div>
-        <dialog id="createDepartmentDialog" className="modal">
+              <dialog id="createDepartmentDialog" className="modal">
+              {loading ? (
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+        <span className="loading loading-dots bg-accent"></span>
+      </div>
+    </div>
+  ) : null}
           <div className="modal-box">
             <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -531,23 +591,23 @@ export default function AdminHomePage() {
                   value={manager}
                   onChange={(e) => setManager(e.target.value)}
                   className="select select-bordered"
-                              >
-                                  <option value={'Not selected'}>Select manager</option>
+                >
+                  <option value={"Not selected"}>Select manager</option>
                   {managerArr.map((manager) => {
-
                     return <option value={manager._id}>{manager.name}</option>;
                   })}
                 </select>
               </label>
-                          <p className="text-error ">{warningText}</p>
-              <button onClick={createDeptAction} className="btn btn-secondary my-2">
+              <p className="text-error text-sm m-4">{warningText}</p>
+              <button
+                onClick={createDeptAction}
+                className="btn btn-secondary my-2"
+              >
                 Add Department
               </button>
             </div>
           </div>
         </dialog>
-
-      
       </div>
     </div>
   );

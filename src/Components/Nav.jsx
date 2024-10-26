@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { Link ,useNavigate} from "react-router-dom";
 function Nav() {
   const navigate = useNavigate()
-  const accountType = localStorage.getItem('accountType')
+  const accountType = sessionStorage.getItem('accountType')
 const [isAdmin, setIsAdmin] = useState(accountType == 'admin')
-  console.log(localStorage.getItem('accountType'));
+  console.log(sessionStorage.getItem('accountType'));
   
   
   const LogoutAction = () => {
-    localStorage.removeItem("accountId");
-    localStorage.removeItem("accountType");
-    localStorage.removeItem("company");
-    localStorage.removeItem("token");
-    localStorage.removeItem("department");
+    sessionStorage.removeItem("accountId");
+    sessionStorage.removeItem("accountType");
+    sessionStorage.removeItem("company");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("department");
 
     navigate(`/`)
   }
@@ -24,7 +24,7 @@ const [isAdmin, setIsAdmin] = useState(accountType == 'admin')
         </Link>
         <ul className="menu menu-horizontal px-1 hidden md:flex">
           <li>
-            <Link to={isAdmin?`/admin/${localStorage.getItem('accountId')}`: accountType == 'manager'? `/Manager/${localStorage.getItem('accountId')}`:`/Employee/${localStorage.getItem('accountId')}`}>Dashboard</Link>
+            <Link to={isAdmin?`/admin/${sessionStorage.getItem('accountId')}`: accountType == 'manager'? `/Manager/${sessionStorage.getItem('accountId')}`:`/Employee/${sessionStorage.getItem('accountId')}`}>Dashboard</Link>
           </li>
 
           {/* <li>

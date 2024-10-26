@@ -8,7 +8,9 @@ const DepartmentAPI = `http://localhost:3000/department/id/`;
 function AdminDeptPage() {
   const { id } = useParams();
   const [department, setDepartment] = useState([]);
-  const [positionsArr , setPositionsArr] = useState([])
+  const [positionsArr, setPositionsArr] = useState([])
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     getDept();
   }, []);
@@ -19,19 +21,30 @@ function AdminDeptPage() {
   console.log(positionsArr);
   
   const getDept = () => {
+    setLoading(true);
+
     axios
       .get(DepartmentAPI + id, {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: sessionStorage.getItem("token"),
         },
       })
       .then((res) => {
         console.log(res);
         setDepartment(res.data);
+      }).finally(() => {
+        setLoading(false);
       });
   };
   return (
     <div>
+       {loading ? (
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+        <span className="loading loading-dots bg-accent"></span>
+      </div>
+    </div>
+  ) : null}
       <Nav></Nav>
       <div className="p-10 flex flex-col items-start">
         <p className="font-title text-2xl font-bold">{department.name}</p>

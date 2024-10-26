@@ -8,8 +8,10 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [warningText, setWarningText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const loginAction = () => {
+    setLoading(true);
     if (email == "" || password == "") {
       setWarningText("");
     } else {
@@ -21,11 +23,11 @@ function Login() {
         .then((res) => {
           console.log(res);
           
-          localStorage.setItem("accountId", res.data.id);
-          localStorage.setItem("accountType", res.data.accountType);
-          localStorage.setItem("company", res.data.company);
-          localStorage.setItem("token", res.data.token);
-          localStorage.setItem("department", res.data.department?._id);
+          sessionStorage.setItem("accountId", res.data.id);
+          sessionStorage.setItem("accountType", res.data.accountType);
+          sessionStorage.setItem("company", res.data.company);
+          sessionStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("department", res.data.department?._id);
 
           if (res.data.accountType === "admin") {
             navigate(`/admin/${res.data.id}`);
@@ -34,12 +36,21 @@ function Login() {
           } else if (res.data.accountType === 'employee') {
             navigate(`/Employee/${res.data.id}`)
           }
-        })
+        }).finally(() => {
+          setLoading(false);
+        });
     }
   };
 
   return (
     <div>
+       {loading ? (
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+        <span className="loading loading-dots bg-accent"></span>
+      </div>
+    </div>
+  ) : null}
       <div className="flex justify-center items-center  bg-[#30475e] w-full h-screen ">
         <div className="flex justify-center items-center justify-around rounded-lg bg-white h-[70%] max-md:h-auto max-sm:h-auto ">
           <div className=" flex justify-center items-center">
@@ -108,7 +119,6 @@ function Login() {
                   <h1 className="text-[2vh] flex justify-start w-[70%] hover:text-blue-800">
                     Forgot Password?
                   </h1>
-                  
                   <div className="card-actions">
                     <button
                       onClick={loginAction}
