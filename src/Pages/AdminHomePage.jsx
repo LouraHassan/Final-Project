@@ -117,11 +117,11 @@ export default function AdminHomePage() {
       });
   };
   const createDeptAction = () => {
-    setLoading(true);
-    if (manager == "Not selected" || deptName == "" || manager == "") {
-      setWarningText("you have to select manager");
-    }
-    setWarningText("");
+      if (manager == "Not selected" || deptName == "" || manager == "") {
+          setWarningText("you have to select manager");
+        }
+        setWarningText("");
+        setLoading(true);
     axios
       .post(
         CreateDeptAPI,
@@ -152,11 +152,11 @@ export default function AdminHomePage() {
   };
 
   const CreateManager = () => {
-    setLoading(true);
-    if (name == "" || email == "" || password == "") {
-      setWarningText2("You have to fill all the fields");
-    } else {
-      setWarningText2("");
+      if (name == "" || email == "" || password == "") {
+          setWarningText2("You have to fill all the fields");
+        } else {
+            setWarningText2("");
+            setLoading(true);
 
       axios
         .post(
@@ -191,11 +191,11 @@ export default function AdminHomePage() {
   };
 
   const CreateEmployee = () => {
-    setLoading(true);
-    if (name == "" || email == "" || password == "" || position == "") {
-      setWarningText3("You have to fill all the fields");
-    } else {
-      setWarningText3("");
+      if (name == "" || email == "" || password == "" || position == "") {
+          setWarningText3("You have to fill all the fields");
+        } else {
+            setWarningText3("");
+            setLoading(true);
       axios
         .post(
           createAccountsAPI,
@@ -243,41 +243,33 @@ export default function AdminHomePage() {
     </div>
   ) : null}
       <Nav></Nav>
-      <div className="py-5 px-16 flex flex-col items-start">
-        <p className="font-title text-2xl font-bold text-secondary my-4">
+          <div className="mx-5 py-5 md:px-16 flex flex-col items-start">
+                  <p className="text-xl text-secondary font-semibold">Welcome <span className="text-accent">{user?.name}</span></p>
+              
+              {!managerArr || managerArr.length == 0 ? 
+              
+              <div>
+                  
+        <p className="font-title text-3xl font-bold text-secondary my-4">
           Build your company's structure
-        </p>
-
-        <p className="font-title text-xl font-bold text-secondary my-4">
-          Departments
-        </p>
-        <div className="flex flex-col items-center w-full">
-          <div className="grid grid-cols-1 justify-items-center md:grid-cols-2 lg:grid-cols-3 gap-4  lg:w-[80vw]">
-            {departmentArr.map((dept) => {
-              return (
-                <DepCard
-                  id={dept._id}
-                  name={dept.name}
-                  manager={dept.manager?.name || "No manager"}
-                  employees={dept.employees?.length || 0}
-                  shortage={
-                    dept.positions
-                      ? dept.positions.filter(
-                          (position) => position.status === false
-                        ).length
-                      : 0
-                  }
-                  surplus={dept.surplusCount || 0}
-                ></DepCard>
-              );
-            })}
-          </div>
-                  <button
+              </p>
+              <p className="font-title text-2xl font-bold text-accent my-4">
+          Start by creating managers' accounts
+              </p>
+              </div>
+              : <></>}
+              {!managerArr || managerArr.length == 0 ? <></> : 
+                <>
+                <div className="flex items-center justify-between w-full">    
+                <p className="font-title text-xl font-bold text-secondary my-4">
+                Departments
+                </p>
+                <button
                       disabled={!managerArr || managerArr.length == 0}
-            className="btn btn-accent m-4"
-            onClick={() =>
-              document.getElementById("createDepartmentDialog").showModal()
-            }
+                      className="btn btn-accent m-4"
+                      onClick={() =>
+                        document.getElementById("createDepartmentDialog").showModal()
+                    }
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -290,7 +282,7 @@ export default function AdminHomePage() {
               stroke-linecap="round"
               stroke-linejoin="round"
               class="icon icon-tabler icons-tabler-outline icon-tabler-table-plus"
-            >
+              >
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <path d="M12.5 21h-7.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5" />
               <path d="M3 10h18" />
@@ -300,34 +292,38 @@ export default function AdminHomePage() {
             </svg>
             Add Department
           </button>
-        </div>
+</div>
+        <div className="flex flex-col items-center w-full">
+          <div className="grid grid-cols-1 justify-items-center md:grid-cols-2 lg:grid-cols-3 gap-4  lg:w-[80vw]">
+            {departmentArr.map((dept) => {
+                return (
+                    <DepCard
+                    id={dept._id}
+                    name={dept.name}
+                    manager={dept.manager?.name || "No manager"}
+                    employees={dept.employees?.length || 0}
+                    shortage={
+                        dept.positions
+                        ? dept.positions.filter(
+                            (position) => position.status === false
+                        ).length
+                        : 0
+                    }
+                    surplus={dept.surplusCount || 0}
+                    ></DepCard>
+                );
+            })}
+          </div>
+                 
+              </div>
+            </>
+      }
+              <div className="flex items-center justify-between w-full">
+                  
         <p className="font-title text-xl font-bold text-secondary my-4">
           Managers
-        </p>
-
-        <div className="flex flex-col items-center  w-full md:w-[80vw] self-center">
-          <div className="overflow-x-auto w-full md:w-[80vw] bg-white md:self-center md:m-4 shadow-md shadow-gray-300 rounded-lg">
-            <table className="table">
-              <thead>
-                <tr className="font-title text-lg">
-                  <th>Manager Name</th>
-                  <th>Department</th>
-                </tr>
-              </thead>
-              <tbody>
-                {managerArr.map((manager) => {
-                  return (
-                    <EmpList
-                      id={manager._id}
-                      name={manager.name}
-                      position={"manager"}
-                    ></EmpList>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-          <button
+                  </p>
+                  <button
             className="btn btn-outline btn-secondary self-start my-2"
             onClick={() =>
               document.getElementById("managerAccountDialog").showModal()
@@ -353,10 +349,69 @@ export default function AdminHomePage() {
             </svg>
             Create Manager account
           </button>
-        </div>
+              </div>
+              {!managerArr || managerArr.length == 0 ? <></> : 
+
+        <div className="flex flex-col items-center  w-full md:w-[80vw] self-center">
+          <div className="overflow-x-auto w-full md:w-[80vw] bg-white md:self-center md:m-4 shadow-md shadow-gray-300 rounded-lg">
+            <table className="table">
+              <thead>
+                <tr className="font-title text-lg">
+                  <th>Manager Name</th>
+                  <th>Department</th>
+                </tr>
+              </thead>
+              <tbody>
+                {managerArr.map((manager) => {
+                  return (
+                    <EmpList
+                      id={manager._id}
+                      name={manager.name}
+                      position={"manager"}
+                      ></EmpList>
+                    );
+                })}
+              </tbody>
+            </table>
+          </div>
+              </div>
+
+            }
+              {managerArr.length == 0 || departmentArr.length == 0 ? <></> : 
+              
+             <> <div className="flex items-center justify-between w-full">
+                  
         <p className="font-title text-xl font-bold text-secondary my-4">
           Employees
-        </p>
+                  </p>
+                  <button
+                      disabled={!departmentArr || departmentArr.length == 0}
+                      className="btn btn-outline btn-secondary self-start my-2"
+                      onClick={() =>
+                        document.getElementById("employeeAccountDialog").showModal()
+                    }
+                    >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              className="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"
+              >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+              <path d="M16 19h6" />
+              <path d="M19 16v6" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+            </svg>
+            Create Employee account
+          </button>
+              </div>
 
         <div className="flex flex-col items-center w-full md:w-[80vw] self-center">
           <div className="overflow-x-auto w-full md:w-[80vw] bg-white md:self-center md:m-4 shadow-md shadow-gray-300 rounded-lg">
@@ -369,45 +424,21 @@ export default function AdminHomePage() {
               </thead>
               <tbody>
                 {employeeArr.map((emp) => {
-                  return (
-                    <EmpList
-                      id={emp._id}
-                      name={emp.name}
-                      position={emp.positionTitle}
-                    ></EmpList>
-                  );
+                    return (
+                        <EmpList
+                        id={emp._id}
+                        name={emp.name}
+                        position={emp.positionTitle}
+                        ></EmpList>
+                    );
                 })}
               </tbody>
             </table>
           </div>
-                  <button
-                      disabled={!departmentArr || departmentArr.length == 0}
-            className="btn btn-outline btn-secondary self-start my-2"
-            onClick={() =>
-              document.getElementById("employeeAccountDialog").showModal()
-            }
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              className="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-              <path d="M16 19h6" />
-              <path d="M19 16v6" />
-              <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
-            </svg>
-            Create Employee account
-          </button>
-        </div>
+                 
+                      </div>
+                      </>
+        }
 
         <div>
                   <dialog id="managerAccountDialog" className="modal">
@@ -418,17 +449,19 @@ export default function AdminHomePage() {
       </div>
     </div>
   ) : null}
-            <div className="modal-box flex flex-col items-center">
+            <div className="modal-box flex flex-col items-center bg-white">
               <form method="dialog">
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                   ✕
                 </button>
               </form>
-              <h3 className="font-bold text-lg">Creating Manager Account</h3>
+              <h3 className="font-bold text-xl text-secondary">Creating Manager Account</h3>
               <div className=" flex flex-col items-center m-5 ">
                 <label className="form-control w-full max-w-xs">
                   <div className="label">
-                    <span className="label-text">Name</span>
+                  <span className="label-text font-title text-accent font-bold text-lg">
+                  Name
+                </span>
                   </div>
                   <input
                     value={name}
@@ -440,7 +473,9 @@ export default function AdminHomePage() {
 
                 <label className="form-control w-full max-w-xs">
                   <div className="label">
-                    <span className="label-text">Email</span>
+                  <span className="label-text font-title text-accent font-bold text-lg">
+                  Email
+                </span>
                   </div>
                   <input
                     value={email}
@@ -451,7 +486,9 @@ export default function AdminHomePage() {
                 </label>
                 <label className="form-control w-full max-w-xs">
                   <div className="label">
-                    <span className="label-text">Password</span>
+                  <span className="label-text font-title text-accent font-bold text-lg">
+                  Password
+                </span>
                   </div>
                   <form method="dialog">
                     <input
