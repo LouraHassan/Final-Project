@@ -8,11 +8,7 @@ function EmpList(props) {
   
     const accountType = sessionStorage.getItem('accountType')
     const [isManager, setIsManager] = useState(accountType == 'manager')
-  // useEffect(() => {
-  //     if (editMode) {
-
-  //     }
-  // })
+ 
 
   const editAction = () => {
     setEditMode(true);
@@ -65,8 +61,8 @@ function EmpList(props) {
         <p className="font-text">{props.position}</p>
           </td>
           
-          <td className={isManager ? '' : 'hidden'}>{isReassignible}
-              {editMode?  <input type="checkbox" className="toggle"  onChange={changeExcess} 
+          <td className={`flex items-center${isManager ? '' : 'hidden'}`}>{isReassignible}
+              {editMode?  <input type="checkbox" className="toggle m-2 toggle-accent"  onChange={changeExcess} 
       checked={isReassignible === 'Yes'} /> : <></>}
         
       </td>

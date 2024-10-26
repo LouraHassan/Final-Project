@@ -12,8 +12,10 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [warningText, setWarningText] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const signupAction = () => {
+    const signupAction = () => {
+        setLoading(true);
     if (
       name == "" ||
       company == "" ||
@@ -21,6 +23,7 @@ function Signup() {
       password == "" ||
       confirm == ""
     ) {
+        
       setWarningText("Please fill all the fields first");
     } else if (confirm != password) {
       setWarningText("Password doesn't match");
@@ -41,7 +44,9 @@ function Signup() {
             sessionStorage.setItem("token", res.data.token);
             sessionStorage.setItem('company', res.data.company._id)
           navigate(`/admin/${res.data.id}`);
-        });
+        }).finally(() => {
+            setLoading(false);
+          });
     }
   };
 
