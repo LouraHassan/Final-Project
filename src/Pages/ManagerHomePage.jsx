@@ -22,8 +22,8 @@ function ManagerHomePage() {
   const { id } = useParams();
   const notificationAPI = `http://localhost:3000/getNotifications/${id}`;
   const [user, setUser] = useState([]);
-  const textareaRef = useRef()
-  const textareaRef2 = useRef()
+  const textareaRef = useRef();
+  const textareaRef2 = useRef();
 
   const [skillsOptions, setSkillsOptions] = useState([]);
   const [name, setName] = useState("");
@@ -105,7 +105,10 @@ function ManagerHomePage() {
     if (name == "" || email == "" || password == "" || position == "") {
       setWarningText("");
     } else {
-        axios.post(createAccountsAPI, {
+      axios
+        .post(
+          createAccountsAPI,
+          {
             name: name,
             positionTitle: position,
             email: email,
@@ -190,7 +193,7 @@ function ManagerHomePage() {
     ) {
       setWarningText2("you must fill all the fields");
     } else {
-      setWarningText2('')
+      setWarningText2("");
       axios
         .post(
           AddPositionAPI,
@@ -212,17 +215,18 @@ function ManagerHomePage() {
         )
         .then((res) => {
           console.log(res);
-          setNewPosition('')
-          setNewExperience('')
-          setNewExperience('')
-          setNewSalary('')
-          setJobType('')
-          setNewKey('')
-          setNewOverview('')
-          setSkills([])
+          setNewPosition("");
+          setNewExperience("");
+          setNewExperience("");
+          setNewSalary("");
+          setJobType("");
+          setNewKey("");
+          setNewOverview("");
+          setSkills([]);
           document.getElementById("Newposition").close();
-          getUser()
-        }).finally(() => {
+          getUser();
+        })
+        .finally(() => {
           setLoading(false);
         });
     }
@@ -237,20 +241,22 @@ function ManagerHomePage() {
   // }
   const closeEmpDialog = () => {
     document.getElementById("Newposition").close();
-
-}
+  };
   const dismissAction = (reqId) => {
     setLoading(true);
 
-    axios.put(updateAPI+reqId, {
-      accountId: id
-  }).then(res => {
-      console.log(res.data);
-      getNotifications()
-  }).finally(() => {
-    setLoading(false);
-  })
-  }
+    axios
+      .put(updateAPI + reqId, {
+        accountId: id,
+      })
+      .then((res) => {
+        console.log(res.data);
+        getNotifications();
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   const handleDelete2 = (skillToDelete) => {
     setSkills((prevSkills) =>
@@ -260,18 +266,18 @@ function ManagerHomePage() {
 
   const textareaHeight = () => {
     const textarea = textareaRef.current;
-    if(textarea){
-      textarea.style.height = 'auto',
-  textarea.style.height = `${textarea.scrollHeight}px`
+    if (textarea) {
+      (textarea.style.height = "auto"),
+        (textarea.style.height = `${textarea.scrollHeight}px`);
     }
-  }
+  };
   const textareaHeight2 = () => {
     const textarea2 = textareaRef2.current;
-    if(textarea2){
-      textarea2.style.height = 'auto',
-  textarea2.style.height = `${textarea2.scrollHeight}px`
+    if (textarea2) {
+      (textarea2.style.height = "auto"),
+        (textarea2.style.height = `${textarea2.scrollHeight}px`);
     }
-    }
+  };
   return (
     <div>
       {loading ? (
@@ -372,7 +378,7 @@ function ManagerHomePage() {
               }
             })}
             <h2 className="font-title font-bold text-[3vh] text-secondary ml-5">
-              Number of employees:{user?.department?.employees?.length || 0}
+              Number of employees: {user?.department?.employees?.length || 0}
             </h2>
             <div className="flex justify-center">
               <div className="overflow-x-auto lg:w-[80vw] bg-slate-100 lg:self-center lg:m-4 shadow-md shadow-gray-300 rounded-lg">
@@ -585,149 +591,149 @@ function ManagerHomePage() {
             </div>
 
           )} */}
-          <dialog id="employeeAccountDialog" className="modal">
-          {loading ? (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
-            <span className="loading loading-dots bg-accent"></span>
-          </div>
-        </div>
-      ) : null}
-        <div className="modal-box flex flex-col items-center w-[58vh] ">
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-              ✕
-            </button>
-          </form>
-
-          <h3 className="font-bold text-[3vh] font-title text-secondary ">
-            Creating Employee Account
-          </h3>
-
-          <div className=" flex flex-col   m-5  ">
-            <label className="form-control  max-w-xs">
-              <div className="label">
-                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
-                  Name:
-                </span>
+          <dialog id="employeeAccountDialog" className="modal w-[]">
+            {loading ? (
+              <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                <div className="p-4 w-[10vw] flex flex-col items-center  justify-center bg-secondary rounded-lg">
+                  <span className="loading loading-dots bg-accent"></span>
+                </div>
               </div>
-              <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                type="text"
-                className="input input-bordered  "
-              />
-            </label>
-
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
-                  Position:
-                </span>
-              </div>
-              <input
-                value={position}
-                onChange={(e) => setPosition(e.target.value)}
-                type="text"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
-                  Email:
-                </span>
-              </div>
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="text"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
-                  Password:
-                </span>
-              </div>
-              <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-            <form method="dialog ">
-              <div className="w-[45vh] flex justify-center ">
-                <button
-                  onClick={CreateEmployee}
-                  className="btn btn-secondary mt-5   "
-                >
-                  Create account
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </dialog>
-          <dialog id="Newposition" className="modal w-full">
-          {loading ? (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
-            <span className="loading loading-dots bg-accent"></span>
-          </div>
-        </div>
-      ) : null}
-            <div className="modal-box h-auto flex flex-col justify-around p-6 w-[150vh] bg-white ">
+            ) : null}
+            <div className="modal-box flex flex-col items-center bg-white w-[58vh] ">
               <form method="dialog">
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                   ✕
                 </button>
               </form>
-              <h3 className="font-bold text-[3vh] font-title text-secondary mb-4">
+
+              <h3 className="font-bold text-[3vh] font-title text-secondary ">
+                Creating Employee Account
+              </h3>
+
+              <div className=" flex flex-col   m-5  ">
+                <label className="form-control  max-w-xs">
+                  <div className="label">
+                    <span className="label-text font-title text-accent font-bold text-[2.5vh]">
+                      Name:
+                    </span>
+                  </div>
+                  <input
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    type="text"
+                    className="input input-bordered  "
+                  />
+                </label>
+
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text font-title text-accent font-bold text-[2.5vh]">
+                      Position:
+                    </span>
+                  </div>
+                  <input
+                    value={position}
+                    onChange={(e) => setPosition(e.target.value)}
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text font-title text-accent font-bold text-[2.5vh]">
+                      Email:
+                    </span>
+                  </div>
+                  <input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text font-title text-accent font-bold text-[2.5vh]">
+                      Password:
+                    </span>
+                  </div>
+                  <input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    type="password"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+                <form method="dialog ">
+                  <div className="w-[45vh] flex justify-center ">
+                    <button
+                      onClick={CreateEmployee}
+                      className="btn btn-secondary mt-5   "
+                    >
+                      Create account
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </dialog>
+          <dialog id="Newposition" className="modal  ">
+            {loading ? (
+              <div className="fixed inset-0 flex items-center justify-center  z-50 bg-black bg-opacity-50  ">
+                <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+                  <span className="loading loading-dots bg-accent"></span>
+                </div>
+              </div>
+            ) : null}
+            <div className="modal-box  flex items-start flex-col justify-around  p-7 bg-white md:w-11/12  md:max-w-2xl">
+              <form method="dialog  ">
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                  ✕
+                </button>
+              </form>
+              <h3 className="font-bold self-center text-[3vh] font-title text-secondary mb-4 ">
                 Create New Position
               </h3>
-              <div className="flex  gap-8">
-                <div className="flex flex-col">
-                  <label className="font-title text-accent font-bold">
+              <div className="flex  w-full md:gap-8 flex-col md:flex-row">
+                <div className="flex flex-col md:w-full">
+                  <label className="font-title text-accent font-bold my-1">
                     Position Name:{" "}
                   </label>
                   <input
                     type="text"
                     value={newPosition}
                     onChange={(e) => setNewPosition(e.target.value)}
-                    className="input input-bordered p-2 mt-2 w-full"
+                    className="input input-bordered p-2  w-full"
                   />
                 </div>
 
-                <div className="flex flex-col">
-                  <label className="font-title text-accent font-bold">
+                <div className="flex flex-col md:w-full">
+                  <label className="font-title text-accent font-bold my-1">
                     Estimated Salary:
                   </label>
                   <input
                     type="text"
                     value={newSalary}
                     onChange={(e) => setNewSalary(e.target.value)}
-                    className="input input-bordered p-2 mt-2 w-[33vh]"
+                    className="input input-bordered p-2  lg:w-[33vh] w-full"
                   />
                 </div>
               </div>
 
-              <div className="flex gap-8">
-                <div className="flex flex-col">
-                  <label className="font-title text-accent font-bold  mt-2">
+              <div className="flex  w-full md:gap-8 flex-col md:flex-row">
+                <div className="flex flex-col md:w-full">
+                  <label className="font-title text-accent font-bold my-1 ">
                     Years Of Experience :
                   </label>
                   <input
                     type="text"
                     value={newExperience}
                     onChange={(e) => setNewExperience(e.target.value)}
-                    className="input input-bordered p-2 mt-2 w-full"
+                    className="input input-bordered p-2  w-full"
                   />
                 </div>
-                <div className="flex flex-col">
-                  <label className="font-title text-accent font-bold  mt-2">
+                <div className="flex flex-col md:w-full">
+                  <label className="font-title text-accent font-bold my-1">
                     Job-Type:
                   </label>
                   <select
@@ -735,7 +741,7 @@ function ManagerHomePage() {
                     id=""
                     value={jobType}
                     onChange={(e) => setJobType(e.target.value)}
-                    className="select select-bordered w-[33vh] mt-2"
+                    className="select select-bordered lg:w-[33vh] w-full"
                   >
                     <option value={"Not-specified"}>Select type</option>
                     <option value={"Full-Time"}> Full-Time</option>
@@ -744,10 +750,10 @@ function ManagerHomePage() {
                 </div>
               </div>
 
-              <label className="font-title text-accent font-bold mt-2">
+              <label className="font-title text-accent font-bold my-1">
                 Key Responsibilities:
               </label>
-              {/* <textarea
+              <textarea
                 placeholder="Not added yet"
                 ref={textareaRef}
                 rows={4}
@@ -756,12 +762,12 @@ function ManagerHomePage() {
                   setNewKey(e.target.value);
                   textareaHeight();
                 }}
-                className="textarea resize-none textarea-bordered mt-2 w-full max-w-m"
-              ></textarea> */}
-              <label className="font-title text-accent font-bold mt-2">
+                className="textarea resize-none textarea-bordered  w-full max-w-m"
+              ></textarea>
+              <label className="font-title text-accent font-bold my-1">
                 Job Overview:
               </label>
-              {/* <textarea
+              <textarea
                 placeholder="Not added yet"
                 ref={textareaRef2}
                 rows={4}
@@ -770,10 +776,10 @@ function ManagerHomePage() {
                   setNewOverview(e.target.value);
                   textareaHeight2();
                 }}
-                className="textarea resize-none textarea-bordered mt-2  w-full max-w-m"
-              ></textarea> */}
-              <div className="flex flex-col">
-                <label className="font-title text-accent font-bold mt-2">
+                className="textarea resize-none textarea-bordered   w-full max-w-m"
+              ></textarea>
+              <div className="flex flex-col w-full">
+                <label className="font-title text-accent font-bold my-1">
                   Skills:
                 </label>
                 <select
@@ -785,42 +791,45 @@ function ManagerHomePage() {
                     setSkills([selectedSkill, ...skills]);
                     setSkillInput("");
                   }}
-                  className="select select-bordered mt-2"
+                  className="select select-bordered  "
                 >
-                  {skillsOptions && skillsOptions.map((skill) => {
-                    return <option value={skill}>{skill}</option>;
-                  })}
+                  {skillsOptions &&
+                    skillsOptions.map((skill) => {
+                      return <option value={skill}>{skill}</option>;
+                    })}
                   <option value="">Select Skills</option>
                 </select>
-                <div className="flex flex-wrap">
+                <div className="flex flex-wrap my-3">
                   {skills.map((el) => {
-                       const handleDelete = () => {
-                        handleDelete2(el);
-                      };
-                    return <SkillTip text={el}  onDelete={handleDelete}></SkillTip>;
+                    const handleDelete = () => {
+                      handleDelete2(el);
+                    };
+                    return (
+                      <SkillTip text={el} onDelete={handleDelete}></SkillTip>
+                    );
                   })}
                 </div>
               </div>
               <p>{warningText}</p>
 
-              <div className="flex justify-end mt-6">
+              <div className="flex self-end justify-end absulote bottom-2 bg-white mt-6">
                 <button
-                  className="btn bg-[#30465e] text-white p-4 mr-2"
+                  className="btn btn-secondary btn-outline text-white p-4 mr-2"
                   onClick={closeEmpDialog}
                 >
                   Cancel
                 </button>
                 <button
-                  className="btn btn-accent text-white p-4"
+                  className="btn btn-secondary  text-white p-4 "
                   onClick={addPositionAction}
                 >
-                  Submit
+                  Post Position
                 </button>
               </div>
             </div>
           </dialog>
         </div>
-        </div>
+      </div>
     </div>
   );
 }

@@ -286,7 +286,9 @@ function EmployeePage() {
         </div>
       </div>   */}
 
-        <div className="flex flex-col border justify-start  items-center p-12  w-auto mr-3 shadow-2xl bg-[#30465e] pt-10 rounded-xl  h-[60vh] max-sm:justify-center max-sm:w-[100%]">
+       
+
+        <div className="flex flex-col border justify-start  items-center p-12  w-auto mr-3 shadow-xl bg-[#30465e] pt-10 rounded-lg  h-fit max-sm:justify-center max-sm:w-[100%] max-sm:flex max-sm:mb-3 ">
           <div className="flex justify-center items-center bg-slate-200  rounded-full">
             <div>
               <svg
@@ -308,17 +310,18 @@ function EmployeePage() {
               {user.name}
             </h2>
 
-            <h1 className="font-text font-bold text-accent text-center">
+            <h1 className="font-text font-semibold text-accent text-center">
               {user.positionTitle}
             </h1>
-            <h1 className="font-text font-bold text-accent text-center ">
+            <h1 className="font-text  text-accent text-center ">
               {user?.department?.name}
             </h1>
             <div className="mt-3 ml-3">
               <h2 className="font-text text-center text-accent">
-                <span className=" font-title font-bold text-accent text-[2.8vh]">
-                  Manager:{" "}
+                <span className=" font-title font-bold  text-white text-[2.3vh]">
+                  Manager{" "}
                 </span>
+                <br></br>
                 {user?.department?.manager?.name}
               </h2>
             </div>
@@ -355,37 +358,37 @@ function EmployeePage() {
               );
             }
           })}
-          {!passwordChanged ? (
-            <div
-              role="alert"
-              className="alert border-2 border-warning m-2 bg-white "
+           {!passwordChanged ? (
+          <div
+            role="alert"
+            className="alert border-2 border-warning m-2 bg-white "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 shrink-0 stroke-current text-warning"
+              fill="none"
+              viewBox="0 0 24 24"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 shrink-0 stroke-current text-warning"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                />
-              </svg>
-              <span>You must update you password and add your data down</span>
-              <button
-                className="btn btn-secondary"
-                onClick={() =>
-                  document.getElementById("passwordDialog").showModal()
-                }
-              >
-                Update password
-              </button>
-            </div>
-          ) : (
-            <></>
-          )}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+            <span>You must update you password and add your data down</span>
+            <button
+              className="btn btn-secondary"
+              onClick={() =>
+                document.getElementById("passwordDialog").showModal()
+              }
+            >
+              Update password
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
 
           <dialog id="passwordDialog" className="modal">
             <div className="modal-box flex flex-col items-center">
@@ -423,7 +426,7 @@ function EmployeePage() {
               </button>
             </div>
           </dialog>
-          <div className="flex flex-col w-full rounded-md bg-white h-auto justify-around border shadow-2xl p-6 max-md:w-[100%] ">
+          <div className="flex flex-col w-full rounded-lg bg-white h-auto justify-around border shadow-xl p-6 max-md:w-[100%] ">
             <div className="flex justify-between">
               <h1 className="font-title font-bold text-accent text-[4vh]">
                 {user.name}
