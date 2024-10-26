@@ -22,6 +22,8 @@ function ManagerHomePage() {
   const { id } = useParams();
   const notificationAPI = `http://localhost:3000/getNotifications/${id}`;
   const [user, setUser] = useState([]);
+  const textareaRef = useRef()
+  const textareaRef2 = useRef()
 
   const [skillsOptions, setSkillsOptions] = useState([]);
   const [name, setName] = useState("");
@@ -45,6 +47,8 @@ function ManagerHomePage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [warningText, setWarningText] = useState("");
+  const [warningText2, setWarningText2] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -101,10 +105,7 @@ function ManagerHomePage() {
     if (name == "" || email == "" || password == "" || position == "") {
       setWarningText("");
     } else {
-      axios
-        .post(
-          createAccountsAPI,
-          {
+        axios.post(createAccountsAPI, {
             name: name,
             positionTitle: position,
             email: email,
@@ -187,8 +188,9 @@ function ManagerHomePage() {
       newOverview == "" ||
       newSalary == ""
     ) {
-      setWarningText("you must fill all the fields");
+      setWarningText2("you must fill all the fields");
     } else {
+      setWarningText2('')
       axios
         .post(
           AddPositionAPI,
@@ -210,16 +212,17 @@ function ManagerHomePage() {
         )
         .then((res) => {
           console.log(res);
-
-          setNewPosition("");
-          setNewExperience("");
-          setNewExperience("");
-          setNewKey("");
-          setNewOverview("");
-          setSkills([]);
-          document.getElementById("createDepartmentDialog").close();
-        })
-        .finally(() => {
+          setNewPosition('')
+          setNewExperience('')
+          setNewExperience('')
+          setNewSalary('')
+          setJobType('')
+          setNewKey('')
+          setNewOverview('')
+          setSkills([])
+          document.getElementById("Newposition").close();
+          getUser()
+        }).finally(() => {
           setLoading(false);
         });
     }
@@ -232,22 +235,43 @@ function ManagerHomePage() {
   //   }
 
   // }
+  const closeEmpDialog = () => {
+    document.getElementById("Newposition").close();
 
+}
   const dismissAction = (reqId) => {
     setLoading(true);
 
-    axios
-      .put(updateAPI + reqId, {
-        accountId: id,
-      })
-      .then((res) => {
-        console.log(res.data);
-        getNotifications();
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    axios.put(updateAPI+reqId, {
+      accountId: id
+  }).then(res => {
+      console.log(res.data);
+      getNotifications()
+  }).finally(() => {
+    setLoading(false);
+  })
+  }
+
+  const handleDelete2 = (skillToDelete) => {
+    setSkills((prevSkills) =>
+      prevSkills.filter((skill) => skill !== skillToDelete)
+    );
   };
+
+  const textareaHeight = () => {
+    const textarea = textareaRef.current;
+    if(textarea){
+      textarea.style.height = 'auto',
+  textarea.style.height = `${textarea.scrollHeight}px`
+    }
+  }
+  const textareaHeight2 = () => {
+    const textarea2 = textareaRef2.current;
+    if(textarea2){
+      textarea2.style.height = 'auto',
+  textarea2.style.height = `${textarea2.scrollHeight}px`
+    }
+    }
   return (
     <div>
       {loading ? (
@@ -534,8 +558,11 @@ function ManagerHomePage() {
                  
                   <div className="flex flex-wrap">
                     
-                  {skills.map(el => {
-                    return(<SkillTip text={el}></SkillTip>)
+                    {skills.map(el => {
+                       const handleDelete = () => {
+                        handleDelete2(el);
+                      };
+                    return(<SkillTip text={el} onDelete={handleDelete}></SkillTip>)
                   })}
                   </div>
                 </div>
@@ -558,9 +585,101 @@ function ManagerHomePage() {
             </div>
 
           )} */}
+          <dialog id="employeeAccountDialog" className="modal">
+          {loading ? (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+            <span className="loading loading-dots bg-accent"></span>
+          </div>
+        </div>
+      ) : null}
+        <div className="modal-box flex flex-col items-center w-[58vh] ">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
 
+          <h3 className="font-bold text-[3vh] font-title text-secondary ">
+            Creating Employee Account
+          </h3>
+
+          <div className=" flex flex-col   m-5  ">
+            <label className="form-control  max-w-xs">
+              <div className="label">
+                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
+                  Name:
+                </span>
+              </div>
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                type="text"
+                className="input input-bordered  "
+              />
+            </label>
+
+            <label className="form-control w-full max-w-xs">
+              <div className="label">
+                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
+                  Position:
+                </span>
+              </div>
+              <input
+                value={position}
+                onChange={(e) => setPosition(e.target.value)}
+                type="text"
+                className="input input-bordered w-full max-w-xs"
+              />
+            </label>
+            <label className="form-control w-full max-w-xs">
+              <div className="label">
+                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
+                  Email:
+                </span>
+              </div>
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                className="input input-bordered w-full max-w-xs"
+              />
+            </label>
+            <label className="form-control w-full max-w-xs">
+              <div className="label">
+                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
+                  Password:
+                </span>
+              </div>
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                className="input input-bordered w-full max-w-xs"
+              />
+            </label>
+            <form method="dialog ">
+              <div className="w-[45vh] flex justify-center ">
+                <button
+                  onClick={CreateEmployee}
+                  className="btn btn-secondary mt-5   "
+                >
+                  Create account
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </dialog>
           <dialog id="Newposition" className="modal w-full">
-            <div className="modal-box h-auto flex flex-col justify-around p-6 w-[150vh]  ">
+          {loading ? (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+            <span className="loading loading-dots bg-accent"></span>
+          </div>
+        </div>
+      ) : null}
+            <div className="modal-box h-auto flex flex-col justify-around p-6 w-[150vh] bg-white ">
               <form method="dialog">
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                   ✕
@@ -668,14 +787,17 @@ function ManagerHomePage() {
                   }}
                   className="select select-bordered mt-2"
                 >
-                  {skillsOptions.map((skill) => {
+                  {skillsOptions && skillsOptions.map((skill) => {
                     return <option value={skill}>{skill}</option>;
                   })}
                   <option value="">Select Skills</option>
                 </select>
                 <div className="flex flex-wrap">
                   {skills.map((el) => {
-                    return <SkillTip text={el}></SkillTip>;
+                       const handleDelete = () => {
+                        handleDelete2(el);
+                      };
+                    return <SkillTip text={el}  onDelete={handleDelete}></SkillTip>;
                   })}
                 </div>
               </div>
@@ -684,7 +806,7 @@ function ManagerHomePage() {
               <div className="flex justify-end mt-6">
                 <button
                   className="btn bg-[#30465e] text-white p-4 mr-2"
-                  // onClick={closeDialog}
+                  onClick={closeEmpDialog}
                 >
                   Cancel
                 </button>
@@ -698,87 +820,7 @@ function ManagerHomePage() {
             </div>
           </dialog>
         </div>
-      </div>
-
-      <dialog id="employeeAccountDialog" className="modal">
-        <div className="modal-box flex flex-col items-center w-[58vh] ">
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-              ✕
-            </button>
-          </form>
-
-          <h3 className="font-bold text-[3vh] font-title text-secondary ">
-            Creating Employee Account
-          </h3>
-
-          <div className=" flex flex-col   m-5  ">
-            <label className="form-control  max-w-xs">
-              <div className="label">
-                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
-                  Name:
-                </span>
-              </div>
-              <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                type="text"
-                className="input input-bordered  "
-              />
-            </label>
-
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
-                  Position:
-                </span>
-              </div>
-              <input
-                value={position}
-                onChange={(e) => setPosition(e.target.value)}
-                type="text"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
-                  Email:
-                </span>
-              </div>
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="text"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
-                  Password:
-                </span>
-              </div>
-              <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-            <form method="dialog ">
-              <div className="w-[45vh] flex justify-center ">
-                <button
-                  onClick={CreateEmployee}
-                  className="btn btn-secondary mt-5   "
-                >
-                  Create account
-                </button>
-              </div>
-            </form>
-          </div>
         </div>
-      </dialog>
     </div>
   );
 }

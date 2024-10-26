@@ -42,13 +42,14 @@ function PositionsPage() {
 
   const [editModeSelect, setEditModeSelect] = useState("bg-transparent");
   const [departmentStyle, setDepartmentStyle] = useState("bg-transparent ");
-  const [experienceStyle, setExperienceStyle] = useState("bg-transparent ");
+  const [experienceStyle, setExperienceStyle] = useState("bg-transparent w-[2vw]");
   const [descriptionStyle, setDescriptionStyle] = useState("bg-transparent ");
-  const [salaryStyle, setSalaryStyle] = useState("bg-transparent ");
+  const [salaryStyle, setSalaryStyle] = useState("bg-transparent w-[6vw]");
   const [requirmentsStyle, setRequirmentsStyle] = useState("bg-transparent ");
 
   const [skillsOptions, setSkillsOptions] = useState([]);
   const [skillInput, setSkillInput] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getPosition();
@@ -68,30 +69,42 @@ function PositionsPage() {
   }, [position]);
 
   const getPosition = () => {
+    setLoading(true);
     axios.get(positionAPI + id).then((res) => {
       console.log(res);
       setPosition(res.data);
-    });
+    }).finally(() => {
+      setLoading(false);
+    })
   };
 
   const getAllPositions = () => {
+    setLoading(true);
     axios.get(allPositionsAPI).then((res) => {
       console.log(res);
       setPositionArr(res.data);
-    });
+    }).finally(() => {
+      setLoading(false);
+    })
   };
 
   const getOptions = () => {
+    setLoading(true);
     axios.get(SkillsOptionsAPI).then((res) => {
       setSkillsOptions(res.data.skills);
-    });
+    }).finally(() => {
+      setLoading(false);
+    })
   };
 
   const getBestEmp = () => {
+    setLoading(true);
     axios.get(bestEmpAPI + id).then((res) => {
       console.log(res);
       setBestEmp(res.data);
-    });
+    }).finally(() => {
+      setLoading(false);
+    })
   };
   const textareaHeight = () => {
     const textarea = textareaRef.current;
@@ -124,9 +137,9 @@ function PositionsPage() {
     setEditModeInput("bg-transparent");
     setEditModeSelect("bg-transparent");
     setDepartmentStyle("bg-transparent ");
-    setExperienceStyle("bg-transparent");
+    setExperienceStyle("bg-transparent w-[2vw]");
     setDescriptionStyle("bg-transparent");
-    setSalaryStyle("bg-transparent");
+    setSalaryStyle("bg-transparent w-[6vw]");
     setRequirmentsStyle("bg-transparent");
 
     setJobType(position.jobType);
@@ -138,6 +151,7 @@ function PositionsPage() {
     setRequirments(position.requirments);
   };
   const deleteAction = () => {
+    setLoading(true);
     axios
       .delete(
         deletePositionAPI + id + `?company=${sessionStorage.getItem("company")}`,
@@ -150,9 +164,12 @@ function PositionsPage() {
       .then((res) => {
         console.log(res);
         navigate(`/Manager/${sessionStorage.getItem("accountId")}`);
-      });
+      }).finally(() => {
+        setLoading(false);
+      })
   };
   const saveEditAction = () => {
+    setLoading(true);
     axios
       .put(
         updateAPI + id + `?company=${sessionStorage.getItem("company")}`,
@@ -163,6 +180,7 @@ function PositionsPage() {
           description: description,
           expectedSalary: salary,
           requirments: requirments,
+          skills: skillsArr
         },
         {
           headers: {
@@ -174,11 +192,13 @@ function PositionsPage() {
         console.log(res);
         setEditMode(true);
         setDepartmentStyle("bg-transparent");
-        setExperienceStyle("bg-transparent");
+        setExperienceStyle("bg-transparent w-[2vw]");
         setDescriptionStyle("bg-transparent");
-        setSalaryStyle("bg-transparent");
+        setSalaryStyle("bg-transparent w-[6vw]");
         setRequirmentsStyle("bg-transparent");
-      });
+      }).finally(() => {
+        setLoading(false);
+      })
   };
 console.log(bestEmp);
 
@@ -189,6 +209,13 @@ console.log(bestEmp);
   };
   return (
     <div>
+       {loading ? (
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+        <span className="loading loading-dots bg-accent"></span>
+      </div>
+    </div>
+  ) : null}
       <Nav />
       <div className="flex  justify-around mt-5 mb-5  m-8 max-md:flex-col max-md:justify-center max-md:items-center ">
         <div className="flex flex-col w-[70%]  bg-white p-8 h-auto justify-around  border shadow-2xl max-md:w-[90%] ">
@@ -197,25 +224,48 @@ console.log(bestEmp);
               {position.title}
             </h1>
             {isManager ? (
-              <svg
-                onClick={editAction}
-                // onClick={() => setOpen(true)}
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="icon icon-tabler icons-tabler-outline icon-tabler-edit"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                <path d="M16 5l3 3" />
-              </svg>
+ <svg
+ onClick={editAction}
+ xmlns="http://www.w3.org/2000/svg"
+ width="24"
+ height="24"
+ viewBox="0 0 24 24"
+ fill="none"
+ stroke="currentColor"
+ stroke-width="2"
+ stroke-linecap="round"
+ stroke-linejoin="round"
+ className="icon icon-tabler icons-tabler-outline icon-tabler-pencil text-secondary"
+>
+ <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+ <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+ <path d="M13.5 6.5l4 4" />
+</svg>
+
+
+
+              // <svg
+              //   onClick={editAction}
+              //   // onClick={() => setOpen(true)}
+              //   xmlns="http://www.w3.org/2000/svg"
+              //   width="24"
+              //   height="24"
+              //   viewBox="0 0 24 24"
+              //   fill="none"
+              //   stroke="currentColor"
+              //   stroke-width="2"
+              //   stroke-linecap="round"
+              //   stroke-linejoin="round"
+              //   class="icon icon-tabler icons-tabler-outline icon-tabler-edit"
+              // >
+              //   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              //   <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+              //   <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+              //   <path d="M16 5l3 3" />
+              // </svg>
+
+
+
             ) : (
               <></>
             )}
@@ -503,17 +553,20 @@ console.log(bestEmp);
         </div>
         <div className="flex flex-col max-md:justify-center max-md:items-center gap-3 m-4 max-md:w-[90%] px-3">
           {positionArr.map((el, index) => {
+          if (!el.status) {
             if (el._id != position._id) {
-              return (
-                <PositionCard
+                
+                return (
+                  <PositionCard
                   key={index}
                   id={el._id}
                   Position={el.title}
                   Department={el.department.name}
                   Experience={el.experienceYears}
                   skills={el?.skills || ""}
-                ></PositionCard>
-              );
+                  ></PositionCard>
+                );
+              }
             }
           })}
         </div>
