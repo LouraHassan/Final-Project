@@ -628,7 +628,7 @@ function ManagerHomePage() {
               <label className="font-title text-accent font-bold mt-2">
                 Key Responsibilities:
               </label>
-              <textarea
+              {/* <textarea
                 placeholder="Not added yet"
                 ref={textareaRef}
                 rows={4}
@@ -638,11 +638,11 @@ function ManagerHomePage() {
                   textareaHeight();
                 }}
                 className="textarea resize-none textarea-bordered mt-2 w-full max-w-m"
-              ></textarea>
+              ></textarea> */}
               <label className="font-title text-accent font-bold mt-2">
                 Job Overview:
               </label>
-              <textarea
+              {/* <textarea
                 placeholder="Not added yet"
                 ref={textareaRef2}
                 rows={4}
@@ -652,7 +652,7 @@ function ManagerHomePage() {
                   textareaHeight2();
                 }}
                 className="textarea resize-none textarea-bordered mt-2  w-full max-w-m"
-              ></textarea>
+              ></textarea> */}
               <div className="flex flex-col">
                 <label className="font-title text-accent font-bold mt-2">
                   Skills:
