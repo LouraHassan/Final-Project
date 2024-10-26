@@ -29,20 +29,19 @@ function Home() {
 </div>
       </div>
 
-      <div id="about-us" className="p-20 bg-secondary">
-        <div className="grid lg:grid-cols-2 my-4">
-          <div>
+      <div id="about-us" className="p-10 md:p-20 bg-secondary">
+        <div className="grid lg:grid-cols-2 my-4 border-2">
+          <div className="flex flex-col items-center md:items-start">
             <p className="text-primary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-5">
               ABOUT US
             </p>
-            <p className="text-primary font-text text-md tracking-wide m-4">
+            <p className="text-primary text-center md:text-left font-text text-md tracking-wide m-4">
               At MergeNet, we specialize in optimizing workforce management
               following the merger of companies or startups. Our platform is
               designed to streamline the process of integrating employees into
               new departments, ensuring that every individual is placed where
               they can contribute most effectively.
                       </p>
-                      {/* <span className="loading loading-dots loading-lg bg-primary"></span> */}
 
           </div>
           <div className=" flex items-center justify-around">
@@ -52,7 +51,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <div id="how-it-works" className="p-20 bg-base-100">
+      <div id="how-it-works" className="p-10 md:p-20 bg-base-100 flex flex-col items-center md:items-start">
         <p className="text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           HOW IT WORKS
         </p>
@@ -208,7 +207,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <div id="key-features" className="p-20 bg-base-200 flex flex-col items-center">
+      <div id="key-features" className="p-10 md:p-20 bg-base-200 flex flex-col items-center">
         <p className="self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           KEY FEATURES
         </p>
@@ -317,7 +316,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <div id="benefits" className="p-20 bg-base-100 flex flex-col items-center">
+      <div id="benefits" className="p-10 md:p-20 bg-base-100 flex flex-col items-center">
         <p className="self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           BENEFITS
         </p>

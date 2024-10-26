@@ -5,7 +5,7 @@ function HomeNav() {
   return (
     <div className="navbar bg-secondary fixed top-0 text-secondary-content z-30">
     <div className="navbar-start">
-      <Link to={`/admin`} className=" flex items-center m-4">
+      <Link to={`/`} className=" flex items-center m-4">
          <span className='font-title font-semibold mx-1 text-2xl'>MergeNet</span>
           <img src={logo} alt="logo" className='w-[30px]'/>
       </Link>

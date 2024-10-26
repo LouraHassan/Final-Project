@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "/logo.png";
+
 function Nav() {
-  const navigate = useNavigate()
-  const accountType = sessionStorage.getItem('accountType')
-const [isAdmin, setIsAdmin] = useState(accountType == 'admin')
-  console.log(sessionStorage.getItem('accountType'));
-  
-  
+  const navigate = useNavigate();
+  const accountType = sessionStorage.getItem("accountType");
+  const [isAdmin, setIsAdmin] = useState(accountType == "admin");
+  console.log(sessionStorage.getItem("accountType"));
+
   const LogoutAction = () => {
     sessionStorage.removeItem("accountId");
     sessionStorage.removeItem("accountType");
@@ -14,17 +15,33 @@ const [isAdmin, setIsAdmin] = useState(accountType == 'admin')
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("department");
 
-    navigate(`/`)
-  }
+    navigate(`/`);
+  };
   return (
     <div className="navbar bg-secondary sticky top-0 text-secondary-content z-10">
       <div className="navbar-start">
-        <Link to={`/admin`} className="btn btn-ghost text-xl">
-          MergeNet
+        <Link
+          to={`/admin/${sessionStorage.getItem("accountId")}`}
+          className=" flex items-center m-4"
+        >
+          <span className="font-title font-semibold mx-1 text-2xl">
+            MergeNet
+          </span>
+          <img src={logo} alt="logo" className="w-[30px]" />
         </Link>
         <ul className="menu menu-horizontal px-1 hidden md:flex">
           <li>
-            <Link to={isAdmin?`/admin/${sessionStorage.getItem('accountId')}`: accountType == 'manager'? `/Manager/${sessionStorage.getItem('accountId')}`:`/Employee/${sessionStorage.getItem('accountId')}`}>Dashboard</Link>
+            <Link
+              to={
+                isAdmin
+                  ? `/admin/${sessionStorage.getItem("accountId")}`
+                  : accountType == "manager"
+                  ? `/Manager/${sessionStorage.getItem("accountId")}`
+                  : `/Employee/${sessionStorage.getItem("accountId")}`
+              }
+            >
+              Dashboard
+            </Link>
           </li>
 
           {/* <li>
@@ -37,8 +54,6 @@ const [isAdmin, setIsAdmin] = useState(accountType == 'admin')
       </div>
       <div className="navbar-center hidden lg:flex"></div>
       <div className="navbar-end">
-      
-
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost m-1">
             <svg
@@ -63,6 +78,31 @@ const [isAdmin, setIsAdmin] = useState(accountType == 'admin')
             tabIndex={0}
             className="dropdown-content menu bg-base-100 text-neutral rounded-box z-[1] w-52 p-2 shadow"
           >
+            <li className="md:hidden">
+              <Link
+                to={`/admin/${sessionStorage.getItem("accountId")}`}
+                className="font-semibold text-secondary"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  className="icon icon-tabler icons-tabler-outline icon-tabler-home text-secondary"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                </svg>
+                Dashboard
+              </Link>
+            </li>
             <li>
               <Link onClick={LogoutAction} className="text-error">
                 <svg
