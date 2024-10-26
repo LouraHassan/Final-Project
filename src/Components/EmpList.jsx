@@ -6,7 +6,7 @@ function EmpList(props) {
   const [editMode, setEditMode] = useState(false);
     const [isReassignible, setIsReassignible] = useState(props.excess ? 'Yes' : 'No')
   
-    const accountType = localStorage.getItem('accountType')
+    const accountType = sessionStorage.getItem('accountType')
     const [isManager, setIsManager] = useState(accountType == 'manager')
   // useEffect(() => {
   //     if (editMode) {
@@ -25,7 +25,7 @@ function EmpList(props) {
             excess: isReassignible == 'Yes'? true : false
         }, {
             headers: {
-                Authorization: localStorage.getItem("token"),
+                Authorization: sessionStorage.getItem("token"),
               },
         }).then(res => {
             console.log(res);

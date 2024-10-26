@@ -2,7 +2,7 @@ import {useState} from 'react'
 import SkillTip from './SkillTip'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-const AssignEmpAPI = `http://localhost:3000/fillPosition?company=${localStorage.getItem("company")}`
+const AssignEmpAPI = `http://localhost:3000/fillPosition?company=${sessionStorage.getItem("company")}`
 function EmpCard(props) {
   const navigate = useNavigate()
   const [skills, setSkills] = useState(props.skills)
@@ -17,12 +17,12 @@ function EmpCard(props) {
     },
       {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: sessionStorage.getItem("token"),
       },
       }).then(res => {
       console.log(res);
         setIsDialogOpen(false);
-        navigate(`/admin/${localStorage.getItem('accountId')}`)
+        navigate(`/admin/${sessionStorage.getItem('accountId')}`)
     })
   }
   return (

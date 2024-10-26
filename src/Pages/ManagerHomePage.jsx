@@ -7,49 +7,97 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import SkillTip from "../Components/SkillTip";
 
+import NotificationCard from "../Components/NotificationCard";
 const AccountsAPI = `http://localhost:3000/account/`;
-const AddPositionAPI = `http://localhost:3000/position?company=${localStorage.getItem(
+const AddPositionAPI = `http://localhost:3000/position?company=${sessionStorage.getItem(
   "company"
 )}`;
 const SkillsOptionsAPI = `http://localhost:3000/skills`;
-const createAccountsAPI = `http://localhost:3000/createAccount/manager?company=${localStorage.getItem(
+const createAccountsAPI = `http://localhost:3000/createAccount/manager?company=${sessionStorage.getItem(
   "company"
 )}`;
+const updateAPI = `http://localhost:3000/request/`;
 
 function ManagerHomePage() {
   const { id } = useParams();
+  const notificationAPI = `http://localhost:3000/getNotifications/${id}`;
   const [user, setUser] = useState([]);
+
   const [skillsOptions, setSkillsOptions] = useState([]);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [position, setPosition] = useState("");
+  const [notifications, setNotifications] = useState([]);
+  const [positions, setPositions] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [experience, setExperience] = useState([]);
+  const [newPosition, setNewPosition] = useState("");
+  const [newDepartment, setNewDepartment] = useState("");
+  const [newExperience, setNewExperience] = useState("");
+  const [jobType, setJobType] = useState("");
+  const [skillInput, setSkillInput] = useState("");
+  const [skills, setSkills] = useState([]);
+
+  const [newSalary, setNewSalary] = useState("");
+  const [newKey, setNewKey] = useState("");
+  const [newOverview, setNewOverview] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
+  const [warningText, setWarningText] = useState("");
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     getUser();
     getOptions();
+    getNotifications();
   }, []);
   const getUser = () => {
+    setLoading(true);
     axios
-      .get(AccountsAPI + id + `?company=${localStorage.getItem("company")}`, {
+      .get(AccountsAPI + id + `?company=${sessionStorage.getItem("company")}`, {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: sessionStorage.getItem("token"),
         },
       })
       .then((res) => {
         console.log(res);
         setUser(res.data);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
   const getOptions = () => {
-    axios.get(SkillsOptionsAPI).then((res) => {
-      setSkillsOptions(res.data.skills);
-    });
+    setLoading(true);
+    axios
+      .get(SkillsOptionsAPI)
+      .then((res) => {
+        setSkillsOptions(res.data.skills);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [position, setPosition] = useState("");
-  console.log(user.department?._id);
+  const getNotifications = () => {
+    setLoading(true);
+    axios
+      .get(notificationAPI)
+      .then((res) => {
+        console.log(res.data);
+        setNotifications(res.data);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
+  console.log(notifications);
   const CreateEmployee = () => {
+    setLoading(true);
+
     if (name == "" || email == "" || password == "" || position == "") {
       setWarningText("");
     } else {
@@ -66,7 +114,7 @@ function ManagerHomePage() {
           },
           {
             headers: {
-              Authorization: localStorage.getItem("token"),
+              Authorization: sessionStorage.getItem("token"),
             },
           }
         )
@@ -78,42 +126,12 @@ function ManagerHomePage() {
           console.log(res);
           getUser();
           document.getElementById("employeeAccountDialog").close();
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   };
-
-  const textareaRef = useRef(null);
-  const textareaRef2 = useRef(null);
-  const textareaHeight = () => {
-    const textarea = textareaRef.current;
-    if (textarea) {
-      (textarea.style.height = "auto"),
-        (textarea.style.height = `${textarea.scrollHeight}px`);
-    }
-  };
-  const textareaHeight2 = () => {
-    const textarea2 = textareaRef2.current;
-    if (textarea2) {
-      (textarea2.style.height = "auto"),
-        (textarea2.style.height = `${textarea2.scrollHeight}px`);
-    }
-  };
-
-  const [positions, setPositions] = useState([]);
-  const [departments, setDepartments] = useState([]);
-  const [experience, setExperience] = useState([]);
-  const [newPosition, setNewPosition] = useState("");
-  const [newDepartment, setNewDepartment] = useState("");
-  const [newExperience, setNewExperience] = useState("");
-  const [jobType, setJobType] = useState("");
-  const [skillInput, setSkillInput] = useState("");
-  const [skills, setSkills] = useState([]);
-  const [newSalary, setNewSalary] = useState("");
-  const [newKey, setNewKey] = useState("");
-  const [newOverview, setNewOverview] = useState("");
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  // const [editIndex, setEditIndex] = useState(null);
-  const [warningText, setWarningText] = useState("");
   // const openDialog = (index = null) => {
   //   if (index !== null) {
   //     setNewPosition(positions[index]);
@@ -160,12 +178,8 @@ function ManagerHomePage() {
   //       setExperience([...experience, newExperience]);
   //     }
 
-  //     closeDialog();
-  //   }
-  // };
-  console.log(localStorage.getItem("department"));
-
   const addPositionAction = () => {
+    setLoading(true);
     if (
       newPosition == "" ||
       newExperience == "" ||
@@ -190,12 +204,13 @@ function ManagerHomePage() {
           },
           {
             headers: {
-              Authorization: localStorage.getItem("token"),
+              Authorization: sessionStorage.getItem("token"),
             },
           }
         )
         .then((res) => {
           console.log(res);
+
           setNewPosition("");
           setNewExperience("");
           setNewExperience("");
@@ -203,18 +218,45 @@ function ManagerHomePage() {
           setNewOverview("");
           setSkills([]);
           document.getElementById("createDepartmentDialog").close();
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   };
 
-  const addSkillAction = () => {
-    if (skillInput != "") {
-      setSkills([skillInput, ...skills]);
-      setSkillInput("");
-    }
+  // const addSkillAction = () => {
+  //   if (skillInput != "") {
+  //     setSkills([skillInput, ...skills]);
+  //     setSkillInput("");
+  //   }
+
+  // }
+
+  const dismissAction = (reqId) => {
+    setLoading(true);
+
+    axios
+      .put(updateAPI + reqId, {
+        accountId: id,
+      })
+      .then((res) => {
+        console.log(res.data);
+        getNotifications();
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <div>
+      {loading ? (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+            <span className="loading loading-dots bg-accent"></span>
+          </div>
+        </div>
+      ) : null}
       <Nav />
       <div className="flex">
         <div className="flex w-[100%]">
@@ -244,7 +286,67 @@ function ManagerHomePage() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col w-[75%] mt-9">
+
+          <div className="flex flex-col w-[75%] mt-10">
+            {notifications.newManager?.map((el) => {
+              if (!el.isClosedByNewManager) {
+                const handleDismiss = () => {
+                  dismissAction(el._id);
+                };
+
+                return (
+                  <NotificationCard
+                    text={`Employee ${el.employeeName} joined you department as ${el.newPosition}`}
+                    onDismiss={handleDismiss}
+                    style={"border-info"}
+                    icon={
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        className="stroke-info h-6 w-6 shrink-0"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path>
+                      </svg>
+                    }
+                  />
+                );
+              }
+            })}
+            {notifications.oldManager?.map((el) => {
+              if (!el.isClosedByOldManager) {
+                const handleDismiss = () => {
+                  dismissAction(el._id);
+                };
+                return (
+                  <NotificationCard
+                    text={`Employee ${el.employeeName} is no longer in your department`}
+                    onDismiss={handleDismiss}
+                    style={"border-warning"}
+                    icon={
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6 shrink-0 stroke-current text-warning"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                        />
+                      </svg>
+                    }
+                  />
+                );
+              }
+            })}
             <h2 className="font-title font-bold text-[3vh] text-secondary ml-5">
               Number of employees:{user?.department?.employees?.length || 0}
             </h2>
@@ -454,6 +556,7 @@ function ManagerHomePage() {
                 </div>
               </div>
             </div>
+
           )} */}
 
           <dialog id="Newposition" className="modal w-full">

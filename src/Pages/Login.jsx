@@ -8,12 +8,13 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [warningText, setWarningText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const loginAction = () => {
+    setLoading(true);
     if (email == "" || password == "") {
-      setWarningText("Please fill all the fields");
-    } else {
       setWarningText("");
+    } else {
       axios
         .post(LoginAPI, {
           email: email,
@@ -21,16 +22,13 @@ function Login() {
         })
         .then((res) => {
           console.log(res);
+          
+          sessionStorage.setItem("accountId", res.data.id);
+          sessionStorage.setItem("accountType", res.data.accountType);
+          sessionStorage.setItem("company", res.data.company);
+          sessionStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("department", res.data.department?._id);
 
-          localStorage.setItem("accountId", res.data.id);
-          localStorage.setItem("accountType", res.data.accountType);
-          localStorage.setItem("company", res.data.company);
-          localStorage.setItem("token", res.data.token);
-          if (res.data.department) {
-            localStorage.setItem("department", res.data.department._id);
-          } else {
-            localStorage.removeItem("department");
-          }
           if (res.data.accountType === "admin") {
             navigate(`/admin/${res.data.id}`);
           } else if (res.data.accountType === "manager") {
@@ -38,19 +36,25 @@ function Login() {
           } else if (res.data.accountType === "employee") {
             navigate(`/Employee/${res.data.id}`);
           }
-        })
-        .catch((err) => {
-          setWarningText(err.response.data.msg);
+        }).finally(() => {
+          setLoading(false);
         });
     }
   };
 
   return (
     <div>
-      <div className="flex justify-center items-center  bg-[#30475e]  h-screen ">
-        <div className="flex justify-center  relative items-center rounded-lg bg-white h-auto  max-md:h-auto max-sm:h-auto ">
-          <div className=" flex    justify-center items-center">
-            <div className="flex flex-col items-center   ">
+       {loading ? (
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+        <span className="loading loading-dots bg-accent"></span>
+      </div>
+    </div>
+  ) : null}
+      <div className="flex justify-center items-center  bg-[#30475e] w-full h-screen ">
+        <div className="flex justify-center items-center justify-around rounded-lg bg-white h-[70%] max-md:h-auto max-sm:h-auto ">
+          <div className=" flex justify-center items-center">
+            <div className="p-16 flex flex-col items-center relative   ">
               <Link to={`/`}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -165,7 +169,6 @@ function Login() {
                   >
                     Forgot Password?
                   </h1>
-                  <p className="text-error">{warningText}</p>
                   <div className="card-actions">
                     <button
                       onClick={loginAction}

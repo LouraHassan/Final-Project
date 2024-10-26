@@ -2,66 +2,58 @@ import React from "react";
 import Footer from "../Components/Footer";
 import HomeNav from "../Components/HomeNav";
 import { Link } from "react-router-dom";
+import logo from '/logo.png'
+
 function Home() {
   return (
       <div className="w-full">
           <HomeNav></HomeNav>
       <div
-        className="lg:w-full h-screen bg-cover flex justify-center items-center"
-        style={{
-          backgroundImage:
-            "url('https://images.pexels.com/photos/3183183/pexels-photo-3183183.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')",
-        }}
+        className="lg:w-full h-screen flex flex-col justify-center items-center"
       >
-        <div className="z-0 absolute inset-0 bg-black opacity-60 "></div>
-        <div className="z-10 flex flex-col items-center lg:w-[60vw] justify-between">
-          <p className="text-3xl text-left mx-6 md:text-5xl text-white my-4 md:text-center">Streamline Employee Placement Across Departments After Mergers</p>
-          <p className="text-xl text-left mx-6 md:text-2xl text-white my-4 md:text-center">Manage employee roles, track department needs, and optimize talent allocation seamlessly</p>
-          <Link to={`/signup`} className="btn self-start mx-6 my-10 btn-secondary btn-lg md:self-center">Start Now!</Link>
-        </div>
+        <div className="z-10 flex flex-col items-center justify-between my-10 absolute top-24 left-10 lg:w-[70vw]">
+          <p className="text-4xl text-left mx-2 md:mx-6 md:text-5xl text-secondary my-5">Streamline Employee Placement Across Departments After Mergers</p>
+          <p className="text-xl text-left mx-6 md:text-2xl text-accent my-4 font-semibold">Manage employee roles, track department needs, and optimize talent allocation seamlessly</p>
+              </div>
+          <Link to={`/signup`} className="btn self-start mx-6 my-10 btn-accent btn-lg md:self-center absolute left-10 bottom-20 md:bottom-10 z-20">Start Now!</Link>
+       
+          <div class="custom-shape-divider-bottom-1729945068 md:hidden">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M598.97 114.72L0 0 0 120 1200 120 1200 0 598.97 114.72z" class="shape-fill"></path>
+    </svg>
+</div>
+              <div className="custom-shape-divider-bottom-1729943384 hidden md:block">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M598.97 114.72L0 0 0 120 1200 120 1200 0 598.97 114.72z" class="shape-fill"></path>
+    </svg>
+</div>
       </div>
 
-      <div className="p-20 bg-secondary">
+      <div id="about-us" className="p-20 bg-secondary">
         <div className="grid lg:grid-cols-2 my-4">
           <div>
-            <p className="text-primary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block">
+            <p className="text-primary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-5">
               ABOUT US
             </p>
-            <p className="text-primary font-text text-sm tracking-wide m-4">
+            <p className="text-primary font-text text-md tracking-wide m-4">
               At MergeNet, we specialize in optimizing workforce management
               following the merger of companies or startups. Our platform is
               designed to streamline the process of integrating employees into
               new departments, ensuring that every individual is placed where
               they can contribute most effectively.
-            </p>
+                      </p>
+                      {/* <span className="loading loading-dots loading-lg bg-primary"></span> */}
+
           </div>
           <div className=" flex items-center justify-around">
           
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="80"
-              height="80"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              className="icon icon-tabler icons-tabler-outline icon-tabler-users-group text-accent"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-              <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
-              <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-              <path d="M17 10h2a2 2 0 0 1 2 2v1" />
-              <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-              <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
-            </svg>
+                      <img src={logo} alt="logo" className="w-[10vw] " />
+
           </div>
         </div>
       </div>
-      <div className="p-20 bg-base-100">
-        <p className="text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block">
+      <div id="how-it-works" className="p-20 bg-base-100">
+        <p className="text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           HOW IT WORKS
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 my-5">
@@ -216,8 +208,8 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className="p-20 bg-base-200 flex flex-col items-center">
-        <p className="self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block">
+      <div id="key-features" className="p-20 bg-base-200 flex flex-col items-center">
+        <p className="self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           KEY FEATURES
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-20 lg:w-[80vw] my-5">
@@ -318,21 +310,19 @@ function Home() {
               <path d="M3 13a20 20 0 0 0 18 0" />
             </svg>
             <p className="text-md font-title font-bold m-2 text-center">
-              Department Vacancy Management
-            </p>
+            Department Vacancy Management</p>
             <p className="text-xs font-text m-2 text-center tracking-wider">
-              Department managers can post job openings, detailing the required
-              skills and qualifications to fill gaps.
+            Managers can post job openings, specifying skills and qualifications needed to fill staffing gaps.
             </p>
           </div>
         </div>
       </div>
-      <div className="p-20 bg-base-100 flex flex-col items-center">
-        <p className="self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block">
+      <div id="benefits" className="p-20 bg-base-100 flex flex-col items-center">
+        <p className="self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           BENEFITS
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-20 lg:w-[80vw] my-5">
-          <div className="p-5 flex flex-col rounded">
+          <div className="p-5 flex flex-col rounded shadow">
             <p className="text-xl font-title tracking-wider font-semibold text-neutral">
               For Recruiters
             </p>
@@ -359,7 +349,7 @@ function Home() {
               optimizing talent distribution.
             </p>
           </div>
-          <div className="p-5 flex flex-col rounded">
+          <div className="p-5 flex flex-col rounded shadow">
             <p className="text-xl font-title tracking-wider font-semibold text-neutral">
               For Managers
             </p>
@@ -388,7 +378,7 @@ function Home() {
               levels.
             </p>
           </div>
-          <div className="p-5 flex flex-col rounded">
+          <div className="p-5 flex flex-col rounded shadow">
             <p className="text-xl font-title tracking-wider font-semibold text-neutral">
               For Employees
             </p>
@@ -416,8 +406,8 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className="p-20 bg-secondary flex flex-col items-center">
-        <p className="self-start text-primary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block">
+      <div id="faq" className="p-20 bg-secondary flex flex-col items-center">
+        <p className="self-start text-primary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           FAQ
         </p>
         <div className="lg:w-[80vw]">
@@ -460,8 +450,8 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className="p-20 bg-base-200 flex flex-col items-center">
-        <p className="self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block">
+      <div id="contact-us" className="p-20 bg-base-200 flex flex-col items-center">
+        <p className="self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           CONTACT US
         </p>
         <div className="my-4 flex flex-col items-center">
