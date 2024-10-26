@@ -11,9 +11,8 @@ function Login() {
 
   const loginAction = () => {
     if (email == "" || password == "") {
-      setWarningText("Please fill all the fields");
+      setWarningText("");
     } else {
-      setWarningText('')
       axios
         .post(LoginAPI, {
           email: email,
@@ -26,11 +25,8 @@ function Login() {
           localStorage.setItem("accountType", res.data.accountType);
           localStorage.setItem("company", res.data.company);
           localStorage.setItem("token", res.data.token);
-          if (res.data.department) {
-            localStorage.setItem("department", res.data.department._id);
-          } else {
-            localStorage.removeItem("department");
-          }
+          localStorage.setItem("department", res.data.department?._id);
+
           if (res.data.accountType === "admin") {
             navigate(`/admin/${res.data.id}`);
           } else if (res.data.accountType === 'manager') {
@@ -38,8 +34,6 @@ function Login() {
           } else if (res.data.accountType === 'employee') {
             navigate(`/Employee/${res.data.id}`)
           }
-        }).catch(err => {
-          setWarningText(err.response.data.msg)
         })
     }
   };
@@ -114,7 +108,7 @@ function Login() {
                   <h1 className="text-[2vh] flex justify-start w-[70%] hover:text-blue-800">
                     Forgot Password?
                   </h1>
-                    <p className="text-error">{warningText}</p>
+                  
                   <div className="card-actions">
                     <button
                       onClick={loginAction}

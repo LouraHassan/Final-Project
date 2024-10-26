@@ -6,18 +6,29 @@ import EmpList from "../Components/EmpList";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import SkillTip from "../Components/SkillTip";
+import NotificationCard from "../Components/NotificationCard";
 const AccountsAPI = `http://localhost:3000/account/`;
 const AddPositionAPI = `http://localhost:3000/position?company=${localStorage.getItem("company")}`;
 const SkillsOptionsAPI = `http://localhost:3000/skills`
 const createAccountsAPI = `http://localhost:3000/createAccount/manager?company=${localStorage.getItem('company')}`
+const updateAPI = `http://localhost:3000/request/`
 
 function ManagerHomePage() {
+  
+  
   const { id } = useParams();
+  const notificationAPI = `http://localhost:3000/getNotifications/${id}`
   const [user, setUser] = useState([]);
   const [skillsOptions, setSkillsOptions] = useState([])
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [position, setPosition] = useState('')
+  const [notifications, setNotifications] = useState([])
   useEffect(() => {
     getUser();
     getOptions()
+    getNotifications()
   }, []);
   const getUser = () => {
     axios
@@ -38,13 +49,15 @@ function ManagerHomePage() {
 })
   }
 
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [position, setPosition] = useState('')
-console.log(user.department?._id);
+  
+  const getNotifications = () => {
+    axios.get(notificationAPI).then(res => {
+      console.log(res.data);
+    setNotifications(res.data)
+  })
+}
 
-
+ console.log(notifications);
   const CreateEmployee = () => {
     if (name == '' || email == '' || password == '' || position == '') {
         setWarningText('')
@@ -187,6 +200,15 @@ console.log(localStorage.getItem('department'));
       setSkills([skillInput, ...skills])
       setSkillInput('')
     }
+  }
+
+  const dismissAction = (reqId) => {
+    axios.put(updateAPI+reqId, {
+      accountId: id
+  }).then(res => {
+      console.log(res.data);
+      getNotifications()
+  })
   }
   return (
     <div>
@@ -429,6 +451,26 @@ console.log(localStorage.getItem('department'));
           )}
         </div>
       </div>
+
+      {notifications.newManager?.map(el => {
+        if (!el.isClosedByNewManager) {
+          const handleDismiss = () => {
+            dismissAction(el._id)
+
+          }
+          
+          return (<NotificationCard text={`Employee ${el.employeeName} joined you department as ${el.newPosition}`} accountId={id} id={el._id} onDismiss={handleDismiss} style={'border-info'} />)
+        }
+      })}
+      {notifications.oldManager?.map(el => {
+        if (!el.isClosedByOldManager) {
+          const handleDismiss = () => {
+            dismissAction(el._id)
+
+          }
+          return (<NotificationCard text={el.employeeName} accountId={id} id={el._id} onDismiss={handleDismiss} />)
+        }
+      })}
       <dialog id="employeeAccountDialog" className="modal">
             <div className="modal-box flex flex-col items-center">
               <form method="dialog">

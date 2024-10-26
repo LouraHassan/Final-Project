@@ -9,8 +9,11 @@ const AccountsAPI = `http://localhost:3000/account/`;
 const SkillsOptionsAPI = `http://localhost:3000/skills`
 const updatePasswordAPI = `http://localhost:3000/account/changepassword/`
 const updateEmpAPI = `http://localhost:3000/account/`
+const updateAPI = `http://localhost:3000/request/`
+
 function EmployeePage() {
   const { id } = useParams();
+  const notificationAPI = `http://localhost:3000/getNotifications/${id}`
   const [user, setUser] = useState([]);
   const [open, setOpen] = useState(false);
   const [editMode, seteditMode] = useState(true);
@@ -32,10 +35,14 @@ const textareaRef = useRef(null)
   const [skillsArr, setSkillsArr] = useState([]);
   const [skillsOptions, setSkillsOptions] = useState([])
   const [skillInput, setSkillInput] = useState("");
-const [passwordChanged, setPasswordChanged] = useState()
+  const [passwordChanged, setPasswordChanged] = useState()
+  const [notifications, setNotifications] = useState([])
+
   useEffect(() => {
     getUser();
     getOptions()
+    getNotifications()
+
   }, []);
 
   useEffect(() => {
@@ -64,6 +71,13 @@ setPasswordChanged(user.passwordChanged)
   setSkillsOptions(res.data.skills)
 })
   }
+  const getNotifications = () => {
+    axios.get(notificationAPI).then(res => {
+      console.log(res.data);
+    setNotifications(res.data)
+  })
+}
+
   const editaction = () => {
     seteditMode(false);
     setYearsStyle("input input-bordered");
@@ -90,6 +104,10 @@ textarea2.style.height = `${textarea2.scrollHeight}px`
     setYearsStyle("bg-transparent");
     setAboutStyle("bg-transparent");
     setEducationStyle("bg-transparent");
+    setYears(user.yearsOfExperience || '')
+    setAbout(user.aboutMe || '')
+    setEducation(user.education || '')
+    setSkillsArr(user.skills || []);
   };
   const saveEditAction = () => {
     axios.put(updateEmpAPI + id, {
@@ -129,16 +147,24 @@ textarea2.style.height = `${textarea2.scrollHeight}px`
       }).then(res => {
         console.log(res);
         document.getElementById("passwordDialog").close();
-        getUser()
+        getUser();
       })
 }
+  }
+
+  const dismissAction = (reqId) => {
+    axios.put(updateAPI+reqId, {
+      accountId: id
+  }).then(res => {
+      console.log(res.data);
+      getNotifications()
+  })
   }
   return (
     <div>
       <Nav />
 
       <div className="flex  justify-center p-5 ">
-        <NotificationCard></NotificationCard>
         {/* <div className="flex flex-col h-[30vh] p-10">
         <div className="flex ">
           <svg
@@ -476,6 +502,16 @@ textarea2.style.height = `${textarea2.scrollHeight}px`
           </div>
           </div>
       </div>
+      
+      {notifications.employees?.map(el => {
+        if (!el.isClosedByEmployee) {
+          const handleDismiss = () => {
+            dismissAction(el._id)
+
+          }
+          return (<NotificationCard text={el.employeeName} accountId={id} id={el._id} onDismiss={handleDismiss} />)
+        }
+      })}
     </div>
   );
 }

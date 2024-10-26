@@ -118,6 +118,7 @@ function PositionsPage() {
         setEditMode(true);
       });
   };
+console.log(bestEmp);
 
   const handleDelete2 = (skillToDelete) => {
     setSkillsArr((prevSkills) =>
@@ -382,10 +383,13 @@ function PositionsPage() {
           <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
             {bestEmp &&
               bestEmp.map((emp, index) => {
-                return (
-                  <EmpCard
+
+                if (emp) {
+             
+                  return (
+                    <EmpCard
                     key={index}
-                    id={emp._id}
+                    id={emp?._id}
                     positionId={position?._id}
                     name={emp.name}
                     years={emp.yearsOfExperience}
@@ -394,8 +398,9 @@ function PositionsPage() {
                     nPosition={position.title}
                     department={position?.department?.name}
                     manager={position?.department?.manager?.name}
-                  ></EmpCard>
-                );
+                    ></EmpCard>
+                  );
+                }
               })}
           </div>
         </div>
