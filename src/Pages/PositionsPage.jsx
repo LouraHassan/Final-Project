@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Nav from "../Components/Nav";
 import SkillTip from "../Components/SkillTip";
 import PositionCard from "../Components/PositionCard";
@@ -15,7 +15,10 @@ const deletePositionAPI = `http://localhost:3000/position/`;
 const updateAPI = `http://localhost:3000/position/`;
 const bestEmpAPI = `http://localhost:3000/chat/`;
 function PositionsPage() {
-  console.log(sessionStorage.getItem("department"));
+
+  console.log(localStorage.getItem("department"));
+  const textareaRef = useRef(null);
+  const textareaRef2 = useRef(null);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -25,13 +28,25 @@ function PositionsPage() {
   const [positionArr, setPositionArr] = useState([]);
   const [open, setOpen] = useState(false);
   const [jobType, setJobType] = useState("");
+  const [department, setDepartment] = useState("");
+  const [experience, setExperience] = useState("");
+  const [description, setDescription] = useState("");
+  const [salary, setSalary] = useState("");
+  const [requirments, setRequirments] = useState("");
   const [editMode, setEditMode] = useState(true);
   const [skillsArr, setSkillsArr] = useState([]);
   const [bestEmp, setBestEmp] = useState([]);
   const [editModeInput, setEditModeInput] = useState(
     "bg-transparent text-black"
   );
+
   const [editModeSelect, setEditModeSelect] = useState("bg-transparent");
+  const [departmentStyle, setDepartmentStyle] = useState("bg-transparent ");
+  const [experienceStyle, setExperienceStyle] = useState("bg-transparent w-[2vw]");
+  const [descriptionStyle, setDescriptionStyle] = useState("bg-transparent ");
+  const [salaryStyle, setSalaryStyle] = useState("bg-transparent w-[6vw]");
+  const [requirmentsStyle, setRequirmentsStyle] = useState("bg-transparent ");
+
   const [skillsOptions, setSkillsOptions] = useState([]);
   const [skillInput, setSkillInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -46,7 +61,13 @@ function PositionsPage() {
   useEffect(() => {
     setJobType(position.jobType);
     setSkillsArr(position.skills);
+    setDepartment(position?.department?.name || "");
+    setExperience(position.experienceYears || "");
+    setDescription(position.description || "");
+    setSalary(position.expectedSalary || "");
+    setRequirments(position.requirments || "");
   }, [position]);
+
   const getPosition = () => {
     setLoading(true);
     axios.get(positionAPI + id).then((res) => {
@@ -85,18 +106,49 @@ function PositionsPage() {
       setLoading(false);
     })
   };
+  const textareaHeight = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      (textarea.style.height = "auto"),
+        (textarea.style.height = `${textarea.scrollHeight}px`);
+    }
+  };
+  const textareaHeight2 = () => {
+    const textarea2 = textareaRef2.current;
+    if (textarea2) {
+      (textarea2.style.height = "auto"),
+        (textarea2.style.height = `${textarea2.scrollHeight}px`);
+    }
+  };
+
   const editAction = () => {
     setEditMode(false);
     setEditModeInput("input input-bordered");
     setEditModeSelect("select select-bordered");
+    setDepartmentStyle("input input-bordered ");
+    setExperienceStyle("input input-bordered");
+    setDescriptionStyle("input input-bordered");
+    setSalaryStyle("input input-bordered");
+    setRequirmentsStyle("input input-bordered");
   };
 
   const cancelEditAction = () => {
     setEditMode(true);
     setEditModeInput("bg-transparent");
     setEditModeSelect("bg-transparent");
+    setDepartmentStyle("bg-transparent ");
+    setExperienceStyle("bg-transparent w-[2vw]");
+    setDescriptionStyle("bg-transparent");
+    setSalaryStyle("bg-transparent w-[6vw]");
+    setRequirmentsStyle("bg-transparent");
+
     setJobType(position.jobType);
     setSkillsArr(position.skills);
+    setDepartment(position?.department?.name);
+    setExperience(position.experienceYears);
+    setDescription(position.description);
+    setSalary(position.expectedSalary);
+    setRequirments(position.requirments);
   };
   const deleteAction = () => {
     setLoading(true);
@@ -123,6 +175,12 @@ function PositionsPage() {
         updateAPI + id + `?company=${sessionStorage.getItem("company")}`,
         {
           jobType: jobType,
+          department: department,
+          yearsOfExperience: experience,
+          description: description,
+          expectedSalary: salary,
+          requirments: requirments,
+          skills: skillsArr
         },
         {
           headers: {
@@ -133,6 +191,11 @@ function PositionsPage() {
       .then((res) => {
         console.log(res);
         setEditMode(true);
+        setDepartmentStyle("bg-transparent");
+        setExperienceStyle("bg-transparent w-[2vw]");
+        setDescriptionStyle("bg-transparent");
+        setSalaryStyle("bg-transparent w-[6vw]");
+        setRequirmentsStyle("bg-transparent");
       }).finally(() => {
         setLoading(false);
       })
@@ -155,7 +218,7 @@ console.log(bestEmp);
   ) : null}
       <Nav />
       <div className="flex  justify-around mt-5 mb-5  m-8 max-md:flex-col max-md:justify-center max-md:items-center ">
-        <div className="flex flex-col w-[70%] bg-white h-auto justify-around border shadow-2xl p-6 max-md:w-[90%] ">
+        <div className="flex flex-col w-[70%]  bg-white p-8 h-auto justify-around  border shadow-2xl max-md:w-[90%] ">
           <div className="flex justify-between">
             <h1 className="font-title font-bold text-secondary text-[4vh]">
               {position.title}
@@ -186,7 +249,7 @@ console.log(bestEmp);
 
             {open && (
               <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-60  ">
-                <div className="bg-white p-6 rounded-lg w-[45%] h-[%]">
+                <div className="bg-white p-6 rounded-lg w-[45%]">
                   <h2 className="font-title font-bold text-secondary text-[4vh]">
                     Edit Position
                   </h2>
@@ -241,14 +304,25 @@ console.log(bestEmp);
           </div>
 
           <div className="flex flex-col justify-around h-[28vh]">
-            <h2 className="font-text ">
-              <span className="font-bold font-title text-[2.8vh]">
+            <h2 className="font-text mt-4 ">
+              <span className="font-bold font-title text-[2.8vh]  text-secondary  ">
                 Department:{" "}
               </span>
-              {position?.department?.name}
+              <input
+                placeholder="Not added yet"
+                type="text"
+                value={department}
+                onChange={(e) => {
+                  setDepartment(e.target.value);
+                }}
+                disabled={editMode}
+                className={departmentStyle}
+                name=""
+                id=""
+              />
             </h2>
-            <h2 className="font-text ">
-              <span className="font-bold font-title text-[2.8vh]">
+            <h2 className="font-text mt-4">
+              <span className="font-bold font-title text-[2.8vh]   text-secondary">
                 Job Type:{" "}
               </span>
               <select
@@ -277,30 +351,89 @@ console.log(bestEmp);
                 <option value={"Part-Time"}>Part-Time</option>
               </select>
             </h2>
-            <h2 className="font-text ">
-              <span className="font-bold font-title text-[2.8vh]">
+            <h2 className="font-text mt-4 ">
+              <span className="font-bold font-title text-[2.8vh]  text-secondary ">
                 Experience:
               </span>{" "}
-              {position.experienceYears} years
+              <input
+                placeholder="Not added yet"
+                type="text"
+                value={experience}
+                onChange={(e) => {
+                  setExperience(e.target.value);
+                }}
+                disabled={editMode}
+                className={experienceStyle}
+                name=""
+                id=""
+              />
+              {/* {position.experienceYears}  */}
+              years
             </h2>
-            <h2 className="font-text ">
-              <span className="font-bold font-title text-[2.8vh]">
+            <h2 className="font-text  mt-4">
+              <span className="font-bold font-title text-[2.8vh]  text-secondary ">
                 Estimated Salary:{" "}
-              </span>{" "}
-              {position.expectedSalary} SR
+              </span>
+              <input
+                placeholder="Not added yet"
+                type="text"
+                value={salary}
+                onChange={(e) => {
+                  setSalary(e.target.value);
+                }}
+                disabled={editMode}
+                className={salaryStyle}
+                name=""
+                id=""
+              />
+              {/* {position.expectedSalary}  */}
+              SR
             </h2>
           </div>
-          <h2 className="font-title text-accent text-[3vh]">Job overview</h2>
-          <p className="font-text w-[90%]">{position.description}</p>
-          <h1 className="font-title text-accent text-[3vh]">
-            Key Responsibilities
-          </h1>
 
-          <p className="font-text w-[90%]">{position.requirments}</p>
+          <h2 className="font-title  font-bold  text-[2.8vh] mt-[8vh] text-secondary ">
+            Job overview:
+          </h2>
+
+          <textarea
+            placeholder="Not added yet"
+            ref={textareaRef}
+            rows={4}
+            value={description}
+            onChange={(e) => {
+              setDescription(e.target.value);
+              textareaHeight();
+            }}
+            className={descriptionStyle}
+            disabled={editMode}
+            style={{ resize: "none" }}
+          ></textarea>
+
+          {/* <p className="font-text w-[90%]">{position.description}</p> */}
+          <h1 className="font-title  font-bold  text-[2.8vh] mt-4  text-secondary">
+            Key Responsibilities:
+          </h1>
+          <textarea
+            placeholder="Not added yet"
+            ref={textareaRef}
+            rows={4}
+            value={requirments}
+            onChange={(e) => {
+              setRequirments(e.target.value);
+              textareaHeight2();
+            }}
+            className={requirmentsStyle}
+            disabled={editMode}
+            style={{ resize: "none" }}
+          ></textarea>
+
+          {/* <p className="font-text w-[90%]">{position.requirments}</p> */}
 
           <div className="flex flex-wrap my-4 items-center">
             <p>
-              <span className="font-bold font-title text-[2.8vh]">Skills:</span>{" "}
+              <span className="font-bold font-title text-[2.8vh]  text-secondary">
+                Skills:
+              </span>{" "}
             </p>
             <select
               name="skills"
@@ -314,12 +447,14 @@ console.log(bestEmp);
                   setSkillInput("");
                 }
               }}
-              className={editMode ? `hidden` : `select select-bordered`}
+              className={
+                editMode ? `hidden` : `select select-bordered w-full mb-7 mt-3`
+              }
             >
               {skillsOptions.map((skill) => {
                 return <option value={skill}>{skill}</option>;
               })}
-              <option value=""></option>
+              <option value="">Select Skills</option>
             </select>
             {skillsArr &&
               skillsArr.map((skill) => {
@@ -336,7 +471,11 @@ console.log(bestEmp);
                 );
               })}
           </div>
-          <div className={`self-end ${editMode ? "hidden" : ""}`}>
+          <div
+            className={`self-end ${
+              editMode ? "hidden" : " flex justify-around w-[30vh]"
+            }`}
+          >
             <button
               onClick={cancelEditAction}
               className="btn btn-outline btn-accent btn-sm"
@@ -372,14 +511,17 @@ console.log(bestEmp);
                 <p className="py-4">
                   Are you sure from deleting this position?
                 </p>
-                <button className="btn btn-error" onClick={deleteAction}>
+                <button
+                  className="btn btn-outline btn-error"
+                  onClick={deleteAction}
+                >
                   Delete Position
                 </button>
               </div>
             </dialog>
             <button
               onClick={saveEditAction}
-              className="btn btn-secondary btn-sm"
+              className="btn btn-outline btn-secondary btn-sm"
             >
               Save
             </button>

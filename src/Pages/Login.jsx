@@ -31,10 +31,10 @@ function Login() {
 
           if (res.data.accountType === "admin") {
             navigate(`/admin/${res.data.id}`);
-          } else if (res.data.accountType === 'manager') {
-            navigate(`/Manager/${res.data.id}`)
-          } else if (res.data.accountType === 'employee') {
-            navigate(`/Employee/${res.data.id}`)
+          } else if (res.data.accountType === "manager") {
+            navigate(`/Manager/${res.data.id}`);
+          } else if (res.data.accountType === "employee") {
+            navigate(`/Employee/${res.data.id}`);
           }
         }).finally(() => {
           setLoading(false);
@@ -72,9 +72,9 @@ function Login() {
                   <path d="M15 6l-6 6l6 6" />
                 </svg>
               </Link>
-              <div className="card   bg-white w-96 max-md:w-[100%]">
-                <div className="card-body justify-around items-center text-center h-[52vh]">
-                  <h1 className="font-title font-bold text-secondary text-[3vh]">
+              <div className="card g bg-white  max-md:w-[100%]">
+                <div className="card-body justify-around items-center text-center h-auto">
+                  <h1 className="font-title font-bold text-secondary mb-4 text-[5vh]">
                     Login
                   </h1>
                   <label className="input input-bordered flex items-center gap-2">
@@ -116,7 +116,57 @@ function Login() {
                       placeholder="password"
                     />
                   </label>
-                  <h1 className="text-[2vh] flex justify-start w-[70%] hover:text-blue-800">
+
+                  <dialog id="changepassword" className="modal ">
+                    <div className="modal-box w-[60vh] p-10 flex flex-col justify-around justify-center items-center">
+                      <form method="dialog">
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                          ✕
+                        </button>
+                      </form>
+                      <h3 className="font-title font-bold text-lg text-secondary">
+                        change password!
+                      </h3>
+                      <label className="font-text text-accent mt-3">
+                        Password:
+                      </label>
+                      <input
+                        className="h-9 border-2 border-gray"
+                        type="password"
+                        name=""
+                        id=""
+                      />
+                      <label className="font-text text-accent">
+                        New Password:
+                      </label>
+                      <input
+                        className="h-9 border-2 border-gray"
+                        type="password"
+                        name=""
+                        id=""
+                      />
+
+                      <label className="font-text text-accent">
+                        New Password:
+                      </label>
+                      <input
+                        className="h-9 border-2 border-gray"
+                        type="password"
+                        name=""
+                        id=""
+                      />
+                      <button className=" btn btn-secondary text-white mt-3">
+                        Save
+                      </button>
+                    </div>
+                  </dialog>
+
+                  <h1
+                    onClick={() =>
+                      document.getElementById("changepassword").showModal()
+                    }
+                    className=" text-[2vh] flex justify-start w-[95%] cursor-pointer hover:text-blue-800"
+                  >
                     Forgot Password?
                   </h1>
                   <div className="card-actions">
@@ -131,13 +181,13 @@ function Login() {
               </div>
             </div>
           </div>
-          <div className=" flex justify-center w-[40%]  max-md:hidden max-sm:hidden">
+          <div className=" flex justify-center w-[50%]  max-md:hidden m:hidden max-sm:hidden">
             <div>
-              <h1 className="font-title font-bold text-secondary text-[6vh] text-center ">
+              <h1 className="font-title font-bold text-secondary pt-3 text-[6vh] text-center ">
                 welcome back
               </h1>
               <img
-                src="https://media.discordapp.net/attachments/1294220545696596029/1297877355636981770/p-logo.png?ex=67182eba&is=6716dd3a&hm=b21e374d7163fe7e5d36c904836d176aa422ad745f2516e360326ce2a873ebaf&=&format=webp&quality=lossless&width=980&height=980"
+                src="https://cdn.discordapp.com/attachments/1277202818746552463/1299678355548930098/p-logo.png?ex=671e134a&is=671cc1ca&hm=bedbdb5da8e61a34829dfd00b90ade57fcef8c5e9ab264377b1a4b0771a3bd5a&"
                 alt=""
               />
             </div>

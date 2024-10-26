@@ -140,6 +140,7 @@ export default function AdminHomePage() {
           document.getElementById("createDepartmentDialog").close();
           setDeptName('')
           setManager('')
+          getDepartments()
       })
       .catch((err) => {
         console.log(err.response);
@@ -177,7 +178,8 @@ export default function AdminHomePage() {
           setEmail("");
           setPassword("");
           console.log(res);
-          document.getElementById("managerAccountDialog").close();
+            document.getElementById("managerAccountDialog").close();
+            getManagers()
         })
         .catch((err) => {
           setWarningText2(err.response.data.msg);
@@ -214,12 +216,16 @@ export default function AdminHomePage() {
         .then((res) => {
           setName("");
           setEmail("");
-          setPassword("");
+            setPassword("");
+            setPosition('')
+            setDepartment('')
           console.log(res);
-          document.getElementById("employeeAccountDialog").close();
+            document.getElementById("employeeAccountDialog").close();
+            getEmployee()
+            getDepartments()
         })
         .catch((err) => {
-          setWarningText3(err.response.data.msg);
+          setWarningText3(err.response.data.err);
         })
         .finally(() => {
           setLoading(false);
@@ -266,7 +272,8 @@ export default function AdminHomePage() {
               );
             })}
           </div>
-          <button
+                  <button
+                      disabled={!managerArr || managerArr.length == 0}
             className="btn btn-accent m-4"
             onClick={() =>
               document.getElementById("createDepartmentDialog").showModal()
@@ -373,7 +380,8 @@ export default function AdminHomePage() {
               </tbody>
             </table>
           </div>
-          <button
+                  <button
+                      disabled={!departmentArr || departmentArr.length == 0}
             className="btn btn-outline btn-secondary self-start my-2"
             onClick={() =>
               document.getElementById("employeeAccountDialog").showModal()
