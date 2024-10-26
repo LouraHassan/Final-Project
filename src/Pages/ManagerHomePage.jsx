@@ -41,6 +41,8 @@ function ManagerHomePage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [warningText, setWarningText] = useState("");
+  const [warningText2, setWarningText2] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -91,6 +93,7 @@ function ManagerHomePage() {
     if (name == '' || email == '' || password == '' || position == '') {
         setWarningText('')
     } else {
+      setWarningText('')
         axios.post(createAccountsAPI, {
             name: name,
             positionTitle: position,
@@ -175,8 +178,9 @@ console.log(sessionStorage.getItem('department'));
       newOverview == "" ||
       newSalary == ""
     ) {
-      setWarningText("you must fill all the fields");
+      setWarningText2("you must fill all the fields");
     } else {
+      setWarningText2('')
       axios
         .post(
           AddPositionAPI,
@@ -206,6 +210,9 @@ console.log(sessionStorage.getItem('department'));
           setSkills([])
           // document.getElementById("createDepartmentDialog").close();
 
+        }).catch((err) => {
+          console.log(err.response);
+          setWarningText2(err.response.data.msg);
         }).finally(() => {
           setLoading(false);
         })
@@ -228,9 +235,17 @@ console.log(sessionStorage.getItem('department'));
   }).then(res => {
       console.log(res.data);
       getNotifications()
+  }).catch((err) => {
+    console.log(err.response);
+    setWarningText(err.response.data.msg);
   }).finally(() => {
     setLoading(false);
   })
+  }
+  const handleDelete2 = (skillToDelete) => {
+    setSkills((prevSkills) =>
+      prevSkills.filter((skill) => skill !== skillToDelete)
+    );
   }
   return (
     <div>
@@ -494,8 +509,11 @@ console.log(sessionStorage.getItem('department'));
                  
                   <div className="flex flex-wrap">
                     
-                  {skills.map(el => {
-                    return(<SkillTip text={el}></SkillTip>)
+                    {skills.map(el => {
+                       const handleDelete = () => {
+                        handleDelete2(el);
+                      };
+                    return(<SkillTip text={el} onDelete={handleDelete}></SkillTip>)
                   })}
                   </div>
                 </div>
@@ -559,9 +577,9 @@ console.log(sessionStorage.getItem('department'));
   <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="input input-bordered w-full max-w-xs" />
  
                               </label>
-                              <form method="dialog">
+            <p>{warningText}</p>
                 <button onClick={CreateEmployee} className="btn btn-secondary btn-wide m-4">Create account</button>
-      </form>
+  
               </div>
             </div>
           </dialog>

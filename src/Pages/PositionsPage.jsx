@@ -34,6 +34,7 @@ function PositionsPage() {
   const [editModeSelect, setEditModeSelect] = useState("bg-transparent");
   const [skillsOptions, setSkillsOptions] = useState([]);
   const [skillInput, setSkillInput] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getPosition();
@@ -47,30 +48,42 @@ function PositionsPage() {
     setSkillsArr(position.skills);
   }, [position]);
   const getPosition = () => {
+    setLoading(true);
     axios.get(positionAPI + id).then((res) => {
       console.log(res);
       setPosition(res.data);
-    });
+    }).finally(() => {
+      setLoading(false);
+    })
   };
 
   const getAllPositions = () => {
+    setLoading(true);
     axios.get(allPositionsAPI).then((res) => {
       console.log(res);
       setPositionArr(res.data);
-    });
+    }).finally(() => {
+      setLoading(false);
+    })
   };
 
   const getOptions = () => {
+    setLoading(true);
     axios.get(SkillsOptionsAPI).then((res) => {
       setSkillsOptions(res.data.skills);
-    });
+    }).finally(() => {
+      setLoading(false);
+    })
   };
 
   const getBestEmp = () => {
+    setLoading(true);
     axios.get(bestEmpAPI + id).then((res) => {
       console.log(res);
       setBestEmp(res.data);
-    });
+    }).finally(() => {
+      setLoading(false);
+    })
   };
   const editAction = () => {
     setEditMode(false);
@@ -86,6 +99,7 @@ function PositionsPage() {
     setSkillsArr(position.skills);
   };
   const deleteAction = () => {
+    setLoading(true);
     axios
       .delete(
         deletePositionAPI + id + `?company=${sessionStorage.getItem("company")}`,
@@ -98,9 +112,12 @@ function PositionsPage() {
       .then((res) => {
         console.log(res);
         navigate(`/Manager/${sessionStorage.getItem("accountId")}`);
-      });
+      }).finally(() => {
+        setLoading(false);
+      })
   };
   const saveEditAction = () => {
+    setLoading(true);
     axios
       .put(
         updateAPI + id + `?company=${sessionStorage.getItem("company")}`,
@@ -116,7 +133,9 @@ function PositionsPage() {
       .then((res) => {
         console.log(res);
         setEditMode(true);
-      });
+      }).finally(() => {
+        setLoading(false);
+      })
   };
 console.log(bestEmp);
 
@@ -127,6 +146,13 @@ console.log(bestEmp);
   };
   return (
     <div>
+       {loading ? (
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+        <span className="loading loading-dots bg-accent"></span>
+      </div>
+    </div>
+  ) : null}
       <Nav />
       <div className="flex  justify-around mt-5 mb-5  m-8 max-md:flex-col max-md:justify-center max-md:items-center ">
         <div className="flex flex-col w-[70%] bg-white h-auto justify-around border shadow-2xl p-6 max-md:w-[90%] ">
@@ -362,17 +388,20 @@ console.log(bestEmp);
         </div>
         <div className="flex flex-col max-md:justify-center max-md:items-center gap-3 m-4 max-md:w-[90%] px-3">
           {positionArr.map((el, index) => {
+          if (!el.status) {
             if (el._id != position._id) {
-              return (
-                <PositionCard
+                
+                return (
+                  <PositionCard
                   key={index}
                   id={el._id}
                   Position={el.title}
                   Department={el.department.name}
                   Experience={el.experienceYears}
                   skills={el?.skills || ""}
-                ></PositionCard>
-              );
+                  ></PositionCard>
+                );
+              }
             }
           })}
         </div>
