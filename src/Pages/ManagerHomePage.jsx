@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import PositionCard from "../Components/PositionCard";
 import Nav from "../Components/Nav";
 import DepCard from "../Components/DepCard";
@@ -6,6 +6,7 @@ import EmpList from "../Components/EmpList";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import SkillTip from "../Components/SkillTip";
+
 const AccountsAPI = `http://localhost:3000/account/`;
 const AddPositionAPI = `http://localhost:3000/position?company=${localStorage.getItem(
   "company"
@@ -80,6 +81,24 @@ function ManagerHomePage() {
         });
     }
   };
+
+  const textareaRef = useRef(null);
+  const textareaRef2 = useRef(null);
+  const textareaHeight = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      (textarea.style.height = "auto"),
+        (textarea.style.height = `${textarea.scrollHeight}px`);
+    }
+  };
+  const textareaHeight2 = () => {
+    const textarea2 = textareaRef2.current;
+    if (textarea2) {
+      (textarea2.style.height = "auto"),
+        (textarea2.style.height = `${textarea2.scrollHeight}px`);
+    }
+  };
+
   const [positions, setPositions] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [experience, setExperience] = useState([]);
@@ -199,7 +218,7 @@ function ManagerHomePage() {
       <Nav />
       <div className="flex">
         <div className="flex w-[100%]">
-          <div className="flex flex-col border justify-start items-center p-15 mt-10 w-auto ml-5 shadow-2xl bg-[#30465e] pt-10 rounded-xl h-[51vh]">
+          <div className="flex flex-col border justify-start items-center p-15 mt-10 w-auto ml-5 shadow-2xl bg-[#30465e] pt-10 rounded-xl h-[51vh] max-md:w-[30vh]">
             <div className="flex justify-center items-center bg-slate-200 rounded-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -225,7 +244,7 @@ function ManagerHomePage() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col w-[75%] mt-10">
+          <div className="flex flex-col w-[75%] mt-9">
             <h2 className="font-title font-bold text-[3vh] text-secondary ml-5">
               Number of employees:{user?.department?.employees?.length || 0}
             </h2>
@@ -476,7 +495,7 @@ function ManagerHomePage() {
               <div className="flex gap-8">
                 <div className="flex flex-col">
                   <label className="font-title text-accent font-bold  mt-2">
-                  Years Of Experience :
+                    Years Of Experience :
                   </label>
                   <input
                     type="text"
@@ -507,17 +526,29 @@ function ManagerHomePage() {
                 Key Responsibilities:
               </label>
               <textarea
+                placeholder="Not added yet"
+                ref={textareaRef}
+                rows={4}
                 value={newKey}
-                onChange={(e) => setNewKey(e.target.value)}
-                className="textarea resize-none textarea-bordered mt-2  textarea-lg w-full max-w-m"
+                onChange={(e) => {
+                  setNewKey(e.target.value);
+                  textareaHeight();
+                }}
+                className="textarea resize-none textarea-bordered mt-2 w-full max-w-m"
               ></textarea>
               <label className="font-title text-accent font-bold mt-2">
                 Job Overview:
               </label>
               <textarea
+                placeholder="Not added yet"
+                ref={textareaRef2}
+                rows={4}
                 value={newOverview}
-                onChange={(e) => setNewOverview(e.target.value)}
-                className="textarea resize-none textarea-bordered mt-2 textarea-lg w-full max-w-m"
+                onChange={(e) => {
+                  setNewOverview(e.target.value);
+                  textareaHeight2();
+                }}
+                className="textarea resize-none textarea-bordered mt-2  w-full max-w-m"
               ></textarea>
               <div className="flex flex-col">
                 <label className="font-title text-accent font-bold mt-2">
@@ -537,7 +568,7 @@ function ManagerHomePage() {
                   {skillsOptions.map((skill) => {
                     return <option value={skill}>{skill}</option>;
                   })}
-                  <option value=""></option>
+                  <option value="">Select Skills</option>
                 </select>
                 <div className="flex flex-wrap">
                   {skills.map((el) => {
@@ -567,29 +598,37 @@ function ManagerHomePage() {
       </div>
 
       <dialog id="employeeAccountDialog" className="modal">
-        <div className="modal-box flex flex-col items-center">
+        <div className="modal-box flex flex-col items-center w-[58vh] ">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               ✕
             </button>
           </form>
-          <h3 className="font-bold text-lg">Creating Employee Account</h3>
-          <div className=" flex flex-col items-center m-5 ">
-            <label className="form-control w-full max-w-xs">
+
+          <h3 className="font-bold text-[3vh] font-title text-secondary ">
+            Creating Employee Account
+          </h3>
+
+          <div className=" flex flex-col   m-5  ">
+            <label className="form-control  max-w-xs">
               <div className="label">
-                <span className="label-text">Name</span>
+                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
+                  Name:
+                </span>
               </div>
               <input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 type="text"
-                className="input input-bordered w-full "
+                className="input input-bordered  "
               />
             </label>
 
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Position</span>
+                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
+                  Position:
+                </span>
               </div>
               <input
                 value={position}
@@ -600,7 +639,9 @@ function ManagerHomePage() {
             </label>
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Email</span>
+                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
+                  Email:
+                </span>
               </div>
               <input
                 value={email}
@@ -611,7 +652,9 @@ function ManagerHomePage() {
             </label>
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text font-title text-accent font-bold text-[2.5vh]">
+                  Password:
+                </span>
               </div>
               <input
                 value={password}
@@ -620,13 +663,15 @@ function ManagerHomePage() {
                 className="input input-bordered w-full max-w-xs"
               />
             </label>
-            <form method="dialog">
-              <button
-                onClick={CreateEmployee}
-                className="btn btn-secondary btn-wide m-4"
-              >
-                Create account
-              </button>
+            <form method="dialog ">
+              <div className="w-[45vh] flex justify-center ">
+                <button
+                  onClick={CreateEmployee}
+                  className="btn btn-secondary mt-5   "
+                >
+                  Create account
+                </button>
+              </div>
             </form>
           </div>
         </div>
