@@ -6,7 +6,8 @@ import DepCard from "../Components/DepCard";
 import Nav from "../Components/Nav";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-
+import { Chart as ChartJS } from 'chart.js/auto'
+import {Pie, Bar} from 'react-chartjs-2'
 const AccountsAPI = `http://localhost:3000/account/`;
 const createAccountsAPI = `http://localhost:3000/createAccount?company=${sessionStorage.getItem(
   "company"
@@ -148,41 +149,44 @@ export default function AdminHomePage() {
   const createDeptAction = () => {
     if (manager == "Not selected" || deptName == "" || manager == "") {
       setWarningText("you have to select manager");
-    }
-    setWarningText("");
-    setLoading(true);
-    axios
-      .post(
-        CreateDeptAPI,
-        {
-          name: deptName,
-          manager: manager,
-        },
-        {
-          headers: {
-            Authorization: sessionStorage.getItem("token"),
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        document.getElementById("createDepartmentDialog").close();
-        setDeptName("");
-        setManager("");
-          getDepartments();
-        //   setNetworkError(false);
-
-      })
+    } else {
+        
+        setWarningText("");
+        setLoading(true);
+        axios
+        .post(
+            CreateDeptAPI,
+            {
+                name: deptName,
+                manager: manager,
+            },
+            {
+                headers: {
+                    Authorization: sessionStorage.getItem("token"),
+                },
+            }
+        )
+        .then((res) => {
+            console.log(res);
+            document.getElementById("createDepartmentDialog").close();
+            setDeptName("");
+            setManager("");
+            getDepartments();
+            //   setNetworkError(false);
+            
+        })
         .catch((err) => {
             if (!err.response || err.code === 'ERR_CONNECTION_REFUSED' || err.code === "ERR_BAD_RESPONSE") {
-            //   setNetworkError(true)
-          }
-        console.log(err.response);
-        setWarningText(err.response.data.msg);
-      })
+                //   setNetworkError(true)
+            }
+            
+            console.log(err.response);
+            setWarningText(err.response.data.msg);
+        })
         .finally(() => {
-        setLoading(false);
-      });
+            setLoading(false);
+        });
+    }
   };
 
   const CreateManager = () => {
@@ -268,7 +272,9 @@ export default function AdminHomePage() {
   };
     const retryAction = () => {
      location.reload()
- }
+  }
+  
+  //! ADD PIE APPEARANCE LOGIC
   return (
     <div>
       {loading ? (
@@ -309,10 +315,48 @@ export default function AdminHomePage() {
       ) : null}
       <Nav></Nav>
       <div className="mx-5 py-5 md:px-16 flex flex-col items-start">
+      
         <p className="text-xl text-secondary font-semibold">
+          
           Welcome <span className="text-accent">{user?.name}</span>
         </p>
+        <div className="flex items-center my-8">
 
+        <div className="">
+        <Pie
+          data={{
+            labels: ['Total Employees', 'Total Shortage', 'Total Surplus Employees'],
+            datasets: [
+              {
+                label: 'revenue',
+                data: [employeeArr.length + managerArr.length, 10, employeeArr.filter(el => el.excess == true).length],
+                backgroundColor: [
+                  '#30475E',
+                  'rgb(54, 162, 235)',
+                  '#F2A365'
+                ],
+              }
+            ]
+          }}/>
+        </div>
+        <div className="">
+        {/* <Bar
+          data={{
+            labels: ['Total Employees', 'Total Shortage', 'Total Surplus Employees'],
+            datasets: [
+              {
+                label: 'revenue',
+                data: [employeeArr.length + managerArr.length, 10, employeeArr.filter(el => el.excess == true).length],
+                backgroundColor: [
+                  '#30475E',
+                  'rgb(54, 162, 235)',
+                  '#F2A365'
+                ],
+              }
+            ]
+          }}/> */}
+          </div>
+          </div>
         {!managerArr || managerArr.length == 0 ? (
           <div>
             <p className="font-title text-3xl font-bold text-secondary my-4">
@@ -525,7 +569,7 @@ export default function AdminHomePage() {
               <h3 className="font-bold text-xl text-secondary">
                 Creating Manager Account
               </h3>
-              <div className=" flex flex-col items-center m-5 ">
+              <div className=" flex flex-col items-center m-5">
                 <label className="form-control w-full max-w-xs">
                   <div className="label">
                     <span className="label-text font-title text-accent font-bold text-lg">
@@ -588,17 +632,21 @@ export default function AdminHomePage() {
                 </div>
               </div>
             ) : null}
-            <div className="modal-box flex flex-col items-center">
+            <div className="modal-box flex flex-col items-center bg-white">
               <form method="dialog">
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                   ✕
                 </button>
               </form>
-              <h3 className="font-bold text-lg">Creating Employee Account</h3>
-              <div className=" flex flex-col items-center m-5 ">
+              <h3 className="font-bold text-xl text-secondary">
+                Creating Employee Account
+              </h3>
+              <div className=" flex flex-col items-center m-4 ">
                 <label className="form-control w-full max-w-xs">
                   <div className="label">
-                    <span className="label-text">Name</span>
+                  <span className="label-text font-title text-accent font-bold text-lg">
+                      Name
+                    </span>
                   </div>
                   <input
                     value={name}
@@ -610,7 +658,9 @@ export default function AdminHomePage() {
 
                 <label className="form-control w-full max-w-xs">
                   <div className="label">
-                    <span className="label-text">Position</span>
+                  <span className="label-text font-title text-accent font-bold text-lg">
+                      Position
+                    </span>
                   </div>
                   <input
                     value={position}
@@ -621,7 +671,9 @@ export default function AdminHomePage() {
                 </label>
                 <label className="form-control w-full max-w-xs">
                   <div className="label">
-                    <span className="label-text">Department</span>
+                  <span className="label-text font-title text-accent font-bold text-lg">
+                      Department
+                    </span>
                   </div>
                   <select
                     value={department}
@@ -638,7 +690,9 @@ export default function AdminHomePage() {
                 </label>
                 <label className="form-control w-full max-w-xs">
                   <div className="label">
-                    <span className="label-text">Email</span>
+                  <span className="label-text font-title text-accent font-bold text-lg">
+                      Email
+                    </span>
                   </div>
                   <input
                     value={email}
@@ -649,7 +703,9 @@ export default function AdminHomePage() {
                 </label>
                 <label className="form-control w-full max-w-xs">
                   <div className="label">
-                    <span className="label-text">Password</span>
+                  <span className="label-text font-title text-accent font-bold text-lg">
+                      Password
+                    </span>
                   </div>
                   <input
                     value={password}
@@ -658,11 +714,11 @@ export default function AdminHomePage() {
                     className="input input-bordered w-full max-w-xs"
                   />
                 </label>
-                <p className="text-error text-sm m-4">{warningText3}</p>
+                <p className="text-error text-sm m-2">{warningText3}</p>
 
                 <button
                   onClick={CreateEmployee}
-                  className="btn btn-secondary btn-wide m-4"
+                  className="btn btn-secondary btn-wide m-2"
                 >
                   Create account
                 </button>
@@ -678,28 +734,36 @@ export default function AdminHomePage() {
               </div>
             </div>
           ) : null}
-          <div className="modal-box">
+          <div className="modal-box flex flex-col items-center">
             <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                 ✕
               </button>
-            </form>
-            <h3 className="font-bold text-lg">Adding New Department</h3>
-            <div className=" flex flex-col items-center m-5 ">
-              <label className="form-control w-full max-w-xs">
-                <div className="label">
-                  <span className="label-text">Name</span>
-                </div>
-                <input
+                      </form>
+                      <h3 className="font-bold text-xl text-secondary">
+                      Adding New Department
+                      </h3>
+                      
+              <div className=" flex flex-col items-center m-5 ">
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text font-title text-accent font-bold text-lg">
+                      Name
+                    </span>
+                  </div>
+                  <input
                   value={deptName}
                   onChange={(e) => setDeptName(e.target.value)}
                   type="text"
                   className="input input-bordered w-full "
                 />
-              </label>
-              <label className="form-control w-full max-w-xs">
+                </label>
+
+                          <label className="form-control w-full max-w-xs">
                 <div className="label">
-                  <span className="label-text">Select Manager</span>
+                <span className="label-text font-title text-accent font-bold text-lg">
+                      Select Manager
+                    </span>
                 </div>
                 <select
                   value={manager}
@@ -712,14 +776,15 @@ export default function AdminHomePage() {
                   })}
                 </select>
               </label>
-              <p className="text-error text-sm m-4">{warningText}</p>
-              <button
-                onClick={createDeptAction}
-                className="btn btn-secondary my-2"
-              >
-                Add Department
-              </button>
-            </div>
+                <p className="text-error text-sm m-4">{warningText}</p>
+
+                <button
+                  onClick={createDeptAction}
+                  className="btn btn-secondary btn-wide m-4"
+                >
+                 Add Department
+                </button>
+              </div>
           </div>
         </dialog>
       </div>
