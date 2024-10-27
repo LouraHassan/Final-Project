@@ -7,10 +7,12 @@ function EmpCard(props) {
   const navigate = useNavigate()
   const [skills, setSkills] = useState(props.skills)
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  
+  const [loading, setLoading] = useState(false);
+
 
 
   const assignAction = () => {
+    setLoading(true)
     axios.post(AssignEmpAPI, {
       employeeId: props.id,
       positionId: props.positionId
@@ -23,11 +25,20 @@ function EmpCard(props) {
       console.log(res);
         setIsDialogOpen(false);
         navigate(`/admin/${sessionStorage.getItem('accountId')}`)
-    })
+    }).finally(() => {
+      setLoading(false);
+    });
   }
   return (
     <>
-    <div className='bg-secondary text-secondary-content p-4 rounded-lg flex flex-col justify-between'>
+      <div className='bg-secondary text-secondary-content p-4 rounded-lg flex flex-col justify-between'>
+      {loading ? (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+            <span className="loading loading-dots bg-accent"></span>
+          </div>
+        </div>
+      ) : null}
        <div className="flex items-center gap-3">
           <div className="avatar">
            

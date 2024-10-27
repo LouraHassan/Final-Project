@@ -4,20 +4,20 @@ function DepCard(props) {
   return (
     <Link
       to={`/admin/department/${props.id}`}
-      className="flex flex-col justify-between p-5 bg-white  shadow-md  rounded-md"
+      className="flex flex-col justify-between p-5 bg-white shadow-md  rounded-md"
     >
       <div className="flex flex-col">
         <h2 className="text-accent">Department</h2>
-        <h1 className="text-secondary font-bold">{props.name}</h1>
+        <h1 className="text-secondary font-bold text-lg">{props.name}</h1>
       </div>
-      <div className="flex justify-between">
-        <div className="flex flex-col m-4">
+      <div className="flex flex-wrap justify-between">
+        <div className="flex flex-col m-2">
           <h2>Employees</h2>
           <h1 className="text-secondary text-center text-[3vh]">
             {props.employees}
           </h1>
         </div>
-        <div className="flex flex-col m-4">
+        <div className="flex flex-col m-2">
           <div className="flex">
             <h2>Shortage</h2>
             <svg
@@ -43,7 +43,7 @@ function DepCard(props) {
             {props.shortage}
           </h1>
         </div>
-        <div className="flex flex-col m-4">
+        <div className="flex flex-col m-2">
           <div className="flex">
             <h2>Surplus</h2>
             <svg

@@ -206,8 +206,7 @@ function Login() {
                 welcome back
               </h1>
               <img
-                src="https://cdn.discordapp.com/attachments/1277202818746552463/1299678355548930098/p-logo.png?ex=671ebc0a&is=671d6a8a&hm=cfcb643f2de85682c93756919f3ff0b863fba2bdd98527f64d08a3d1cfe70eb0&"
-                alt=""
+                src="https://cdn.discordapp.com/attachments/1277202818746552463/1299678355548930098/p-logo.png?ex=671ebc0a&is=671d6a8a&hm=cfcb643f2de85682c93756919f3ff0b863fba2bdd98527f64d08a3d1cfe70eb0&" alt=""
               />
             </div>
           </div>

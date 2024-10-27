@@ -61,7 +61,7 @@ function EmpList(props) {
         <p className="font-text">{props.position}</p>
           </td>
           
-          <td className={`flex items-center${isManager ? '' : 'hidden'}`}>{isReassignible}
+          <td className={`flex items-center ${isManager ? '' : 'hidden'}`}>{isReassignible}
               {editMode?  <input type="checkbox" className="toggle m-2 toggle-accent"  onChange={changeExcess} 
       checked={isReassignible === 'Yes'} /> : <></>}
         
