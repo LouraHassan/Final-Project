@@ -318,7 +318,7 @@ export default function AdminHomePage() {
               </div>
             </>
       }
-              <div className="flex items-center justify-between w-full">
+              <div className="flex items-center justify-between w-full mt-10">
                   
         <p className="font-title text-xl font-bold text-secondary my-4">
           Managers

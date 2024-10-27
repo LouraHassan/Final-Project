@@ -47,7 +47,7 @@ function EmpCard(props) {
           </div>
             <div className="font-bold text-xl">{props.name}</div>
       </div>
-      <p className='font-text my-2'>Experience: {props.years} years</p>
+      <p className='font-text my-2 '>Experience: {props.years} years</p>
       <div className='flex flex-wrap'>
         <p className='font-text my-2'>Skills: </p>
         {skills &&skills.map(skill => {
@@ -56,12 +56,12 @@ function EmpCard(props) {
        
 
       </div>
-      <button className='btn btn-accent btn-wide self-end' onClick={() => setIsDialogOpen(true)}>Assign</button>
+      <button className='btn btn-accent  self-end' onClick={() => setIsDialogOpen(true)}>Assign</button>
 
     </div>
     {isDialogOpen && (
         <dialog open className="modal">
-          <div className="modal-box flex flex-col items-center">
+          <div className="modal-box flex flex-col items-center bg-white">
             <button
               className="btn text-neutral btn-sm btn-circle btn-ghost absolute right-2 top-2"
               onClick={() => setIsDialogOpen(false)}
@@ -71,12 +71,22 @@ function EmpCard(props) {
             <h3 className="font-bold text-xl text-neutral font-title">
               Employee Assignment Confirmation
             </h3>
+            <div className='flex items-center w-full justify-around'>
+
             <div className="self-start flex flex-col my-4 font-semibold text-lg font-title">
-              <p className="text-neutral">Employee: {props.name}</p>
-              <p className="text-neutral">Previous position: {props.pPosition}</p>
-              <p className="text-neutral">New position: {props.nPosition}</p>
-              <p className="text-neutral">Department: {props.department}</p>
-              <p className="text-neutral">Manager: {props.manager}</p>
+              <p className="text-accent">Employee: </p>
+              <p className="text-accent">Previous position: </p>
+              <p className="text-accent">New position: </p>
+              <p className="text-accent">Department: </p>
+              <p className="text-accent">Manager: </p>
+            </div>
+            <div className="self-start flex flex-col my-4 font-semibold text-lg font-title">
+              <p className="text-neutral">{props.name}</p>
+              <p className="text-neutral">{props.pPosition}</p>
+              <p className="text-neutral">{props.nPosition}</p>
+              <p className="text-neutral">{props.department}</p>
+              <p className="text-neutral">{props.manager}</p>
+            </div>
             </div>
             <div className="flex">
               <button

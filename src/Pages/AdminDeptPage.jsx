@@ -14,7 +14,9 @@ function AdminDeptPage() {
   useEffect(() => {
     getDept();
   }, []);
-
+  useEffect(() => {
+  sessionStorage.setItem('department', department._id)
+})
   useEffect(() => {
     setPositionsArr(department.positions)
   }, [department])
@@ -116,7 +118,7 @@ function AdminDeptPage() {
           Needed Positions
         </p>
         <div className="my-4 flex flex-col items-center  self-center">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 lg:w-[80vw]  gap-4">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 lg:w-[80vw]  gap-4">
 
             {positionsArr && positionsArr.map((position, index) => {
               if (!position.status) {

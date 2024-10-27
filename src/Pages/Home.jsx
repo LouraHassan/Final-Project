@@ -30,7 +30,7 @@ function Home() {
       </div>
 
       <div id="about-us" className="p-10 md:p-20 bg-secondary">
-        <div className="grid lg:grid-cols-2 my-4 border-2">
+        <div className="grid lg:grid-cols-2 my-4">
           <div className="flex flex-col items-center md:items-start">
             <p className="text-primary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-5">
               ABOUT US
@@ -208,7 +208,7 @@ function Home() {
         </div>
       </div>
       <div id="key-features" className="p-10 md:p-20 bg-base-200 flex flex-col items-center">
-        <p className="self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
+        <p className="md:self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           KEY FEATURES
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-20 lg:w-[80vw] my-5">
@@ -317,7 +317,7 @@ function Home() {
         </div>
       </div>
       <div id="benefits" className="p-10 md:p-20 bg-base-100 flex flex-col items-center">
-        <p className="self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
+        <p className="md:self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           BENEFITS
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-20 lg:w-[80vw] my-5">
@@ -405,8 +405,8 @@ function Home() {
           </div>
         </div>
       </div>
-      <div id="faq" className="p-20 bg-secondary flex flex-col items-center">
-        <p className="self-start text-primary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
+      <div id="faq" className="p-10 md:p-20 bg-secondary flex flex-col items-center">
+        <p className="md:self-start text-primary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           FAQ
         </p>
         <div className="lg:w-[80vw]">
@@ -449,21 +449,21 @@ function Home() {
           </div>
         </div>
       </div>
-      <div id="contact-us" className="p-20 bg-base-200 flex flex-col items-center">
-        <p className="self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
+      <div id="contact-us" className="p-10 md:p-20 bg-base-200 flex flex-col items-center">
+        <p className="md:self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           CONTACT US
         </p>
         <div className="my-4 flex flex-col items-center">
-          <div className="flex">
+          <div className="flex flex-col md:flex-row w-full">
             <input
               type="text"
               placeholder="Name"
-              className="input input-bordered lg:w-[20vw] mr-2 my-2"
+              className="input input-bordered lg:w-[20vw] w-full mr-2 my-2"
             />
             <input
               type="text"
               placeholder="Email"
-              className="input input-bordered lg:w-[20vw]  my-2"
+              className="input input-bordered lg:w-[20vw] w-full my-2"
             />
           </div>
           <input

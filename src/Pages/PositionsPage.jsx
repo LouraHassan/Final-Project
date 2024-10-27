@@ -16,7 +16,7 @@ const updateAPI = `http://localhost:3000/position/`;
 const bestEmpAPI = `http://localhost:3000/chat/`;
 function PositionsPage() {
 
-  console.log(localStorage.getItem("department"));
+  console.log(sessionStorage.getItem("department"));
   const textareaRef = useRef(null);
   const textareaRef2 = useRef(null);
 
@@ -218,7 +218,7 @@ console.log(bestEmp);
   ) : null}
       <Nav />
       <div className="flex  justify-around mt-5 mb-5  m-8 max-md:flex-col max-md:justify-center max-md:items-center ">
-        <div className="flex flex-col w-[70%]  bg-white p-8 h-auto justify-around  border shadow-2xl max-md:w-[90%] ">
+        <div className="flex flex-col w-[70%]  bg-white p-8 h-auto justify-around rounded-lg border shadow-xl max-md:w-[90%] ">
           <div className="flex justify-between">
             <h1 className="font-title font-bold text-secondary text-[4vh]">
               {position.title}
@@ -573,7 +573,9 @@ console.log(bestEmp);
       </div>
       {!isManager ? (
         <div className="lg:w-[80vw] p-10">
-          <p>Best match employees</p>
+                <h1 className="font-title font-bold text-[3vh] text-secondary my-6">
+                    Best match employees
+                  </h1>
           <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
             {bestEmp &&
               bestEmp.map((emp, index) => {

@@ -376,7 +376,7 @@ function EmployeePage() {
               </svg>
               <span>You must update you password and add your data down</span>
               <button
-                className="btn btn-secondary"
+                className="btn btn-ghost text-secondary"
                 onClick={() =>
                   document.getElementById("passwordDialog").showModal()
                 }

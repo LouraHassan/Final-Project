@@ -80,7 +80,13 @@ function Nav() {
           >
             <li className="md:hidden">
               <Link
-                to={`/admin/${sessionStorage.getItem("accountId")}`}
+                 to={
+                  isAdmin
+                    ? `/admin/${sessionStorage.getItem("accountId")}`
+                    : accountType == "manager"
+                    ? `/Manager/${sessionStorage.getItem("accountId")}`
+                    : `/Employee/${sessionStorage.getItem("accountId")}`
+                }
                 className="font-semibold text-secondary"
               >
                 <svg
