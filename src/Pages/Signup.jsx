@@ -41,8 +41,8 @@ function Signup() {
           console.log(res);
           sessionStorage.setItem("accountId", res.data.id);
           sessionStorage.setItem("accountType", "admin");
-            sessionStorage.setItem("token", res.data.token);
-            sessionStorage.setItem('company', res.data.company._id)
+          sessionStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("company", res.data.company._id);
           navigate(`/admin/${res.data.id}`);
         }).finally(() => {
             setLoading(false);
@@ -52,8 +52,8 @@ function Signup() {
 
   return (
     <div className="h-screen w-full flex justify-center items-center bg-secondary  ">
-      <div className="grid lg:grid-cols-2 lg:w-[65vw]  h-fit bg-white rounded-md ">
-        <div className="p-10 flex flex-col items-center relative   ">
+      <div className="grid   max-sm:justify-center max-sm:items-center  lg:grid-cols-2 lg:w-[55vw] h-fit bg-white rounded-lg ">
+        <div className="p-10 flex flex-col items-center relative  ">
           <Link to={`/`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +72,7 @@ function Signup() {
             </svg>
           </Link>
 
-          <h1 className="font-title font-bold text-secondary text-[3vh] mb-3">
+          <h1 className="font-title font-bold text-secondary mb-4 text-[5vh]">
             Signup
           </h1>
           <p
@@ -239,16 +239,16 @@ function Signup() {
 
             <button
               onClick={signupAction}
-              className="btn btn-accent m-2 lg:w-[16vw] max-sm:w-[16vw] sm:w-[16vw]  "
+              className="btn btn-accent m-2 lg:w-full max-md:w-full max-sm:w-full sm:w-full  "
             >
               Signup
             </button>
           </div>
         </div>
-        <div className="flex justify-center items-center j">
+        <div className="flex justify-center items-center pr-10">
           <div className="flex flex-col justify-items-center  max-md:hidden md:hidden lg:block ">
             <img
-              src="https://media.discordapp.net/attachments/1294220545696596029/1297877355636981770/p-logo.png?ex=67182eba&is=6716dd3a&hm=b21e374d7163fe7e5d36c904836d176aa422ad745f2516e360326ce2a873ebaf&=&format=webp&quality=lossless&width=980&height=980"
+              src="https://cdn.discordapp.com/attachments/1277202818746552463/1299678355548930098/p-logo.png?ex=671ebc0a&is=671d6a8a&hm=cfcb643f2de85682c93756919f3ff0b863fba2bdd98527f64d08a3d1cfe70eb0&"
               alt=""
             />
           </div>

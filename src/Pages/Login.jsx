@@ -22,7 +22,7 @@ function Login() {
         })
         .then((res) => {
           console.log(res);
-          
+
           sessionStorage.setItem("accountId", res.data.id);
           sessionStorage.setItem("accountType", res.data.accountType);
           sessionStorage.setItem("company", res.data.company);
@@ -36,7 +36,8 @@ function Login() {
           } else if (res.data.accountType === "employee") {
             navigate(`/Employee/${res.data.id}`);
           }
-        }).finally(() => {
+        })
+        .finally(() => {
           setLoading(false);
         });
     }
@@ -44,18 +45,17 @@ function Login() {
 
   return (
     <div>
-       {loading ? (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
-        <span className="loading loading-dots bg-accent"></span>
-      </div>
-    </div>
-  ) : null}
+      {loading ? (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+            <span className="loading loading-dots bg-accent"></span>
+          </div>
+        </div>
+      ) : null}
       <div className="flex justify-center items-center  bg-[#30475e] w-full h-screen ">
-        <div className="flex justify-center items-center justify-around rounded-lg bg-white h-[70%] max-md:h-auto max-sm:h-auto ">
+        <div className="flex justify-center items-center  rounded-lg bg-white h-auto max-md:h-auto max-sm:h-auto ">
           <div className=" flex justify-center items-center">
-            <div className="p-16 flex flex-col items-center relative   ">
-              <Link to={`/`}>
+            {/* <Link to={`/`}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="30"
@@ -66,14 +66,33 @@ function Login() {
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  className="icon  icon-tabler icons-tabler-outline icon-tabler-chevron-left text-secondary absolute top-4 left-4"
+                  className="icon  icon-tabler icons-tabler-outline icon-tabler-chevron-left text-secondary absolute top-1  left-4"
                 >
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                   <path d="M15 6l-6 6l6 6" />
                 </svg>
-              </Link>
-              <div className="card g bg-white  max-md:w-[100%]">
+              </Link> */}
+
+            <div className="card g bg-white  max-md:w-[100%]">
+              <div className="p-8 flex flex-col items-center relative   ">
                 <div className="card-body justify-around items-center text-center h-auto">
+                  <Link to={`/`}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      className="icon  icon-tabler icons-tabler-outline icon-tabler-chevron-left text-secondary absolute top-1 left-4"
+                    >
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M15 6l-6 6l6 6" />
+                    </svg>
+                  </Link>
                   <h1 className="font-title font-bold text-secondary mb-4 text-[5vh]">
                     Login
                   </h1>
@@ -187,7 +206,7 @@ function Login() {
                 welcome back
               </h1>
               <img
-                src="https://cdn.discordapp.com/attachments/1277202818746552463/1299678355548930098/p-logo.png?ex=671e134a&is=671cc1ca&hm=bedbdb5da8e61a34829dfd00b90ade57fcef8c5e9ab264377b1a4b0771a3bd5a&"
+                src="https://cdn.discordapp.com/attachments/1277202818746552463/1299678355548930098/p-logo.png?ex=671ebc0a&is=671d6a8a&hm=cfcb643f2de85682c93756919f3ff0b863fba2bdd98527f64d08a3d1cfe70eb0&"
                 alt=""
               />
             </div>

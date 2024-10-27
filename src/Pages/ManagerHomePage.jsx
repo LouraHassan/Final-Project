@@ -288,9 +288,9 @@ function ManagerHomePage() {
         </div>
       ) : null}
       <Nav />
-      <div className="flex">
-        <div className="flex w-[100%]">
-          <div className="flex flex-col border justify-start items-center p-15 mt-10 w-auto ml-5 shadow-2xl bg-[#30465e] pt-10 rounded-xl h-[51vh] max-md:w-[30vh]">
+      <div className="flex max-md:w-[95%] md:w-[90%] lg:w-[100%]  ">
+        <div className="flex  w-[100%] max-md:flex-col max-md:w-full   md:w-full lg:w-[80%] max-sm:w-full ">
+          <div className="flex max-md:justify-center max-md:items-center max-md:p-7   lg:flex-col md:flex-col border justify-start items-center  p-15 mt-10 w-auto  max-md:ml-5 max-sm:ml-3 lg:ml-5  shadow-2xl bg-[#30465e] pt-10 rounded-xl lg:h-[51vh] md:h-[51vh] max-sm:w-full   ">
             <div className="flex justify-center items-center bg-slate-200 rounded-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -305,7 +305,7 @@ function ManagerHomePage() {
                 <path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
               </svg>
             </div>
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center max-sm:w-[36vh]">
               <h2 className="font-title mt-4 text-center w-[40vh] text-white font-bold text-[4vh]">
                 {user?.name}
               </h2>
@@ -317,7 +317,7 @@ function ManagerHomePage() {
             </div>
           </div>
 
-          <div className="flex flex-col w-[75%] mt-10">
+          <div className="flex flex-col lg:w-[90%] lg:mt-10 md:mt-10 max-md:ml-3 max-sm:ml-1 md:w-[72%] max-sm:mt-3 max-sm:w-[100%]">
             {notifications.newManager?.map((el) => {
               if (!el.isClosedByNewManager) {
                 const handleDismiss = () => {
@@ -377,11 +377,11 @@ function ManagerHomePage() {
                 );
               }
             })}
-            <h2 className="font-title font-bold text-[3vh] text-secondary ml-5">
+            <h2 className="font-title font-bold text-[3vh] text-secondary ml-5 mt-3">
               Number of employees: {user?.department?.employees?.length || 0}
             </h2>
             <div className="flex justify-center">
-              <div className="overflow-x-auto lg:w-[80vw] bg-slate-100 lg:self-center lg:m-4 shadow-md shadow-gray-300 rounded-lg">
+              <div className="overflow-x-auto lg:w-[80vw] bg-slate-100 lg:self-center  max-md:ml-3 lg:m-4 shadow-md shadow-gray-300 rounded-lg">
                 <table className="table">
                   <thead>
                     <tr className="font-title text-lg">
@@ -414,7 +414,7 @@ function ManagerHomePage() {
               </div>
             </div>
             <button
-              className="btn btn-outline btn-secondary self-start my-2"
+              className="btn btn-outline btn-secondary self-start m-5"
               onClick={() =>
                 document.getElementById("employeeAccountDialog").showModal()
               }
