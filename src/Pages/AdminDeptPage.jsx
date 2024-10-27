@@ -117,7 +117,7 @@ function AdminDeptPage() {
         <p className="text-xl font-title font-bold text-secondary">
           Needed Positions
         </p>
-        <div className="my-4 flex flex-col items-center  self-center">
+        <div className="my-4 mx-10 flex flex-col items-center lg:w-[80vw] self-center">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 lg:w-[80vw]  gap-4">
 
             {positionsArr && positionsArr.map((position, index) => {
