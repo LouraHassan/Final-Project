@@ -15,7 +15,6 @@ const deletePositionAPI = `http://localhost:3000/position/`;
 const updateAPI = `http://localhost:3000/position/`;
 const bestEmpAPI = `http://localhost:3000/chat/`;
 function PositionsPage() {
-
   console.log(sessionStorage.getItem("department"));
   const textareaRef = useRef(null);
   const textareaRef2 = useRef(null);
@@ -42,7 +41,9 @@ function PositionsPage() {
 
   const [editModeSelect, setEditModeSelect] = useState("bg-transparent");
   const [departmentStyle, setDepartmentStyle] = useState("bg-transparent ");
-  const [experienceStyle, setExperienceStyle] = useState("bg-transparent w-[2vw]");
+  const [experienceStyle, setExperienceStyle] = useState(
+    "bg-transparent w-[2vw]"
+  );
   const [descriptionStyle, setDescriptionStyle] = useState("bg-transparent ");
   const [salaryStyle, setSalaryStyle] = useState("bg-transparent w-[6vw]");
   const [requirmentsStyle, setRequirmentsStyle] = useState("bg-transparent ");
@@ -70,41 +71,53 @@ function PositionsPage() {
 
   const getPosition = () => {
     setLoading(true);
-    axios.get(positionAPI + id).then((res) => {
-      console.log(res);
-      setPosition(res.data);
-    }).finally(() => {
-      setLoading(false);
-    })
+    axios
+      .get(positionAPI + id)
+      .then((res) => {
+        console.log(res);
+        setPosition(res.data);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const getAllPositions = () => {
     setLoading(true);
-    axios.get(allPositionsAPI).then((res) => {
-      console.log(res);
-      setPositionArr(res.data);
-    }).finally(() => {
-      setLoading(false);
-    })
+    axios
+      .get(allPositionsAPI)
+      .then((res) => {
+        console.log(res);
+        setPositionArr(res.data);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const getOptions = () => {
     setLoading(true);
-    axios.get(SkillsOptionsAPI).then((res) => {
-      setSkillsOptions(res.data.skills);
-    }).finally(() => {
-      setLoading(false);
-    })
+    axios
+      .get(SkillsOptionsAPI)
+      .then((res) => {
+        setSkillsOptions(res.data.skills);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const getBestEmp = () => {
     setLoading(true);
-    axios.get(bestEmpAPI + id).then((res) => {
-      console.log(res);
-      setBestEmp(res.data);
-    }).finally(() => {
-      setLoading(false);
-    })
+    axios
+      .get(bestEmpAPI + id)
+      .then((res) => {
+        console.log(res);
+        setBestEmp(res.data);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   const textareaHeight = () => {
     const textarea = textareaRef.current;
@@ -154,7 +167,9 @@ function PositionsPage() {
     setLoading(true);
     axios
       .delete(
-        deletePositionAPI + id + `?company=${sessionStorage.getItem("company")}`,
+        deletePositionAPI +
+          id +
+          `?company=${sessionStorage.getItem("company")}`,
         {
           headers: {
             Authorization: sessionStorage.getItem("token"),
@@ -164,9 +179,10 @@ function PositionsPage() {
       .then((res) => {
         console.log(res);
         navigate(`/Manager/${sessionStorage.getItem("accountId")}`);
-      }).finally(() => {
-        setLoading(false);
       })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   const saveEditAction = () => {
     setLoading(true);
@@ -180,7 +196,7 @@ function PositionsPage() {
           description: description,
           expectedSalary: salary,
           requirments: requirments,
-          skills: skillsArr
+          skills: skillsArr,
         },
         {
           headers: {
@@ -196,11 +212,12 @@ function PositionsPage() {
         setDescriptionStyle("bg-transparent");
         setSalaryStyle("bg-transparent w-[6vw]");
         setRequirmentsStyle("bg-transparent");
-      }).finally(() => {
-        setLoading(false);
       })
+      .finally(() => {
+        setLoading(false);
+      });
   };
-console.log(bestEmp);
+  console.log(bestEmp);
 
   const handleDelete2 = (skillToDelete) => {
     setSkillsArr((prevSkills) =>
@@ -209,41 +226,39 @@ console.log(bestEmp);
   };
   return (
     <div>
-       {loading ? (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
-        <span className="loading loading-dots bg-accent"></span>
-      </div>
-    </div>
-  ) : null}
+      {loading ? (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+            <span className="loading loading-dots bg-accent"></span>
+          </div>
+        </div>
+      ) : null}
       <Nav />
-      <div className="flex  justify-around mt-5 mb-5  m-8 max-md:flex-col max-md:justify-center max-md:items-center ">
-        <div className="flex flex-col w-[70%]  bg-white p-8 h-auto justify-around rounded-lg border shadow-xl max-md:w-[90%] ">
+      <div className="flex  justify-around mt-5 mb-5 lg:m-8 md:m-8 max-md:flex-col max-md:justify-center max-md:items-center ">
+        <div className="flex flex-col lg:w-[65%] md:w-[65%]  bg-white p-8 h-auto justify-around rounded-lg border shadow-xl max-md:w-[95%] ">
           <div className="flex justify-between">
             <h1 className="font-title font-bold text-secondary text-[4vh]">
               {position.title}
             </h1>
             {isManager ? (
- <svg
- onClick={editAction}
- xmlns="http://www.w3.org/2000/svg"
- width="24"
- height="24"
- viewBox="0 0 24 24"
- fill="none"
- stroke="currentColor"
- stroke-width="2"
- stroke-linecap="round"
- stroke-linejoin="round"
- className="icon icon-tabler icons-tabler-outline icon-tabler-pencil text-secondary"
->
- <path stroke="none" d="M0 0h24v24H0z" fill="none" />
- <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
- <path d="M13.5 6.5l4 4" />
-</svg>
-
-
-
+              <svg
+                onClick={editAction}
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="icon icon-tabler icons-tabler-outline icon-tabler-pencil text-secondary"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                <path d="M13.5 6.5l4 4" />
+              </svg>
+            ) : (
               // <svg
               //   onClick={editAction}
               //   // onClick={() => setOpen(true)}
@@ -264,9 +279,6 @@ console.log(bestEmp);
               //   <path d="M16 5l3 3" />
               // </svg>
 
-
-
-            ) : (
               <></>
             )}
 
@@ -551,19 +563,18 @@ console.log(bestEmp);
           </div>
           <br></br>
         </div>
-        <div className="flex flex-col max-md:justify-center max-md:items-center gap-3 m-4 max-md:w-[90%] px-3">
+        <div className="flex flex-col max-md:justify-center max-md:items-center gap-3 m-4 max-md:w-[90%] max-sm:w-[95%] px-3">
           {positionArr.map((el, index) => {
-          if (!el.status) {
-            if (el._id != position._id) {
-                
+            if (!el.status) {
+              if (el._id != position._id) {
                 return (
                   <PositionCard
-                  key={index}
-                  id={el._id}
-                  Position={el.title}
-                  Department={el.department.name}
-                  Experience={el.experienceYears}
-                  skills={el?.skills || ""}
+                    key={index}
+                    id={el._id}
+                    Position={el.title}
+                    Department={el.department.name}
+                    Experience={el.experienceYears}
+                    skills={el?.skills || ""}
                   ></PositionCard>
                 );
               }
@@ -573,27 +584,25 @@ console.log(bestEmp);
       </div>
       {!isManager ? (
         <div className="lg:w-[80vw] p-10">
-                <h1 className="font-title font-bold text-[3vh] text-secondary my-6">
-                    Best match employees
-                  </h1>
+          <h1 className="font-title font-bold text-[3vh] text-secondary my-6">
+            Best match employees
+          </h1>
           <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
             {bestEmp &&
               bestEmp.map((emp, index) => {
-
                 if (emp) {
-             
                   return (
                     <EmpCard
-                    key={index}
-                    id={emp?._id}
-                    positionId={position?._id}
-                    name={emp.name}
-                    years={emp.yearsOfExperience}
-                    skills={emp.skills}
-                    pPosition={emp.positionTitle}
-                    nPosition={position.title}
-                    department={position?.department?.name}
-                    manager={position?.department?.manager?.name}
+                      key={index}
+                      id={emp?._id}
+                      positionId={position?._id}
+                      name={emp.name}
+                      years={emp.yearsOfExperience}
+                      skills={emp.skills}
+                      pPosition={emp.positionTitle}
+                      nPosition={position.title}
+                      department={position?.department?.name}
+                      manager={position?.department?.manager?.name}
                     ></EmpCard>
                   );
                 }
