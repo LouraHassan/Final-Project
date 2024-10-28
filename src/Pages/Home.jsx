@@ -3,8 +3,45 @@ import Footer from "../Components/Footer";
 import HomeNav from "../Components/HomeNav";
 import { Link } from "react-router-dom";
 import logo from "/logo.png";
+import axios from "axios";
 
 function Home() {
+  let [senderEmail, setSenderEmail] = React.useState("")
+  let [contactTitle, setContactTitle] = React.useState("")
+  let [msg, setMsg] = React.useState("")
+  let [senderName, setSenderName] = React.useState("")
+
+
+  function sendEmail() {
+   
+   
+      var data = {
+        service_id: 'service_s8jk25h',
+        template_id: 'template_rz2zfss',
+        user_id: 'KQE-OJj9b2kAySp7m',
+        template_params: {
+          from_name: senderName,
+          to_name: "Merge-Net Team",
+          reply_to: senderEmail,
+          message: msg,
+          msg_title:contactTitle
+        }
+      }
+
+      if(senderEmail!=="" &&
+        contactTitle!=="" &&
+        msg!=="" &&
+        senderName!=="" )
+      {
+        setSenderEmail("")
+        setContactTitle("")
+        setMsg("")
+        setSenderName("")
+        axios.post("https://api.emailjs.com/api/v1.0/email/send", data).then(res => console.log(res))
+      }
+    
+  }
+
   return (
     <div className="w-full">
       <HomeNav></HomeNav>
@@ -14,19 +51,19 @@ function Home() {
         <div className="z-10 flex flex-col items-center justify-between my-10 absolute top-24 left-10 lg:w-[70vw]">
           <p className="text-4xl text-left mx-2 md:mx-6 md:text-5xl text-secondary my-5">Streamline Employee Placement Across Departments After Mergers</p>
           <p className="text-xl text-left mx-6 md:text-2xl text-accent my-4 font-semibold">Manage employee roles, track department needs, and optimize talent allocation seamlessly</p>
-              </div>
-          <Link to={`/signup`} className="btn self-start mx-6 my-10 btn-accent btn-lg md:self-center absolute left-10 bottom-20 md:bottom-10 z-20">Start Now!</Link>
-       
-          <div class="custom-shape-divider-bottom-1729945068 md:hidden">
-    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M598.97 114.72L0 0 0 120 1200 120 1200 0 598.97 114.72z" class="shape-fill"></path>
-    </svg>
-</div>
-              <div className="custom-shape-divider-bottom-1729943384 hidden md:block">
-    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M598.97 114.72L0 0 0 120 1200 120 1200 0 598.97 114.72z" class="shape-fill"></path>
-    </svg>
-</div>
+        </div>
+        <Link to={`/signup`} className="btn self-start mx-6 my-10 btn-accent btn-lg md:self-center absolute left-10 bottom-20 md:bottom-10 z-20">Start Now!</Link>
+
+        <div class="custom-shape-divider-bottom-1729945068 md:hidden">
+          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M598.97 114.72L0 0 0 120 1200 120 1200 0 598.97 114.72z" class="shape-fill"></path>
+          </svg>
+        </div>
+        <div className="custom-shape-divider-bottom-1729943384 hidden md:block">
+          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M598.97 114.72L0 0 0 120 1200 120 1200 0 598.97 114.72z" class="shape-fill"></path>
+          </svg>
+        </div>
       </div>
 
       <div id="about-us" className="p-10 md:p-20 bg-secondary">
@@ -471,31 +508,35 @@ function Home() {
         </p>
         <div className="my-4 flex flex-col items-center">
           <div className="flex flex-col md:flex-row w-full">
-            <input
+            <input onChange={(e)=>{setSenderName(e.target.value)}}
+            value={senderName}
               type="text"
               placeholder="Name"
               className="input input-bordered lg:w-[20vw] w-full mr-2 my-2"
             />
-            <input
+            <input onChange={(e)=>{setSenderEmail(e.target.value)}}
+            value={senderEmail}
               type="text"
               placeholder="Email"
               className="input input-bordered lg:w-[20vw] w-full my-2"
             />
           </div>
-          <input
+          <input onChange={(e)=>{setContactTitle(e.target.value)}}
+          value={contactTitle}
             type="text"
             placeholder="Subject"
             className="input input-bordered w-full lg:w-[40vw] my-2"
           />
           <textarea
-            type="text"
+          value={msg}
+            type="text" onChange={(e)=>{setMsg(e.target.value)}}
             placeholder="Subject"
             className="textarea textarea-bordered w-full lg:w-[40vw] my-2"
             rows={8}
             style={{ resize: "none" }}
           />
           <br />
-          <button className="btn btn-accent btn-wide">Send</button>
+          <button className="btn btn-accent btn-wide" onClick={sendEmail}>Send</button>
         </div>
       </div>
       <Footer></Footer>
