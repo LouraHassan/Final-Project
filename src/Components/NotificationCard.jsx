@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 function NotificationCard(props) {
    
   return (
-      <div role="alert" className={`alert border-2 bg-white my-2 flex justify-between ${props.style}`}>
+      <div role="alert" className={`alert border-2 bg-white flex justify-between ${props.style}`}>
           <div className='flex items-center'>
               
   {props.icon}

@@ -294,9 +294,9 @@ function ManagerHomePage() {
       ) : null}
       <Nav />
 
-      <div className="flex max-md:w-[95%] md:w-[90%] lg:w-[100%]  ">
-        <div className="flex  w-[100%] max-md:flex-col max-md:w-full   md:w-full lg:w-[80%] max-sm:w-full ">
-          <div className="flex max-md:justify-center max-md:items-center max-md:p-7   lg:flex-col md:flex-col border justify-start items-center  p-15 mt-5 w-auto  max-md:ml-5 max-sm:ml-3 lg:ml-5  shadow-2xl bg-[#30465e] pt-10 rounded-xl lg:h-[51vh] md:h-[51vh] max-sm:w-full   ">
+      <div className="flex flex-col w-full items-center md:gap-2 md:items-start md:flex-row max-md:w-[95%] md:w-[90%] lg:w-[100%] p-5 ">
+        <div className="flex  w-[100%] max-md:flex-col max-md:w-full   md:w-full lg:w-[80%] max-sm:w-full">
+          <div className="flex max-md:justify-center max-md:items-center max-md:p-7   lg:flex-col md:flex-col border justify-start items-center  p-15  w-auto   shadow-2xl bg-[#30465e] pt-10 rounded-xl lg:h-[51vh] md:h-[51vh] max-sm:w-full   ">
             <div className="flex justify-center items-center bg-slate-200 rounded-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -323,8 +323,12 @@ function ManagerHomePage() {
             </div>
           </div>
 
-          <div className="flex flex-col lg:w-[90%] lg:mt-10  lg:ml-5 md:ml-5 md:mt-10 max-md:ml-5 max-md:mt-1 md:w-[72%] max-sm:mt-1 max-sm:ml-3 max-sm:w-[100%]">
-            {notifications.newManager?.map((el) => {
+           
+        
+       
+        </div>
+        <div className="flex flex-col lg:w-[90%] lg:mt-10 gap-2  max-md:mt-1 md:w-[72%] max-sm:mt-1 max-sm:w-[100%]">
+        {notifications.newManager?.map((el) => {
               if (!el.isClosedByNewManager) {
                 const handleDismiss = () => {
                   dismissAction(el._id);
@@ -383,77 +387,6 @@ function ManagerHomePage() {
                 );
               }
             })}
-            <h2 className="font-title font-bold text-[3vh] text-secondary ml-5 mt-3">
-              Number of employees: {user?.department?.employees?.length || 0}
-
-            </h2>
-            <div className="mt-3 ml-3">
-              <h1 className="font-text text-accent text-center">
-                {user?.department?.name}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col lg:w-[73%] lg:mt-10 md:mt-7 max-md:mt-7 max-md:ml-3 max-sm:ml-1  max-sm:mt-3 max-md:w-[98%] md:w-[98%] max-sm:w-[100%]">
-          {notifications.newManager?.map((el) => {
-            if (!el.isClosedByNewManager) {
-              const handleDismiss = () => {
-                dismissAction(el._id);
-              };
-
-              return (
-                <NotificationCard
-                  text={`Employee ${el.employeeName} joined you department as ${el.newPosition}`}
-                  onDismiss={handleDismiss}
-                  style={"border-info"}
-                  icon={
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      className="stroke-info h-6 w-6 shrink-0"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      ></path>
-                    </svg>
-                  }
-                />
-              );
-            }
-          })}
-          {notifications.oldManager?.map((el) => {
-            if (!el.isClosedByOldManager) {
-              const handleDismiss = () => {
-                dismissAction(el._id);
-              };
-              return (
-                <NotificationCard
-                  text={`Employee ${el.employeeName} is no longer in your department`}
-                  onDismiss={handleDismiss}
-                  style={"border-warning"}
-                  icon={
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 shrink-0 stroke-current text-warning"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                      />
-                    </svg>
-                  }
-                />
-              );
-            }
-          })}
           <h2 className="font-title font-bold text-[3vh] text-secondary ml-5 mt-3">
             Number of employees: {user?.department?.employees?.length || 0}
           </h2>
@@ -557,7 +490,6 @@ function ManagerHomePage() {
               </div>
             </div>
           </div>
-
           {/* 
           {isDialogOpen && (
             <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-60">
@@ -905,7 +837,6 @@ function ManagerHomePage() {
               </div>
             </div>
           </dialog>
->>>>>>> main
         </div>
       </div>
 
