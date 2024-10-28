@@ -293,10 +293,9 @@ function ManagerHomePage() {
         </div>
       ) : null}
       <Nav />
-
-      <div className="flex max-md:w-[95%] md:w-[90%] lg:w-[100%]  ">
-        <div className="flex  w-[100%] max-md:flex-col max-md:w-full   md:w-full lg:w-[80%] max-sm:w-full ">
-          <div className="flex max-md:justify-center max-md:items-center max-md:p-7   lg:flex-col md:flex-col border justify-start items-center  p-15 mt-5 w-auto  max-md:ml-5 max-sm:ml-3 lg:ml-5  shadow-2xl bg-[#30465e] pt-10 rounded-xl lg:h-[51vh] md:h-[51vh] max-sm:w-full   ">
+      <div className="flex max-sm:flex-col max-md:flex-col md:flex-col lg:flex-row max-sm:w-[95%] max-md:w-[95%] md:w-[95%] lg:w-[100%]  ">
+        <div className="flex w-[100%] max-sm:ml-2 max-md:ml-2 md:ml-6  max-md:flex-col max-md:w-full  md:w-[100%] lg:w-[23%]  ">
+          <div className="flex lg:justify-start max-md:justify-center max-md:items-center md:justify-center md:items-center md:p-7  md:flex-row max-md:p-7 md:w-[100%] lg:flex-col  border justify-start items-center  p-15 mt-5 w-auto  shadow-2xl bg-[#30465e] pt-10 rounded-xl lg:h-[51vh] md:h-fit    ">
             <div className="flex justify-center items-center bg-slate-200 rounded-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -323,7 +322,7 @@ function ManagerHomePage() {
             </div>
           </div>
 
-          <div className="flex flex-col lg:w-[90%] lg:mt-10  lg:ml-5 md:ml-5 md:mt-10 max-md:ml-5 max-md:mt-1 md:w-[72%] max-sm:mt-1 max-sm:ml-3 max-sm:w-[100%]">
+          {/* <div className="flex flex-col lg:w-[90%] lg:mt-10  lg:ml-5 md:ml-5 md:mt-10 max-md:ml-5 max-md:mt-1 md:w-[72%] max-sm:mt-1 max-sm:ml-3 max-sm:w-[100%]">
             {notifications.newManager?.map((el) => {
               if (!el.isClosedByNewManager) {
                 const handleDismiss = () => {
@@ -392,9 +391,9 @@ function ManagerHomePage() {
                 {user?.department?.name}
               </h1>
             </div>
-          </div>
+          </div> */}
         </div>
-        <div className="flex flex-col lg:w-[73%] lg:mt-10 md:mt-7 max-md:mt-7 max-md:ml-3 max-sm:ml-1  max-sm:mt-3 max-md:w-[98%] md:w-[98%] max-sm:w-[100%]">
+        <div className="flex flex-col lg:w-[70%] md:ml-6  max-sm:ml-2 max-md:ml-2 max-md:w-[100%] lg:mt-4 md:mt-1 max-md:mt-1 md:w-[100%] max-sm:mt-1   max-sm:w-[100%]">
           {notifications.newManager?.map((el) => {
             if (!el.isClosedByNewManager) {
               const handleDismiss = () => {
@@ -557,7 +556,6 @@ function ManagerHomePage() {
               </div>
             </div>
           </div>
-
           {/* 
           {isDialogOpen && (
             <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-60">
@@ -905,7 +903,6 @@ function ManagerHomePage() {
               </div>
             </div>
           </dialog>
->>>>>>> main
         </div>
       </div>
 
