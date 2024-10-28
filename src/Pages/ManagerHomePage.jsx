@@ -292,7 +292,7 @@ function ManagerHomePage() {
           </div>
         </div>
       ) : null}
-      <Nav />
+      <Nav/>
 
       <div className="flex max-sm:flex-col max-md:flex-col md:flex-col lg:flex-row max-sm:w-[95%] max-md:w-[95%] md:w-[95%] lg:w-[100%]  ">
         <div className="flex w-[100%] max-sm:ml-2 max-md:ml-2 md:ml-6  max-md:flex-col max-md:w-full  md:w-[100%] lg:w-[23%]  ">
@@ -324,140 +324,9 @@ function ManagerHomePage() {
             </div>
           </div>
 
-
-          {/* <div className="flex flex-col lg:w-[90%] lg:mt-10  lg:ml-5 md:ml-5 md:mt-10 max-md:ml-5 max-md:mt-1 md:w-[72%] max-sm:mt-1 max-sm:ml-3 max-sm:w-[100%]">
-            {notifications.newManager?.map((el) => {
->>>>>>> Ghaida
-              if (!el.isClosedByNewManager) {
-                const handleDismiss = () => {
-                  dismissAction(el._id);
-                };
-
-                return (
-                  <NotificationCard
-                    text={`Employee ${el.employeeName} joined you department as ${el.newPosition}`}
-                    onDismiss={handleDismiss}
-                    style={"border-info"}
-                    icon={
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        className="stroke-info h-6 w-6 shrink-0"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
-                      </svg>
-                    }
-                  />
-                );
-              }
-            })}
-            {notifications.oldManager?.map((el) => {
-              if (!el.isClosedByOldManager) {
-                const handleDismiss = () => {
-                  dismissAction(el._id);
-                };
-                return (
-                  <NotificationCard
-                    text={`Employee ${el.employeeName} is no longer in your department`}
-                    onDismiss={handleDismiss}
-                    style={"border-warning"}
-                    icon={
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 shrink-0 stroke-current text-warning"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                        />
-                      </svg>
-                    }
-                  />
-                );
-              }
-            })}
-
-            <h2 className="font-title font-bold text-[3vh] text-secondary ml-5 mt-3">
-              Number of employees: {user?.department?.employees?.length || 0}
-
-            </h2>
-            <div className="mt-3 ml-3">
-              <h1 className="font-text text-accent text-center">
-                {user?.department?.name}
-              </h1>
-            </div>
-          </div> */}
         </div>
         <div className="flex flex-col lg:w-[70%] md:ml-6  max-sm:ml-2 max-md:ml-2 max-md:w-[100%] lg:mt-4 md:mt-1 max-md:mt-1 md:w-[100%] max-sm:mt-1   max-sm:w-[100%]">
-          {notifications.newManager?.map((el) => {
-            if (!el.isClosedByNewManager) {
-              const handleDismiss = () => {
-                dismissAction(el._id);
-              };
-
-              return (
-                <NotificationCard
-                  text={`Employee ${el.employeeName} joined you department as ${el.newPosition}`}
-                  onDismiss={handleDismiss}
-                  style={"border-info"}
-                  icon={
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      className="stroke-info h-6 w-6 shrink-0"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      ></path>
-                    </svg>
-                  }
-                />
-              );
-            }
-          })}
-          {notifications.oldManager?.map((el) => {
-            if (!el.isClosedByOldManager) {
-              const handleDismiss = () => {
-                dismissAction(el._id);
-              };
-              return (
-                <NotificationCard
-                  text={`Employee ${el.employeeName} is no longer in your department`}
-                  onDismiss={handleDismiss}
-                  style={"border-warning"}
-                  icon={
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 shrink-0 stroke-current text-warning"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                      />
-                    </svg>
-                  }
-                />
-              );
-            }
-          })}
+          
 
           <h2 className="font-title font-bold text-[3vh] text-secondary ml-5 mt-3">
             Number of employees: {user?.department?.employees?.length || 0}
