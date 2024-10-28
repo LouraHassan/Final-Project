@@ -2,12 +2,12 @@ import React from "react";
 import Footer from "../Components/Footer";
 import HomeNav from "../Components/HomeNav";
 import { Link } from "react-router-dom";
-import logo from '/logo.png'
+import logo from "/logo.png";
 
 function Home() {
   return (
-      <div className="w-full">
-          <HomeNav></HomeNav>
+    <div className="w-full">
+      <HomeNav></HomeNav>
       <div
         className="lg:w-full h-screen flex flex-col justify-center items-center"
       >
@@ -41,17 +41,17 @@ function Home() {
               designed to streamline the process of integrating employees into
               new departments, ensuring that every individual is placed where
               they can contribute most effectively.
-                      </p>
-
+            </p>
           </div>
           <div className=" flex items-center justify-around">
-          
-                      <img src={logo} alt="logo" className="w-[10vw] " />
-
+            <img src={logo} alt="logo" className="w-[10vw] " />
           </div>
         </div>
       </div>
-      <div id="how-it-works" className="p-10 md:p-20 bg-base-100 flex flex-col items-center md:items-start">
+      <div
+        id="how-it-works"
+        className="p-10 md:p-20 bg-base-100 flex flex-col items-center md:items-start"
+      >
         <p className="text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           HOW IT WORKS
         </p>
@@ -126,7 +126,9 @@ function Home() {
                 <path d="M4 4h6v6h-6zm10 0h6v6h-6zm-10 10h6v6h-6zm10 3h6m-3 -3v6" />
               </svg>
             </div>
-            <p className="m-4 font-text">Recruiter adds company's departments</p>
+            <p className="m-4 font-text">
+              Recruiter adds company's departments
+            </p>
           </div>
           <div>
             <div className="flex items-center">
@@ -207,7 +209,10 @@ function Home() {
           </div>
         </div>
       </div>
-      <div id="key-features" className="p-10 md:p-20 bg-base-200 flex flex-col items-center">
+      <div
+        id="key-features"
+        className="p-10 md:p-20 bg-base-200 flex flex-col items-center"
+      >
         <p className="md:self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           KEY FEATURES
         </p>
@@ -309,14 +314,19 @@ function Home() {
               <path d="M3 13a20 20 0 0 0 18 0" />
             </svg>
             <p className="text-md font-title font-bold m-2 text-center">
-            Department Vacancy Management</p>
+              Department Vacancy Management
+            </p>
             <p className="text-xs font-text m-2 text-center tracking-wider">
-            Managers can post job openings, specifying skills and qualifications needed to fill staffing gaps.
+              Managers can post job openings, specifying skills and
+              qualifications needed to fill staffing gaps.
             </p>
           </div>
         </div>
       </div>
-      <div id="benefits" className="p-10 md:p-20 bg-base-100 flex flex-col items-center">
+      <div
+        id="benefits"
+        className="p-10 md:p-20 bg-base-100 flex flex-col items-center"
+      >
         <p className="md:self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           BENEFITS
         </p>
@@ -405,7 +415,10 @@ function Home() {
           </div>
         </div>
       </div>
-      <div id="faq" className="p-10 md:p-20 bg-secondary flex flex-col items-center">
+      <div
+        id="faq"
+        className="p-10 md:p-20 bg-secondary flex flex-col items-center"
+      >
         <p className="md:self-start text-primary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           FAQ
         </p>
@@ -449,7 +462,10 @@ function Home() {
           </div>
         </div>
       </div>
-      <div id="contact-us" className="p-10 md:p-20 bg-base-200 flex flex-col items-center">
+      <div
+        id="contact-us"
+        className="p-10 md:p-20 bg-base-200 flex flex-col items-center"
+      >
         <p className="md:self-start text-secondary font-title font-bold tracking-wider text-xl border-b-4 border-accent inline-block my-10">
           CONTACT US
         </p>
