@@ -294,9 +294,9 @@ function ManagerHomePage() {
       ) : null}
       <Nav/>
 
-      <div className="flex max-sm:flex-col max-md:flex-col md:flex-col lg:flex-row max-sm:w-[95%] max-md:w-[95%] md:w-[95%] lg:w-[100%]  ">
-        <div className="flex w-[100%] max-sm:ml-2 max-md:ml-2 md:ml-6  max-md:flex-col max-md:w-full  md:w-[100%] lg:w-[23%]  ">
-          <div className="flex lg:justify-start max-md:justify-center max-md:items-center md:justify-center md:items-center md:p-7  md:flex-row max-md:p-7 md:w-[100%] lg:flex-col  border justify-start items-center  p-15 mt-5 w-auto  shadow-2xl bg-[#30465e] pt-10 rounded-xl lg:h-[51vh] md:h-fit    ">
+      <div className="flex flex-col  p-5 items-center w-full lg:flex-row  lg:items-start  ">
+        <div className="flex    max-md:flex-col max-md:w-full  md:w-[100%] lg:w-[23%]  ">
+          <div className="flex lg:justify-start p-5 lg:px-5 lg:py-16  md:flex-row  md:w-[100%] lg:flex-col  border justify-start items-center   shadow-2xl bg-secondary  rounded-xl  md:h-fit    ">
 
             <div className="flex justify-center items-center bg-slate-200 rounded-full">
               <svg
@@ -312,12 +312,12 @@ function ManagerHomePage() {
                 <path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
               </svg>
             </div>
-            <div className="flex flex-col justify-center max-sm:w-[36vh]">
-              <h2 className="font-title mt-4 text-center w-[40vh] text-white font-bold text-[4vh]">
+            <div className="flex flex-col lg:justify-center px-5  max-sm:w-[36vh]">
+              <h2 className="font-title mt-4 lg:text-center  text-white font-bold text-xl">
                 {user?.name}
               </h2>
-              <div className="mt-3 ml-3">
-                <h1 className="font-text text-accent text-center">
+              <div className="mt-3">
+                <h1 className="font-text text-accent lg:text-center">
                   {user?.department?.name}
                 </h1>
               </div>
@@ -325,20 +325,48 @@ function ManagerHomePage() {
           </div>
 
         </div>
-        <div className="flex flex-col lg:w-[70%] md:ml-6  max-sm:ml-2 max-md:ml-2 max-md:w-[100%] lg:mt-4 md:mt-1 max-md:mt-1 md:w-[100%] max-sm:mt-1   max-sm:w-[100%]">
-          
+        <div className="flex flex-col m-2 lg:w-[75vw] md:w-[100%]  max-sm:w-[100%]">
+          <div className="flex items-center justify-between w-full my-4 lg:w-[75vw]">
 
-          <h2 className="font-title font-bold text-[3vh] text-secondary ml-5 mt-3">
+
+          <h2 className="font-title font-bold text-secondary md:text-xl">
             Number of employees: {user?.department?.employees?.length || 0}
-          </h2>
+            </h2>
+            <button
+            className="btn btn-outline btn-secondary self-end btn-sm md:btn-md"
+            onClick={() =>
+              document.getElementById("employeeAccountDialog").showModal()
+            }
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              className="icon icon-tabler icons-tabler-outline icon-tabler-user-plus hidden md:block"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+              <path d="M16 19h6" />
+              <path d="M19 16v6" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+            </svg>
+            Create Employee account
+          </button>
+          </div>
           <div className="flex justify-center">
-            <div className="overflow-x-auto lg:w-[80vw] bg-slate-100 lg:self-center  max-md:ml-3 lg:m-4 shadow-md shadow-gray-300 rounded-lg">
+            <div className="overflow-x-auto  bg-slate-100 lg:self-center w-full shadow-md shadow-gray-300 rounded-lg">
               <table className="table">
                 <thead>
-                  <tr className="font-title text-lg">
+                  <tr className="font-title md:text-lg">
                     <th>Employee Name</th>
                     <th>Position</th>
-                    <th>Can be reassigned?</th>
+                    <th className="hidden md:block">Can be reassigned?</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -364,36 +392,10 @@ function ManagerHomePage() {
               </table>
             </div>
           </div>
-          <button
-            className="btn btn-outline btn-secondary self-start ml-4 m-3"
-            onClick={() =>
-              document.getElementById("employeeAccountDialog").showModal()
-            }
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              className="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-              <path d="M16 19h6" />
-              <path d="M19 16v6" />
-              <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
-            </svg>
-            Create Employee account
-          </button>{" "}
-          <div className="flex justify-around   w-[100%] ">
-            <div className="flex flex-col justify-around pb-10 w-[96%] max-md:w-[90%]">
-              <div className="flex justify-between w-[97%]">
-                <h1 className="font-title font-bold text-[3vh] text-secondary">
+       {" "}
+            <div className="flex flex-col my-4 ">
+              <div className="flex justify-between items-center">
+                <h1 className="font-title font-bold md:text-xl text-secondary">
                   Posted Positions
                 </h1>
 
@@ -401,12 +403,12 @@ function ManagerHomePage() {
                   onClick={() =>
                     document.getElementById("Newposition").showModal()
                   }
-                  className=" btn bg-secondary text-white "
+                  className=" btn btn-sm md:btn-md bg-secondary text-white "
                 >
                   New Post
                 </button>
               </div>
-              <div className="grid lg:grid-cols-3 justify-around gap-4 mt-4">
+              <div className="grid lg:grid-cols-3  w-full  gap-4 mt-4">
                 {}
                 {user.department &&
                 user.department.positions &&
@@ -429,126 +431,9 @@ function ManagerHomePage() {
                   <p>No positions yet</p>
                 )}
               </div>
-            </div>
           </div>
-          {/* 
-          {isDialogOpen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-60">
-              <div className="bg-white p-6 rounded-lg w-[45%] ">
-                <h2 className="font-title font-bold text-secondary text-[4vh]">
-                  {editIndex !== null ? "Edit Position" : "Create New Position"}
-                </h2> 
-                <label className="font-title text-accent font-bold">
-                  Position Name:{" "}
-                </label>
-                <input
-                  type="text"
-                  value={newPosition}
-                  onChange={(e) => setNewPosition(e.target.value)}
-                  className="input input-bordered p-2 mt-2 w-full"
-                />
-               
-                <label className="font-title text-accent font-bold">
-                  Estimated Salary:
-                </label>
-                <input
-                  type="text"
-                  value={newSalary}
-                  onChange={(e) => setNewSalary(e.target.value)}
-
-                  className="input input-bordered p-2 mt-2 w-full"
-
-                />
-                <label className="font-title text-accent font-bold">
-                  Experience Years:
-                </label>
-                <input
-                  type="text"
-                  value={newExperience}
-                  onChange={(e) => setNewExperience(e.target.value)}
-
-                  className="input input-bordered p-2 mt-2 w-full"
-
-                />
-                <div className="flex flex-col justify-around h-[35vh]">
-                  <select
-                    name=""
-                    id=""
-                    value={jobType}
-                    onChange={(e) => setJobType(e.target.value)}
-                    className="select select-bordered"
-                  >
-                    <option value={"Not-specified"}>Select type</option>
-                    <option value={"Full-Time"}> Full-Time</option>
-                    <option value={"Part-Time"}>Part-Time</option>
-                  </select>
-                  <label className="font-title text-accent font-bold">
-                    Key Responsibilities:
-                  </label>
-                  <textarea
-                    value={newKey}
-                    onChange={(e) => setNewKey(e.target.value)}
-                    className="textarea resize-none textarea-bordered  textarea-lg max-w-m"
-                  ></textarea>
-                  <label className="font-title text-accent font-bold">
-                    Job Overview:
-                  </label>
-                  <textarea
-                    value={newOverview}
-                    onChange={(e) => setNewOverview(e.target.value)}
-                    className="textarea resize-none textarea-bordered  textarea-lg max-w-m"
-                  ></textarea>
-                  <select name="skills" value={skillInput} onChange={(e) => {
-                     const selectedSkill = e.target.value;
-                    setSkillInput(selectedSkill)
-                    setSkills([selectedSkill, ...skills])
-                    setSkillInput('')
-                
-                  }} className="select select-bordered">
-                    {skillsOptions.map(skill => {
-                      return (<option value={skill}>{skill}</option>)
-                  })}
-                    <option value=""></option>
-                  </select>
-                
-                 
-                  <div className="flex flex-wrap">
-                    
-                    {skills.map(el => {
-                       const handleDelete = () => {
-                        handleDelete2(el);
-                      };
-                    return(<SkillTip text={el} onDelete={handleDelete}></SkillTip>)
-                  })}
-                  </div>
-                </div>
-                <p>{warningText}</p>
-                <div className="flex justify-end mt-4">
-                  <button
-                    className="btn bg-[#30465e] text-white p-4 mr-2"
-                    onClick={closeDialog}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="btn btn-accent text-white p-4"
-                    onClick={addPositionAction}
-                  >
-                   Submit
-                  </button>
-                </div>
-              </div>
-            </div>
-
-          )} */}
           <dialog id="employeeAccountDialog" className="modal w-[]">
-            {loading ? (
-              <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                <div className="p-4 w-[10vw] flex flex-col items-center  justify-center bg-secondary rounded-lg">
-                  <span className="loading loading-dots bg-accent"></span>
-                </div>
-              </div>
-            ) : null}
+         
             <div className="modal-box flex flex-col items-center bg-white w-[58vh] ">
               <form method="dialog">
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -615,7 +500,7 @@ function ManagerHomePage() {
                   />
                 </label>
                 <form method="dialog ">
-                  <div className="w-[45vh] flex justify-center ">
+                  <div className=" flex justify-center ">
                     <button
                       onClick={CreateEmployee}
                       className="btn btn-secondary mt-5   "
@@ -782,13 +667,7 @@ function ManagerHomePage() {
       </div>
 
       <dialog id="employeeAccountDialog" className="modal w-[]">
-        {loading ? (
-          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-            <div className="p-4 w-[10vw] flex flex-col items-center  justify-center bg-secondary rounded-lg">
-              <span className="loading loading-dots bg-accent"></span>
-            </div>
-          </div>
-        ) : null}
+     
         <div className="modal-box flex flex-col items-center bg-white w-[58vh] ">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">

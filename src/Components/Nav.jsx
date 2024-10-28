@@ -94,7 +94,7 @@ function Nav() {
       <div className="navbar-end">
         {isAdmin ? <></> :
         <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-ghost m-1">
+          <div tabIndex={0} role="button" className="btn btn-sm btn-ghost md:m-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -116,7 +116,7 @@ function Nav() {
           </div>
           <div
             tabIndex={0}
-            className="dropdown-content menu w-[80vw] rounded-box z-[1] bg-white p-6 shadow gap-2"
+            className="dropdown-content menu w-[95vw] md:w-[80vw] rounded-box z-[1] bg-white p-6 shadow gap-2"
             >
             {(notifications && notifications.newManager?.length > 0) ||
             notifications.oldManager?.length > 0 ||
@@ -218,7 +218,7 @@ function Nav() {
         </div>
           }
         <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-ghost m-1">
+          <div tabIndex={0} role="button" className="btn btn-sm btn-ghost md:m-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

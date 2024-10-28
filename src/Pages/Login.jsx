@@ -152,8 +152,8 @@ function Login() {
                       <input
                         className="h-9 border-2 border-gray"
                         type="password"
-                        name=""
-                        id=""
+                       
+                       
                       />
                       <label className="font-text text-accent">
                         New Password:
@@ -161,8 +161,8 @@ function Login() {
                       <input
                         className="h-9 border-2 border-gray"
                         type="password"
-                        name=""
-                        id=""
+                       
+                       
                       />
 
                       <label className="font-text text-accent">
@@ -171,8 +171,8 @@ function Login() {
                       <input
                         className="h-9 border-2 border-gray"
                         type="password"
-                        name=""
-                        id=""
+                       
+                       
                       />
                       <button className=" btn btn-secondary text-white mt-3">
                         Save

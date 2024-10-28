@@ -34,7 +34,7 @@ function EmpList(props) {
     }
   return (
     <tr>
-      <td>
+      <td className="p-2 md:p-4">
         <div className="flex items-center gap-3 my-2">
           <div className="avatar">
            
@@ -57,19 +57,19 @@ function EmpList(props) {
           </div>
         </div>
       </td>
-      <td>
+      <td className="p-2 md:p-4">
         <p className="font-text">{props.position}</p>
           </td>
           
-          <td className={`flex items-center ${isManager ? '' : 'hidden'}`}>{isReassignible}
+          <td className={`flex items-center flex-col md:flex-row ${isManager ? '' : 'hidden'}`}>{isReassignible}
               {editMode?  <input type="checkbox" className="toggle m-2 toggle-accent"  onChange={changeExcess} 
       checked={isReassignible === 'Yes'} /> : <></>}
         
       </td>
-      <th className={isManager? '': 'hidden'}>
+      <th className={isManager? 'p-2 md:p-4': 'hidden'}>
         <button
           onClick={editAction}
-          className={`btn btn-ghost ${editMode ? "hidden" : ""}`}
+          className={`btn btn-sm md:btn-md btn-ghost ${editMode ? "hidden" : ""}`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +90,7 @@ function EmpList(props) {
         </button>
         <button
           onClick={cancelEdit}
-          className={`btn btn-ghost ${editMode ? "" : "hidden"}`}
+          className={`btn btn-sm md:btn-md btn-ghost ${editMode ? "" : "hidden"}`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +111,7 @@ function EmpList(props) {
         </button>
         <button
           onClick={saveAction}
-          className={`btn btn-ghost ${editMode ? "" : "hidden"}`}
+          className={`btn btn-sm md:btn-md btn-ghost ${editMode ? "" : "hidden"}`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
