@@ -525,7 +525,7 @@ export default function AdminHomePage() {
             </div>
           </div>
         )}
-        <div className="w-full md:w-auto my-5 border-2 border-black">
+        <div className="w-full md:w-auto my-5 ">
 
         <div className="flex items-center justify-between w-full">
           <p className="font-title text-xl font-bold text-secondary my-2">
@@ -589,7 +589,7 @@ export default function AdminHomePage() {
         {managerArr.length == 0 || departmentArr.length == 0 ? (
           <></>
         ) : (
-          <div className="w-full md:w-auto my-5 border-2 border-black">
+          <div className="w-full md:w-auto my-5 ">
             {" "}
             <div className="flex items-center justify-between w-full">
               <p className="font-title text-xl font-bold text-secondary my-4">
