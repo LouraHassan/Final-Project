@@ -56,7 +56,7 @@ export default {
         
 "warning-content": "#ececec",
         
-"error": "#dc2626",
+"error": "#97011B",
         
 "error-content": "#ececec",
         },
