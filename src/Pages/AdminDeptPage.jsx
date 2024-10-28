@@ -89,9 +89,9 @@ function AdminDeptPage() {
         </div>
       ) : null}
       <Nav></Nav>
-      <div className="p-10 flex flex-col items-start">
-        <p className="font-title text-2xl font-bold">{department.name}</p>
-        <div className="self-center flex flex-col md:flex-row md:justify-between items-center md:w-[80vw] ">
+      <div className="p-10 flex flex-col items-center">
+        <p className="font-title text-2xl text-neutral font-bold self-start md:self-auto mb-4">{department.name}</p>
+        <div className="self-center flex flex-col md:flex-row md:justify-between items-center md:w-[80vw] w-full">
           <div className="m-2 self-start">
             <p className="text-accent font-title text-lg">Manager</p>
             <div className="flex items-center">
@@ -107,12 +107,12 @@ function AdminDeptPage() {
                 <path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
                 <path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
               </svg>
-              <p className="text-xl m-2 font-semibold">
+              <p className="text-lg m-2 font-semibold">
                 {department.manager?.name || "No manager"}
               </p>
             </div>
           </div>
-          <div className="flex  self-center text-lg">
+          <div className="flex  self-center text-lg my-4">
             <div className={`flex flex-col items-center m-2`}>
               <p>Employees</p>
               <p>{department.employees?.length || 0}</p>
@@ -128,7 +128,7 @@ function AdminDeptPage() {
           </div>
         </div>
 
-        <div className="overflow-x-auto w-full md:w-[80vw] bg-white md:self-center md:m-4 shadow-md shadow-gray-300 rounded-lg">
+        <div className="overflow-x-auto w-full md:w-[80vw] my-4 bg-white md:self-center md:m-4 shadow-md shadow-gray-300 rounded-lg">
           <table className="table">
             <thead>
               <tr className="font-title text-lg">
@@ -153,13 +153,14 @@ function AdminDeptPage() {
             </tbody>
           </table>
         </div>
-        <div className={department.positions?.filter(position => position.status === false).length == 0 ? 'hidden': ''}>
-
-        <p className="text-xl font-title font-bold text-secondary">
+        <div className={department.positions?.filter(position => position.status === false).length == 0 ? 'hidden': 'w-full md:w-[80vw] my-4'}>
+         
+            
+        <p className="text-xl font-title font-bold text-secondary my-2">
           Needed Positions
         </p>
-        <div className="my-4 mx-10 flex flex-col items-center lg:w-[80vw] self-center">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 lg:w-[80vw]  gap-4">
+        <div className=" flex flex-col items-center md:w-[80vw] self-center">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 md:w-[80vw] w-full gap-4">
 
             {positionsArr && positionsArr.map((position, index) => {
               if (!position.status) {
@@ -181,7 +182,7 @@ function AdminDeptPage() {
         </div>
             </div>
           {department.employees?.filter(employee => employee.excess == true).length > 0 ? 
-        <div className="my-8 flex flex-col lg:items-start w-full ">
+        <div className="my-4 flex flex-col lg:items-start md:w-[80vw] w-full">
           <p className="text-xl font-title font-bold text-secondary my-2">
             Employees who may be reassigned
           </p>

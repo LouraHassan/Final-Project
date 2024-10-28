@@ -5,9 +5,9 @@ import EmpCard from "../Components/EmpCard";
 import DepCard from "../Components/DepCard";
 import Nav from "../Components/Nav";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { Chart as ChartJS } from 'chart.js/auto'
-import {Pie, Bar} from 'react-chartjs-2'
+import axios, { all } from "axios";
+import { Chart as ChartJS } from "chart.js/auto";
+import { Pie, Bar } from "react-chartjs-2";
 const AccountsAPI = `http://localhost:3000/account/`;
 const createAccountsAPI = `http://localhost:3000/createAccount?company=${sessionStorage.getItem(
   "company"
@@ -24,6 +24,12 @@ const CreateDeptAPI = `http://localhost:3000/department?company=${sessionStorage
 const DepartmentsAPI = `http://localhost:3000/department?company=${sessionStorage.getItem(
   "company"
 )}`;
+const AllPositionsAPI = `http://localhost:3000/company/${sessionStorage.getItem(
+  "company"
+)}/position`;
+const AllNotificationsAPI = `http://localhost:3000/company/${sessionStorage.getItem(
+  "company"
+)}/notification`;
 export default function AdminHomePage() {
   const { id } = useParams();
   const [user, setUser] = useState();
@@ -41,6 +47,8 @@ export default function AdminHomePage() {
   const [warningText, setWarningText] = useState("");
   const [warningText2, setWarningText2] = useState("");
   const [warningText3, setWarningText3] = useState("");
+  const [allPositions, setAllPositions] = useState([]);
+  const [allNotifications, setAllNotifications] = useState([]);
 
   const [deptName, setDeptName] = useState("");
   const [manager, setManager] = useState("");
@@ -51,6 +59,8 @@ export default function AdminHomePage() {
     getManagers();
     getEmployee();
     getDepartments();
+    getAllPositions();
+    getAllNotifications();
   }, []);
 
   useEffect(() => {
@@ -66,15 +76,19 @@ export default function AdminHomePage() {
       })
       .then((res) => {
         setUser(res.data);
-          console.log(res);
-          setNetworkError(false);
-      }).catch(err => {
-          if (!err.response || err.code === 'ERR_CONNECTION_REFUSED' || err.code === "ERR_BAD_RESPONSE") {
-              setNetworkError(true)
-          }
-
+        console.log(res);
+        setNetworkError(false);
       })
-        .finally(() => {
+      .catch((err) => {
+        if (
+          !err.response ||
+          err.code === "ERR_CONNECTION_REFUSED" ||
+          err.code === "ERR_BAD_RESPONSE"
+        ) {
+          setNetworkError(true);
+        }
+      })
+      .finally(() => {
         setLoading(false);
       });
   };
@@ -88,15 +102,19 @@ export default function AdminHomePage() {
       })
       .then((res) => {
         console.log(res);
-          setManagerArr(res.data);
+        setManagerArr(res.data);
         //   setNetworkError(false);
-
-      }).catch(err => {
-        if (!err.response || err.code === 'ERR_CONNECTION_REFUSED' || err.code === "ERR_BAD_RESPONSE") {
-            // setNetworkError(true)
+      })
+      .catch((err) => {
+        if (
+          !err.response ||
+          err.code === "ERR_CONNECTION_REFUSED" ||
+          err.code === "ERR_BAD_RESPONSE"
+        ) {
+          // setNetworkError(true)
         }
-
-    }).finally(() => {
+      })
+      .finally(() => {
         setLoading(false);
       });
   };
@@ -111,15 +129,19 @@ export default function AdminHomePage() {
       })
       .then((res) => {
         console.log(res);
-          setEmployeeArr(res.data);
+        setEmployeeArr(res.data);
         //   setNetworkError(false);
       })
       .catch((err) => {
-        if (!err.response || err.code === 'ERR_CONNECTION_REFUSED' || err.code === "ERR_BAD_RESPONSE") {
-        //   setNetworkError(true);
+        if (
+          !err.response ||
+          err.code === "ERR_CONNECTION_REFUSED" ||
+          err.code === "ERR_BAD_RESPONSE"
+        ) {
+          //   setNetworkError(true);
         }
       })
-        .finally(() => {
+      .finally(() => {
         setLoading(false);
       });
   };
@@ -133,58 +155,101 @@ export default function AdminHomePage() {
       })
       .then((res) => {
         console.log(res);
-          setDepartmentsArr(res.data);
+        setDepartmentsArr(res.data);
         //   setNetworkError(false);
-
-      }).catch(err => {
-        if (!err.response || err.code === 'ERR_CONNECTION_REFUSED' || err.code === "ERR_BAD_RESPONSE") {
-            // setNetworkError(true)
+      })
+      .catch((err) => {
+        if (
+          !err.response ||
+          err.code === "ERR_CONNECTION_REFUSED" ||
+          err.code === "ERR_BAD_RESPONSE"
+        ) {
+          // setNetworkError(true)
         }
-
-    })
-        .finally(() => {
+      })
+      .finally(() => {
         setLoading(false);
       });
   };
+
+  const getAllPositions = () => {
+    axios.get(AllPositionsAPI).then((res) => {
+      console.log(res);
+      setAllPositions(res.data.filter((el) => el.status == false));
+    });
+  };
+
+  const getAllNotifications = () => {
+    axios.get(AllNotificationsAPI).then((res) => {
+      console.log(res);
+      setAllNotifications(res.data);
+    });
+  };
+
+  const departmentLookup = departmentArr.reduce((acc, dept) => {
+    acc[dept._id] = dept.name;
+    return acc;
+  }, {});
+
+  const notificationsByDepartment = allNotifications.reduce(
+    (acc, notification) => {
+      const deptName =
+        departmentLookup[notification.department] || "Unknown Department";
+      if (!acc[deptName]) {
+        acc[deptName] = [];
+      }
+      acc[deptName].push(notification);
+      return acc;
+    },
+    {}
+  );
+
+  console.log(notificationsByDepartment);
+  const departmentLabels = Object.keys(notificationsByDepartment);
+  const departmentData = Object.values(notificationsByDepartment).map(
+    (notifications) => notifications.length
+  );
   const createDeptAction = () => {
     if (manager == "Not selected" || deptName == "" || manager == "") {
       setWarningText("you have to select manager");
     } else {
-        
-        setWarningText("");
-        setLoading(true);
-        axios
+      setWarningText("");
+      setLoading(true);
+      axios
         .post(
-            CreateDeptAPI,
-            {
-                name: deptName,
-                manager: manager,
+          CreateDeptAPI,
+          {
+            name: deptName,
+            manager: manager,
+          },
+          {
+            headers: {
+              Authorization: sessionStorage.getItem("token"),
             },
-            {
-                headers: {
-                    Authorization: sessionStorage.getItem("token"),
-                },
-            }
+          }
         )
         .then((res) => {
-            console.log(res);
-            document.getElementById("createDepartmentDialog").close();
-            setDeptName("");
-            setManager("");
-            getDepartments();
-            //   setNetworkError(false);
-            
+          console.log(res);
+          document.getElementById("createDepartmentDialog").close();
+          setDeptName("");
+          setManager("");
+          getDepartments();
+          //   setNetworkError(false);
         })
         .catch((err) => {
-            if (!err.response || err.code === 'ERR_CONNECTION_REFUSED' || err.code === "ERR_BAD_RESPONSE") {
-                //   setNetworkError(true)
-            }
-            
-            console.log(err.response);
-            setWarningText(err.response.data.msg);
+          if (
+            !err.response ||
+            err.code === "ERR_CONNECTION_REFUSED" ||
+            err.code === "ERR_BAD_RESPONSE"
+          ) {
+            //   setNetworkError(true)
+          }
+
+          console.log(err.response);
+          setWarningText(err.response.data.msg);
         })
         .finally(() => {
-            setLoading(false);
+          setLoading(false);
         });
     }
   };
@@ -270,10 +335,10 @@ export default function AdminHomePage() {
         });
     }
   };
-    const retryAction = () => {
-     location.reload()
-  }
-  
+  const retryAction = () => {
+    location.reload();
+  };
+
   //! ADD PIE APPEARANCE LOGIC
   return (
     <div>
@@ -306,59 +371,89 @@ export default function AdminHomePage() {
               <path d="M3.515 9.515a12 12 0 0 1 3.544 -2.455m3.101 -.92a12 12 0 0 1 10.325 3.374" />
               <path d="M3 3l18 18" />
             </svg>
-            <p className="text-error text-lg m-4 font-semibold">Oops! No Internet Connection</p>
-                      <p className="text-neutral m-1">We couldn’t connect to the internet.</p>
-                      <p className="text-neutral m-1"> Please check your connection and click the button to try again.</p>
-                      <button onClick={retryAction} className="btn btn-accent my-5 btn-wide">Retry</button>
+            <p className="text-error text-lg m-4 font-semibold">
+              Oops! No Internet Connection
+            </p>
+            <p className="text-neutral m-1">
+              We couldn’t connect to the internet.
+            </p>
+            <p className="text-neutral m-1">
+              {" "}
+              Please check your connection and click the button to try again.
+            </p>
+            <button
+              onClick={retryAction}
+              className="btn btn-accent my-5 btn-wide"
+            >
+              Retry
+            </button>
           </div>
         </div>
       ) : null}
       <Nav></Nav>
-      <div className="mx-5 py-5 md:px-16 flex flex-col items-start">
-      
-        <p className="text-xl text-secondary font-semibold">
-          
+      <div className="mx-5 py-5 md:px-16 flex flex-col items-center">
+        <p className="text-xl text-secondary font-semibold self-start">
           Welcome <span className="text-accent">{user?.name}</span>
         </p>
-        <div className="flex items-center my-8">
-
-        <div className="">
-        <Pie
-          data={{
-            labels: ['Total Employees', 'Total Shortage', 'Total Surplus Employees'],
-            datasets: [
-              {
-                label: 'revenue',
-                data: [employeeArr.length + managerArr.length, 10, employeeArr.filter(el => el.excess == true).length],
-                backgroundColor: [
-                  '#30475E',
-                  'rgb(54, 162, 235)',
-                  '#F2A365'
+      {departmentArr || departmentArr.length > 0 ? 
+        <div className="self-center flex flex-col md:justify-around md:flex-row flex-wrap w-full items-center justify-center  my-8">
+          <div className="flex flex-col items-center my-2  max-w-lg md:max-w-[30vw] lg:max-w-[50vw]">
+            <p className="my-2 text-center font-semibold">Total Employees in the company</p>
+            <Pie
+              data={{
+                labels: [
+                  "Total Employees",
+                  "Total Shortage",
+                  "Total Surplus Employees",
                 ],
-              }
-            ]
-          }}/>
+                datasets: [
+                  {
+                    label: "revenue",
+                    data: [
+                      employeeArr.length + managerArr.length,
+                      allPositions.length,
+                      employeeArr.filter((el) => el.excess == true).length,
+                    ],
+                    backgroundColor: [
+                      "#30475E",
+                      "rgb(54, 162, 235)",
+                      "#F2A365",
+                    ],
+                  },
+                ],
+              }}
+            />
+          </div>
+          <div className="w-[90vw]  flex flex-col items-center my-2 md:max-w-lg ">
+            <p className="my-2 text-center font-semibold">Number of Employees Assignment Across Departments</p>
+            <Bar
+              data={{
+                labels: departmentLabels,
+                datasets: [
+                  {
+                    
+                    label: '',
+                    data: departmentData, 
+                    backgroundColor: departmentLabels.map((_, index) => {
+                      const colors = [
+                        "#30475E",
+                        "rgb(54, 162, 235)",
+                        "#F2A365",
+                        
+                      ];
+                      return colors[index % colors.length];
+                    }),
+                  },
+                ],
+              }}
+              
+              />
+              </div>
+            
         </div>
-        <div className="">
-        {/* <Bar
-          data={{
-            labels: ['Total Employees', 'Total Shortage', 'Total Surplus Employees'],
-            datasets: [
-              {
-                label: 'revenue',
-                data: [employeeArr.length + managerArr.length, 10, employeeArr.filter(el => el.excess == true).length],
-                backgroundColor: [
-                  '#30475E',
-                  'rgb(54, 162, 235)',
-                  '#F2A365'
-                ],
-              }
-            ]
-          }}/> */}
-          </div>
-          </div>
+         : null   }
         {!managerArr || managerArr.length == 0 ? (
-          <div>
+          <div className="self-start">
             <p className="font-title text-3xl font-bold text-secondary my-4">
               Build your company's structure
             </p>
@@ -372,14 +467,14 @@ export default function AdminHomePage() {
         {!managerArr || managerArr.length == 0 ? (
           <></>
         ) : (
-          <>
-            <div className="flex items-center justify-between w-full">
-              <p className="font-title text-xl font-bold text-secondary my-4">
+          <div className="my-5 w-full md:w-auto">
+            <div className="flex items-center justify-between w-full ">
+              <p className="font-title text-xl font-bold text-secondary my-2">
                 Departments
               </p>
               <button
                 disabled={!managerArr || managerArr.length == 0}
-                className="btn btn-accent m-4"
+                className="btn btn-accent btn-sm md:btn-md my-2"
                 onClick={() =>
                   document.getElementById("createDepartmentDialog").showModal()
                 }
@@ -406,8 +501,8 @@ export default function AdminHomePage() {
                 Add Department
               </button>
             </div>
-            <div className="flex flex-col items-center w-full">
-              <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4  lg:w-[80vw]">
+            <div className="flex flex-col items-center w-full my-2">
+              <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4 w-full lg:w-[80vw] ">
                 {departmentArr.map((dept) => {
                   return (
                     <DepCard
@@ -428,18 +523,20 @@ export default function AdminHomePage() {
                 })}
               </div>
             </div>
-          </>
+          </div>
         )}
-        <div className="flex items-center justify-between w-full mt-10">
-          <p className="font-title text-xl font-bold text-secondary my-4">
+        <div className="w-full md:w-auto my-5 ">
+
+        <div className="flex items-center justify-between w-full">
+          <p className="font-title text-xl font-bold text-secondary my-2">
             Managers
           </p>
           <button
-            className="btn btn-outline btn-secondary self-start my-2"
+            className="btn btn-outline btn-sm md:btn-md btn-secondary  md:self-start my-2"
             onClick={() =>
               document.getElementById("managerAccountDialog").showModal()
             }
-          >
+            >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -477,21 +574,22 @@ export default function AdminHomePage() {
                   {managerArr.map((manager) => {
                     return (
                       <EmpList
-                        id={manager._id}
-                        name={manager.name}
+                      id={manager._id}
+                      name={manager.name}
                         position={"manager"}
-                      ></EmpList>
-                    );
-                  })}
+                        ></EmpList>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
           </div>
         )}
+        </div>
         {managerArr.length == 0 || departmentArr.length == 0 ? (
           <></>
         ) : (
-          <>
+          <div className="w-full md:w-auto my-5 ">
             {" "}
             <div className="flex items-center justify-between w-full">
               <p className="font-title text-xl font-bold text-secondary my-4">
@@ -499,7 +597,7 @@ export default function AdminHomePage() {
               </p>
               <button
                 disabled={!departmentArr || departmentArr.length == 0}
-                className="btn btn-outline btn-secondary self-start my-2"
+                className="btn btn-outline btn-sm md:btn-md btn-secondary md:self-start my-2"
                 onClick={() =>
                   document.getElementById("employeeAccountDialog").showModal()
                 }
@@ -548,7 +646,7 @@ export default function AdminHomePage() {
                 </table>
               </div>
             </div>
-          </>
+          </div>
         )}
 
         <div>
@@ -644,7 +742,7 @@ export default function AdminHomePage() {
               <div className=" flex flex-col items-center m-4 ">
                 <label className="form-control w-full max-w-xs">
                   <div className="label">
-                  <span className="label-text font-title text-accent font-bold text-lg">
+                    <span className="label-text font-title text-accent font-bold text-lg">
                       Name
                     </span>
                   </div>
@@ -658,7 +756,7 @@ export default function AdminHomePage() {
 
                 <label className="form-control w-full max-w-xs">
                   <div className="label">
-                  <span className="label-text font-title text-accent font-bold text-lg">
+                    <span className="label-text font-title text-accent font-bold text-lg">
                       Position
                     </span>
                   </div>
@@ -671,7 +769,7 @@ export default function AdminHomePage() {
                 </label>
                 <label className="form-control w-full max-w-xs">
                   <div className="label">
-                  <span className="label-text font-title text-accent font-bold text-lg">
+                    <span className="label-text font-title text-accent font-bold text-lg">
                       Department
                     </span>
                   </div>
@@ -690,7 +788,7 @@ export default function AdminHomePage() {
                 </label>
                 <label className="form-control w-full max-w-xs">
                   <div className="label">
-                  <span className="label-text font-title text-accent font-bold text-lg">
+                    <span className="label-text font-title text-accent font-bold text-lg">
                       Email
                     </span>
                   </div>
@@ -703,7 +801,7 @@ export default function AdminHomePage() {
                 </label>
                 <label className="form-control w-full max-w-xs">
                   <div className="label">
-                  <span className="label-text font-title text-accent font-bold text-lg">
+                    <span className="label-text font-title text-accent font-bold text-lg">
                       Password
                     </span>
                   </div>
@@ -739,31 +837,31 @@ export default function AdminHomePage() {
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                 ✕
               </button>
-                      </form>
-                      <h3 className="font-bold text-xl text-secondary">
-                      Adding New Department
-                      </h3>
-                      
-              <div className=" flex flex-col items-center m-5 ">
-                <label className="form-control w-full max-w-xs">
-                  <div className="label">
-                    <span className="label-text font-title text-accent font-bold text-lg">
-                      Name
-                    </span>
-                  </div>
-                  <input
+            </form>
+            <h3 className="font-bold text-xl text-secondary">
+              Adding New Department
+            </h3>
+
+            <div className=" flex flex-col items-center m-5 ">
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text font-title text-accent font-bold text-lg">
+                    Name
+                  </span>
+                </div>
+                <input
                   value={deptName}
                   onChange={(e) => setDeptName(e.target.value)}
                   type="text"
                   className="input input-bordered w-full "
                 />
-                </label>
+              </label>
 
-                          <label className="form-control w-full max-w-xs">
+              <label className="form-control w-full max-w-xs">
                 <div className="label">
-                <span className="label-text font-title text-accent font-bold text-lg">
-                      Select Manager
-                    </span>
+                  <span className="label-text font-title text-accent font-bold text-lg">
+                    Select Manager
+                  </span>
                 </div>
                 <select
                   value={manager}
@@ -776,15 +874,15 @@ export default function AdminHomePage() {
                   })}
                 </select>
               </label>
-                <p className="text-error text-sm m-4">{warningText}</p>
+              <p className="text-error text-sm m-4">{warningText}</p>
 
-                <button
-                  onClick={createDeptAction}
-                  className="btn btn-secondary btn-wide m-4"
-                >
-                 Add Department
-                </button>
-              </div>
+              <button
+                onClick={createDeptAction}
+                className="btn btn-secondary btn-wide m-4"
+              >
+                Add Department
+              </button>
+            </div>
           </div>
         </dialog>
       </div>

@@ -21,7 +21,13 @@ function Nav() {
     <div className="navbar bg-secondary sticky top-0 text-secondary-content z-10">
       <div className="navbar-start">
         <Link
-          to={`/admin/${sessionStorage.getItem("accountId")}`}
+          to={
+            isAdmin
+              ? `/admin/${sessionStorage.getItem("accountId")}`
+              : accountType == "manager"
+              ? `/Manager/${sessionStorage.getItem("accountId")}`
+              : `/Employee/${sessionStorage.getItem("accountId")}`
+          }
           className=" flex items-center m-4"
         >
           <span className="font-title font-semibold mx-1 text-2xl">
