@@ -68,13 +68,17 @@ function ManagerHomePage() {
       .then((res) => {
         console.log(res);
         setUser(res.data);
-        setNetworkError(false)
-      }).catch(err => {
-        if (!err.response || err.code === 'ERR_CONNECTION_REFUSED' || err.code === "ERR_BAD_RESPONSE") {
-            setNetworkError(true)
+        setNetworkError(false);
+      })
+      .catch((err) => {
+        if (
+          !err.response ||
+          err.code === "ERR_CONNECTION_REFUSED" ||
+          err.code === "ERR_BAD_RESPONSE"
+        ) {
+          setNetworkError(true);
         }
-
-    })
+      })
       .finally(() => {
         setLoading(false);
       });
@@ -107,7 +111,6 @@ function ManagerHomePage() {
 
   console.log(notifications);
   const CreateEmployee = () => {
-    
     if (name == "" || email == "" || password == "" || position == "") {
       setWarningText("");
     } else {
@@ -247,7 +250,7 @@ function ManagerHomePage() {
 
   // }
   const closeEmpDialog = () => {
-    setWarningText2('')
+    setWarningText2("");
     document.getElementById("Newposition").close();
   };
   const dismissAction = (reqId) => {
@@ -287,8 +290,8 @@ function ManagerHomePage() {
     }
   };
   const retryAction = () => {
-    location.reload()
-}
+    location.reload();
+  };
   return (
     <div>
       {loading ? (
@@ -298,7 +301,7 @@ function ManagerHomePage() {
           </div>
         </div>
       ) : null}
-       {networkError ? (
+      {networkError ? (
         <div className="fixed inset-0 flex items-center justify-center z-40 bg-secondary ">
           <div className="text-center w-[80vw] p-5 md:w-[50vw] lg:w-[30vw] bg-white rounded-lg flex flex-col items-center">
             <svg
@@ -320,17 +323,29 @@ function ManagerHomePage() {
               <path d="M3.515 9.515a12 12 0 0 1 3.544 -2.455m3.101 -.92a12 12 0 0 1 10.325 3.374" />
               <path d="M3 3l18 18" />
             </svg>
-            <p className="text-error text-lg m-4 font-semibold">Oops! No Internet Connection</p>
-                      <p className="text-neutral m-1">We couldn’t connect to the internet.</p>
-                      <p className="text-neutral m-1"> Please check your connection and click the button to try again.</p>
-                      <button onClick={retryAction} className="btn btn-accent my-5 btn-wide">Retry</button>
+            <p className="text-error text-lg m-4 font-semibold">
+              Oops! No Internet Connection
+            </p>
+            <p className="text-neutral m-1">
+              We couldn’t connect to the internet.
+            </p>
+            <p className="text-neutral m-1">
+              {" "}
+              Please check your connection and click the button to try again.
+            </p>
+            <button
+              onClick={retryAction}
+              className="btn btn-accent my-5 btn-wide"
+            >
+              Retry
+            </button>
           </div>
         </div>
       ) : null}
       <Nav />
       <div className="flex max-md:w-[95%] md:w-[90%] lg:w-[100%]  ">
         <div className="flex  w-[100%] max-md:flex-col max-md:w-full   md:w-full lg:w-[80%] max-sm:w-full ">
-          <div className="flex max-md:justify-center max-md:items-center max-md:p-7   lg:flex-col md:flex-col border justify-start items-center  p-15 mt-10 w-auto  max-md:ml-5 max-sm:ml-3 lg:ml-5  shadow-2xl bg-[#30465e] pt-10 rounded-xl lg:h-[51vh] md:h-[51vh] max-sm:w-full   ">
+          <div className="flex max-md:justify-center max-md:items-center max-md:p-7   lg:flex-col md:flex-col border justify-start items-center  p-15 mt-5 w-auto  max-md:ml-5 max-sm:ml-3 lg:ml-5  shadow-2xl bg-[#30465e] pt-10 rounded-xl lg:h-[51vh] md:h-[51vh] max-sm:w-full   ">
             <div className="flex justify-center items-center bg-slate-200 rounded-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -357,7 +372,7 @@ function ManagerHomePage() {
             </div>
           </div>
 
-          <div className="flex flex-col lg:w-[90%] lg:mt-10 md:mt-10 max-md:ml-3 max-sm:ml-1 md:w-[72%] max-sm:mt-3 max-sm:w-[100%]">
+          <div className="flex flex-col lg:w-[90%] lg:mt-10  lg:ml-5 md:ml-5 md:mt-10 max-md:ml-5 max-md:mt-1 md:w-[72%] max-sm:mt-1 max-sm:ml-3 max-sm:w-[100%]">
             {notifications.newManager?.map((el) => {
               if (!el.isClosedByNewManager) {
                 const handleDismiss = () => {
