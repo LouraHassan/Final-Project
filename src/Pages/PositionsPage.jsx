@@ -42,10 +42,10 @@ function PositionsPage() {
   const [editModeSelect, setEditModeSelect] = useState("bg-transparent");
   const [departmentStyle, setDepartmentStyle] = useState("bg-transparent ");
   const [experienceStyle, setExperienceStyle] = useState(
-    "bg-transparent w-[2vw]"
+    "bg-transparent w-fit"
   );
   const [descriptionStyle, setDescriptionStyle] = useState("bg-transparent ");
-  const [salaryStyle, setSalaryStyle] = useState("bg-transparent w-[6vw]");
+  const [salaryStyle, setSalaryStyle] = useState("bg-transparent w-fit");
   const [requirmentsStyle, setRequirmentsStyle] = useState("bg-transparent ");
 
   const [skillsOptions, setSkillsOptions] = useState([]);
@@ -70,6 +70,10 @@ function PositionsPage() {
     setRequirments(position.requirments || "");
   }, [position]);
 
+  useEffect(() => {
+    textareaHeight()
+    textareaHeight2()
+  },[description])
   const getPosition = () => {
     setLoading(true);
 
@@ -213,6 +217,7 @@ function PositionsPage() {
       .then((res) => {
         console.log(res);
         setEditMode(true);
+        setEditModeSelect('bg-transparent')
         setDepartmentStyle("bg-transparent");
         setExperienceStyle("bg-transparent w-[2vw]");
         setDescriptionStyle("bg-transparent");
@@ -274,113 +279,39 @@ function PositionsPage() {
         </div>
       ) : null}
       <Nav />
-      <div className="flex  justify-around mt-5 mb-5 lg:m-8 md:m-8 max-md:flex-col max-md:justify-center max-md:items-center ">
-        <div className="flex flex-col lg:w-[65%] md:w-[65%]  bg-white p-8 h-auto justify-around rounded-lg border shadow-xl max-md:w-[95%] ">
+      <div className="flex flex-col p-10 md:px-16 justify-center items-center ">
+        <div className="flex flex-col md:flex-row w-full md:justify-between md:w-[80vw] gap-4">
+        <div className="flex flex-col  bg-white p-8 lg:w-[50vw] gap-4 justify-around rounded-lg shadow-lg ">
           <div className="flex justify-between">
-            <h1 className="font-title font-bold text-secondary text-[4vh]">
+            <h1 className="font-title font-bold text-secondary text-2xl">
               {position.title}
             </h1>
-            {isManager ? (
+            {isManager && editMode ? (
               <svg
                 onClick={editAction}
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                className="icon icon-tabler icons-tabler-outline icon-tabler-pencil text-secondary"
+                className="icon icon-tabler icons-tabler-outline icon-tabler-pencil text-base-300 hover:cursor-pointer"
               >
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
                 <path d="M13.5 6.5l4 4" />
               </svg>
             ) : (
-              // <svg
-              //   onClick={editAction}
-              //   // onClick={() => setOpen(true)}
-              //   xmlns="http://www.w3.org/2000/svg"
-              //   width="24"
-              //   height="24"
-              //   viewBox="0 0 24 24"
-              //   fill="none"
-              //   stroke="currentColor"
-              //   stroke-width="2"
-              //   stroke-linecap="round"
-              //   stroke-linejoin="round"
-              //   class="icon icon-tabler icons-tabler-outline icon-tabler-edit"
-              // >
-              //   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              //   <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-              //   <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-              //   <path d="M16 5l3 3" />
-              // </svg>
-
               <></>
-            )}
-
-            {open && (
-              <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-60  ">
-                <div className="bg-white p-6 rounded-lg w-[45%]">
-                  <h2 className="font-title font-bold text-secondary text-[4vh]">
-                    Edit Position
-                  </h2>
-
-                  <label className="font-title text-accent font-bold">
-                    position name:{" "}
-                  </label>
-                  <input type="text" className="border p-2 mt-2 w-full" />
-
-                  <label className="font-title text-accent font-bold">
-                    Department name:
-                  </label>
-                  <input type="text" className="border p-2 mt-2 w-full" />
-
-                  <label className="font-title text-accent font-bold">
-                    Estimated Salary:
-                  </label>
-
-                  <input type="text" className="border p-2 mt-2 w-full" />
-
-                  <label className="font-title text-accent font-bold">
-                    Experience years:
-                  </label>
-
-                  <input type="text" className="border p-2 mt-2 w-full" />
-
-                  <div className="flex flex-col justify-around h-[35vh]">
-                    <label className="font-title text-accent font-bold">
-                      Key Responsibilities:
-                    </label>
-                    <textarea className="textarea textarea-bordered bg-white textarea-lg  max-w-m"></textarea>
-                    <label className="font-title text-accent font-bold">
-                      Job overview:
-                    </label>
-                    <textarea className="textarea textarea-bordered bg-white textarea-lg max-w-m"></textarea>
-                  </div>
-
-                  <div className="flex justify-end mt-4 ">
-                    <button
-                      className="btn bg-[#30465e] text-white p-4 mr-2"
-                      onClick={() => setOpen(false)}
-                    >
-                      Cancel
-                    </button>
-                    <button className="btn  btn-accent text-white p-4">
-                      Submit
-                    </button>
-                  </div>
-                </div>
-              </div>
             )}
           </div>
 
-          <div className="flex flex-col justify-around h-[28vh]">
-            <h2 className="font-text mt-4 ">
-              <span className="font-bold font-title text-[2.8vh]  text-secondary  ">
+          <div className="flex flex-col  ">
+            <h2 className="font-text  my-2">
+              <span className="font-bold font-title text-lg  text-secondary  ">
                 Department:{" "}
               </span>
               <input
@@ -396,8 +327,8 @@ function PositionsPage() {
                 id=""
               />
             </h2>
-            <h2 className="font-text mt-4">
-              <span className="font-bold font-title text-[2.8vh]   text-secondary">
+            <h2 className="font-text my-2">
+              <span className="font-bold font-title text-lg   text-secondary">
                 Job Type:{" "}
               </span>
               <select
@@ -426,8 +357,8 @@ function PositionsPage() {
                 <option value={"Part-Time"}>Part-Time</option>
               </select>
             </h2>
-            <h2 className="font-text mt-4 ">
-              <span className="font-bold font-title text-[2.8vh]  text-secondary ">
+            <h2 className="font-text my-2">
+              <span className="font-bold font-title text-lg  text-secondary ">
                 Experience:
               </span>{" "}
               <input
@@ -445,8 +376,8 @@ function PositionsPage() {
               {/* {position.experienceYears}  */}
               years
             </h2>
-            <h2 className="font-text  mt-4">
-              <span className="font-bold font-title text-[2.8vh]  text-secondary ">
+            <h2 className="font-text my-2">
+              <span className="font-bold font-title text-lg  text-secondary ">
                 Estimated Salary:{" "}
               </span>
               <input
@@ -466,14 +397,14 @@ function PositionsPage() {
             </h2>
           </div>
 
-          <h2 className="font-title  font-bold  text-[2.8vh] mt-[8vh] text-secondary ">
+          <h2 className="font-title  font-bold  text-lg my-2 text-secondary ">
             Job overview:
           </h2>
 
           <textarea
             placeholder="Not added yet"
             ref={textareaRef}
-            rows={4}
+            
             value={description}
             onChange={(e) => {
               setDescription(e.target.value);
@@ -485,13 +416,13 @@ function PositionsPage() {
           ></textarea>
 
           {/* <p className="font-text w-[90%]">{position.description}</p> */}
-          <h1 className="font-title  font-bold  text-[2.8vh] mt-4  text-secondary">
-            Key Responsibilities:
+          <h1 className="font-title font-bold  text-lg mt-4  text-secondary">
+            Requirements:
           </h1>
           <textarea
             placeholder="Not added yet"
-            ref={textareaRef}
-            rows={4}
+            ref={textareaRef2}
+          
             value={requirments}
             onChange={(e) => {
               setRequirments(e.target.value);
@@ -506,7 +437,7 @@ function PositionsPage() {
 
           <div className="flex flex-wrap my-4 items-center">
             <p>
-              <span className="font-bold font-title text-[2.8vh]  text-secondary">
+              <span className="font-bold font-title text-lg  text-secondary">
                 Skills:
               </span>{" "}
             </p>
@@ -523,7 +454,7 @@ function PositionsPage() {
                 }
               }}
               className={
-                editMode ? `hidden` : `select select-bordered w-full mb-7 mt-3`
+                editMode ? `hidden` : `select select-bordered w-full my-2`
               }
             >
               {skillsOptions.map((skill) => {
@@ -547,13 +478,13 @@ function PositionsPage() {
               })}
           </div>
           <div
-            className={`self-end ${
-              editMode ? "hidden" : " flex justify-around w-[30vh]"
+            className={`md:self-end ${
+              editMode ? "hidden" : " flex "
             }`}
           >
             <button
               onClick={cancelEditAction}
-              className="btn btn-outline btn-accent btn-sm"
+              className="btn btn-outline btn-accent btn-sm mx-2"
             >
               cancel
             </button>
@@ -562,7 +493,7 @@ function PositionsPage() {
                 onClick={() =>
                   document.getElementById("deletePositionDialog").showModal()
                 }
-                className="btn btn-outline btn-error btn-sm"
+                className="btn btn-outline btn-error btn-sm mx-2"
               >
                 Delete
               </button>
@@ -575,19 +506,28 @@ function PositionsPage() {
             >
               Delete
             </button> */}
-            <dialog id="deletePositionDialog" className="modal">
-              <div className="modal-box">
+              <dialog id="deletePositionDialog" className="modal">
+              {loading ? (
+            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+              <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+                <span className="loading loading-dots bg-accent"></span>
+              </div>
+            </div>
+          ) : null}
+              <div className="modal-box flex flex-col items-center">
                 <form method="dialog">
                   <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                     ✕
                   </button>
                 </form>
-                <h3 className="font-bold text-lg">Deleting Position</h3>
+                <h3 className="font-bold text-xl text-secondary">
+              Adding New Department
+            </h3>
                 <p className="py-4">
                   Are you sure from deleting this position?
                 </p>
                 <button
-                  className="btn btn-outline btn-error"
+                  className="btn  btn-error"
                   onClick={deleteAction}
                 >
                   Delete Position
@@ -596,38 +536,19 @@ function PositionsPage() {
             </dialog>
             <button
               onClick={saveEditAction}
-              className="btn btn-outline btn-secondary btn-sm"
+              className="btn  btn-secondary btn-sm mx-2"
             >
               Save
             </button>
           </div>
           <br></br>
-        </div>
-        <div className="flex flex-col max-md:justify-center max-md:items-center gap-3 m-4 max-md:w-[90%] max-sm:w-[95%] px-3">
-          {positionArr.map((el, index) => {
-            if (!el.status) {
-              if (el._id != position._id) {
-                return (
-                  <PositionCard
-                    key={index}
-                    id={el._id}
-                    Position={el.title}
-                    Department={el.department.name}
-                    Experience={el.experienceYears}
-                    skills={el?.skills || ""}
-                  ></PositionCard>
-                );
-              }
-            }
-          })}
-        </div>
-      </div>
-      {!isManager ? (
-        <div className="lg:w-[80vw] p-10">
-          <h1 className="font-title font-bold text-[3vh] text-secondary my-6">
+          </div>
+          {!isManager ? (
+        <div className="flex flex-col  lg:w-[30vw]">
+          <h1 className="font-title font-bold text-xl border-2 text-secondary my-2">
             Best match employees
           </h1>
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+          <div className="grid gap-4 my-4">
             {bestEmp &&
               bestEmp.map((emp, index) => {
                 if (emp) {
@@ -650,9 +571,64 @@ function PositionsPage() {
           </div>
         </div>
       ) : (
-        <></>
-      )}
-    </div>
+        <div className="w-full lg:w-[30vw] flex flex-col items-center ">
+            <p className="self-start text-xl font-title font-bold text-secondary my-2">
+                Other open positions
+              </p>
+            <div className="grid  gap-3 ">
+              {positionArr.map((el, index) => {
+                if (!el.status) {
+                  if (el._id != position._id) {
+                    return (
+                      <PositionCard
+                      key={index}
+                      id={el._id}
+                      Position={el.title}
+                      Department={el.department.name}
+                      Experience={el.experienceYears}
+                      skills={el?.skills || ""}
+                      ></PositionCard>
+                    );
+                  }
+                }
+              })}
+            </div>
+  
+              </div>
+          )}
+        
+        </div>
+
+        {!isManager ? (
+          
+          <div className="w-full md:w-[80vw] flex flex-col items-center my-4">
+        <p className="self-start text-xl font-title font-bold text-secondary my-2">
+            Other open positions
+          </p>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 ">
+          {positionArr.map((el, index) => {
+            if (!el.status) {
+              if (el._id != position._id) {
+                return (
+                  <PositionCard
+                  key={index}
+                  id={el._id}
+                  Position={el.title}
+                  Department={el.department.name}
+                  Experience={el.experienceYears}
+                  skills={el?.skills || ""}
+                  ></PositionCard>
+                );
+              }
+            }
+          })}
+        </div>
+
+          </div>
+        ): <></>}
+     
+      </div>
+      </div>
   );
 }
 

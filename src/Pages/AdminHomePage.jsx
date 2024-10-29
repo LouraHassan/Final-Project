@@ -391,13 +391,18 @@ export default function AdminHomePage() {
         </div>
       ) : null}
       <Nav></Nav>
-      <div className="mx-5 py-5 md:px-16 flex flex-col items-center">
+      <div className="p-10 md:px-16 flex flex-col items-center">
         <p className="text-xl text-secondary font-semibold self-start">
           Welcome <span className="text-accent">{user?.name}</span>
         </p>
       {departmentArr || departmentArr.length > 0 ? 
-        <div className="self-center flex flex-col md:justify-around md:flex-row flex-wrap w-full items-center justify-center  my-8">
-          <div className="flex flex-col items-center my-2  max-w-lg md:max-w-[30vw] lg:max-w-[50vw]">
+          <div className="self-center flex flex-col w-full md:w-[80vw] my-4">
+ <p className="self-start font-title text-xl font-bold text-secondary my-2">
+                Summary
+            </p>
+            <div className="flex flex-col md:flex-row w-full md:justify-around items-center">
+
+            <div className="flex flex-col items-center my-2 w-[80vw]  md:max-w-[30vw] lg:w-[20vw]">
             <p className="my-2 text-center font-semibold">Total Employees in the company</p>
             <Pie
               data={{
@@ -422,11 +427,11 @@ export default function AdminHomePage() {
                   },
                 ],
               }}
-            />
+              />
           </div>
-          <div className="w-[90vw]  flex flex-col items-center my-2 md:max-w-lg ">
+          <div className="flex flex-col items-center my-2 w-[80vw]  md:max-w-[30vw] lg:w-[20vw]">
             <p className="my-2 text-center font-semibold">Number of Employees Assignment Across Departments</p>
-            <Bar
+            <Pie
               data={{
                 labels: departmentLabels,
                 datasets: [
@@ -448,6 +453,7 @@ export default function AdminHomePage() {
               }}
               
               />
+              </div>
               </div>
             
         </div>
@@ -489,7 +495,7 @@ export default function AdminHomePage() {
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="icon icon-tabler icons-tabler-outline icon-tabler-table-plus"
+                  className="icon icon-tabler icons-tabler-outline icon-tabler-table-plus hidden md:block"
                 >
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                   <path d="M12.5 21h-7.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5" />
@@ -547,7 +553,7 @@ export default function AdminHomePage() {
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              className="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"
+              className="icon icon-tabler icons-tabler-outline icon-tabler-user-plus hidden md:block"
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
@@ -612,7 +618,7 @@ export default function AdminHomePage() {
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  className="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"
+                  className="icon icon-tabler icons-tabler-outline icon-tabler-user-plus hidden md:block"
                 >
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                   <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
