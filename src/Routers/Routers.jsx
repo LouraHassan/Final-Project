@@ -9,6 +9,7 @@ import AdminDeptPage from "../Pages/AdminDeptPage";
 import AdminPositionPage from "../Pages/AdminPositionPage";
 import Signup from "../Pages/Signup";
 import EmployeePage from "../Pages/EmployeePage";
+import Signup2 from "../Pages/Signup";
 
 
 const Router = createBrowserRouter([
@@ -58,7 +59,8 @@ const Router = createBrowserRouter([
 {
     path: '/Employee',
     element: <EmployeePage/>
-}
+},
+
 
 
 
