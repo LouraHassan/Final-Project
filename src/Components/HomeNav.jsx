@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import logo from '/logo.png'
 function HomeNav() {
   return (
-    <div className="navbar bg-secondary fixed top-0 text-secondary-content z-30">
+    <div className="navbar bg-secondary sticky top-0 text-secondary-content z-30">
     <div className="navbar-start">
       <Link to={`/`} className=" flex items-center m-4">
          <span className='font-title font-semibold mx-1 text-2xl'>MergeNet</span>

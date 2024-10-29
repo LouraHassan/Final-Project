@@ -395,7 +395,7 @@ export default function AdminHomePage() {
         <p className="text-xl text-secondary font-semibold self-start">
           Welcome <span className="text-accent">{user?.name}</span>
         </p>
-      {departmentArr || departmentArr.length > 0 ? 
+      {user && (departmentArr && departmentArr.length > 0) ? 
           <div className="self-center flex flex-col w-full md:w-[80vw] my-4">
  <p className="self-start font-title text-xl font-bold text-secondary my-2">
                 Summary
@@ -429,9 +429,9 @@ export default function AdminHomePage() {
               }}
               />
           </div>
-          <div className="flex flex-col items-center my-2 w-[80vw]  md:max-w-[30vw] lg:w-[20vw]">
-            <p className="my-2 text-center font-semibold">Number of Employees Assignment Across Departments</p>
-            <Pie
+              <div className="w-[90vw]  flex flex-col items-center my-2 md:max-w-lg ">
+                <p className="my-2 text-center font-semibold">Number of Employees Assignment Across Departments</p>
+            <Bar
               data={{
                 labels: departmentLabels,
                 datasets: [
@@ -473,7 +473,7 @@ export default function AdminHomePage() {
         {!managerArr || managerArr.length == 0 ? (
           <></>
         ) : (
-          <div className="my-5 w-full md:w-auto">
+          <div className="my-5 w-full md:w-[80vw]">
             <div className="flex items-center justify-between w-full ">
               <p className="font-title text-xl font-bold text-secondary my-2">
                 Departments
@@ -531,9 +531,9 @@ export default function AdminHomePage() {
             </div>
           </div>
         )}
-        <div className="w-full md:w-auto my-5 ">
+        <div className={`w-full  my-5 ${managerArr ? 'md:w-auto': ''}`}>
 
-        <div className="flex items-center justify-between w-full">
+        <div className="flex items-center justify-between w-full ">
           <p className="font-title text-xl font-bold text-secondary my-2">
             Managers
           </p>
