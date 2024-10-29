@@ -6,7 +6,6 @@ const AssignEmpAPI = `http://localhost:3000/fillPosition?company=${sessionStorag
 function EmpCard(props) {
   const navigate = useNavigate()
   const [skills, setSkills] = useState(props.skills)
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
 
@@ -22,8 +21,8 @@ function EmpCard(props) {
         Authorization: sessionStorage.getItem("token"),
       },
       }).then(res => {
-      console.log(res);
-        setIsDialogOpen(false);
+        console.log(res);
+        document.getElementById("confirmDialog").close();
         navigate(`/admin/${sessionStorage.getItem('accountId')}`)
     }).finally(() => {
       setLoading(false);
@@ -39,8 +38,8 @@ function EmpCard(props) {
           </div>
         </div>
       ) : null}
-       <div className="flex items-center gap-3 border-2 border-black">
-          <div className="avatar bg-secondary border-2 border-accent  rounded-full">
+       <div className="flex items-center gap-3 ">
+          <div className="avatar">
            
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -67,31 +66,38 @@ function EmpCard(props) {
        
 
       </div>
-      <button className='btn btn-accent my-2' onClick={() => setIsDialogOpen(true)}>Assign</button>
+      <button className='btn btn-accent my-2' onClick={() =>
+                  document.getElementById("confirmDialog").showModal()}>Assign</button>
 
     </div>
-    {isDialogOpen && (
-        <dialog open className="modal">
+   
+        <dialog id='confirmDialog' className="modal">
+           {loading ? (
+              <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+                  <span className="loading loading-dots bg-accent"></span>
+                </div>
+              </div>
+            ) : null}
           <div className="modal-box flex flex-col items-center bg-white">
-            <button
-              className="btn text-neutral btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              onClick={() => setIsDialogOpen(false)}
-            >
-              ✕
-            </button>
-            <h3 className="font-bold text-xl text-neutral font-title">
+          <form method="dialog">
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                  ✕
+                </button>
+              </form>
+            <h3 className="font-bold text-xl text-secondary font-title">
               Employee Assignment Confirmation
             </h3>
             <div className='flex items-center w-full justify-around'>
 
-            <div className="self-start flex flex-col my-4 font-semibold text-lg font-title">
+            <div className="self-start flex flex-col my-4 font-semibold text-md font-title">
               <p className="text-accent">Employee: </p>
               <p className="text-accent">Previous position: </p>
               <p className="text-accent">New position: </p>
               <p className="text-accent">Department: </p>
               <p className="text-accent">Manager: </p>
             </div>
-            <div className="self-start flex flex-col my-4 font-semibold text-lg font-title">
+            <div className="self-start flex flex-col my-4 font-semibold text-md font-title">
               <p className="text-neutral">{props.name}</p>
               <p className="text-neutral">{props.pPosition}</p>
               <p className="text-neutral">{props.nPosition}</p>
@@ -115,7 +121,7 @@ function EmpCard(props) {
             </div>
           </div>
         </dialog>
-      )}
+      
       </>
   )
 }

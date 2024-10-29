@@ -124,8 +124,8 @@ function Nav() {
               <button>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   className="icon icon-tabler icons-tabler-filled icon-tabler-bell text-accent"
@@ -138,7 +138,7 @@ function Nav() {
             </div>
             <div
               tabIndex={0}
-              className="dropdown-content menu w-[85vw] md:w-[80vw] rounded-box z-[1] bg-white p-6 shadow gap-2"
+              className="dropdown-content menu w-[85vw] md:w-[80vw] rounded-box z-[1]  bg-white p-6 shadow gap-2"
             >
               {(notifications && notifications.newManager?.length > 0) ||
               notifications.oldManager?.length > 0 ||

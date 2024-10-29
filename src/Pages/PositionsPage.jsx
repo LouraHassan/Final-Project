@@ -514,7 +514,7 @@ function PositionsPage() {
               </div>
             </div>
           ) : null}
-              <div className="modal-box flex flex-col items-center">
+              <div className="modal-box flex flex-col items-center bg-white">
                 <form method="dialog">
                   <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                     ✕
