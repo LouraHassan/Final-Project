@@ -24,8 +24,7 @@ function Login() {
           password: password,
         })
         .then((res) => {
-          console.log(res);
-
+          console.log(res)
           sessionStorage.setItem("accountId", res.data.id);
           sessionStorage.setItem("accountType", res.data.accountType);
           sessionStorage.setItem("company", res.data.company);
@@ -39,6 +38,8 @@ function Login() {
           } else if (res.data.accountType === "employee") {
             navigate(`/Employee/${res.data.id}`);
           }
+        }).catch(err => {
+          setWarningText(err.response.data.msg)
         })
         .finally(() => {
           setLoading(false);
