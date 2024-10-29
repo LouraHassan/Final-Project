@@ -294,11 +294,10 @@ function ManagerHomePage() {
       ) : null}
       <Nav/>
 
-      <div className="flex flex-col  p-5 items-center w-full lg:flex-row  lg:items-start  ">
-        <div className="flex    max-md:flex-col max-md:w-full  md:w-[100%] lg:w-[23%]  ">
-          <div className="flex lg:justify-start p-5 lg:px-5 lg:py-16  md:flex-row  md:w-[100%] lg:flex-col  border justify-start items-center   shadow-2xl bg-secondary  rounded-lg  md:h-fit    ">
+      <div className="flex gap-6 flex-col justify-center p-8 items-center lg:flex-row lg:items-start">
+        <div className="flex w-full justify-start items-start lg:flex-col lg:justify-center lg:items-center lg:w-[30vw] p-5  shadow-xl bg-secondary  rounded-lg  h-fit  ">
 
-            <div className="flex justify-center items-center bg-slate-200 rounded-full">
+            <div className="flex justify-center items-center bg-slate-100 rounded-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="90"
@@ -312,7 +311,7 @@ function ManagerHomePage() {
                 <path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
               </svg>
             </div>
-            <div className="flex flex-col lg:justify-center px-5  max-sm:w-[36vh]">
+            <div className="flex flex-col lg:justify-center p-5  max-sm:w-[36vh]">
               <h2 className="font-title mt-4 lg:text-center  text-white font-bold text-xl">
                 {user?.name}
               </h2>
@@ -321,12 +320,11 @@ function ManagerHomePage() {
                   {user?.department?.name}
                 </h1>
               </div>
-            </div>
           </div>
 
         </div>
-        <div className="flex flex-col m-2 lg:w-[75vw] md:w-[100%]  max-sm:w-[100%]">
-          <div className="flex items-center justify-between w-full my-4 lg:w-[75vw]">
+        <div className="flex flex-col w-full  lg:w-[75vw] md:w-[100%]  ">
+          <div className="flex items-center  justify-between w-full my-4 lg:w-[75vw]">
 
 
           <h2 className="font-title font-bold text-secondary md:text-xl">
@@ -408,7 +406,7 @@ function ManagerHomePage() {
                   New Position
                 </button>
               </div>
-              <div className="grid lg:grid-cols-3  w-full  gap-4 mt-4">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3  w-full  gap-4 mt-4">
                 {}
                 {user.department &&
                 user.department.positions &&

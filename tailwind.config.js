@@ -9,7 +9,7 @@ export default {
     extend: {},
     fontFamily: {
       'title': ['Karla'],
-      'text' :  ['Merriweather']
+      'text' :  ['Karla']
     },
   },
   plugins: [

@@ -52,36 +52,24 @@ function Home() {
   return (
     <div className="w-full">
       <HomeNav></HomeNav>
-      <div className="lg:w-full h-[88vh] flex flex-col justify-center items-center">
-        <div className="z-10 flex flex-col items-center justify-between my-10 absolute top-12 left-5 md:top-24 md:left-10 lg:w-[70vw]">
-          <p className="text-4xl text-left mx-2 md:mx-6 md:text-5xl text-secondary my-5">
+      <div className="p-5 md:p-10 w-full h-screen justify-center md:h-[88vh] flex flex-col  md:justify-center items-center">
+        <div className="z-10 flex flex-col items-center md:items-start justify-between md:my-10 md:absolute  md:top-24 md:left-10 lg:w-[70vw]">
+          <p className="text-3xl text-center md:text-left font-semibold md:text-5xl text-secondary my-10">
             Streamline Employee Placement Across Departments After Mergers
           </p>
-          <p className="text-xl text-left mx-6 md:text-2xl text-accent my-2 md:my-4 font-semibold">
+          <p className="text-xl text-center md:text-left md:w-[50vw] md:text-2xl text-accent my-2 md:my-4 ">
             Manage employee roles, track department needs, and optimize talent
             allocation seamlessly
           </p>
         </div>
         <Link
           to={`/signup`}
-          className="btn self-start mx-6 my-10 btn-accent btn-lg md:self-center absolute left-10 bottom-20 md:bottom-10 z-20"
+          className="btn my-5  md:mx-6 md:my-10 btn-accent btn-lg md:self-center md:absolute md:left-10 md:bottom-10 z-20"
         >
           Start Now!
         </Link>
 
-        <div class="custom-shape-divider-bottom-1729945068 md:hidden">
-          <svg
-            data-name="Layer 1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M598.97 114.72L0 0 0 120 1200 120 1200 0 598.97 114.72z"
-              class="shape-fill"
-            ></path>
-          </svg>
-        </div>
+    
         <div className="custom-shape-divider-bottom-1729943384 hidden md:block">
           <svg
             data-name="Layer 1"
@@ -122,7 +110,7 @@ function Home() {
                                         <SectionTitle title='HOW IT WORKS' color={'text-secondary'}></SectionTitle>
 
      
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 my-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 my-5">
           <StepsCard
             number={1}
             icon={
@@ -273,7 +261,7 @@ function Home() {
                                 <SectionTitle title='KEY FEATURES' color={'text-secondary'}></SectionTitle>
 
        
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-20 lg:w-[80vw] my-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-20 lg:w-[80vw] my-5">
           <FeaturesCard
             icon={
               <svg
@@ -380,7 +368,7 @@ function Home() {
                         <SectionTitle title='BENEFITS' color={'text-secondary'}></SectionTitle>
 
        
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-20 lg:w-[80vw] my-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-20 lg:w-[80vw] my-5">
           <BenefitsCard icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"

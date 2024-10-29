@@ -29,7 +29,7 @@ function EmployeePage() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [yearsStyle, setYearsStyle] = useState("bg-transparent w-[2vh] ");
+  const [yearsStyle, setYearsStyle] = useState("bg-transparent");
   const [aboutStyle, setAboutStyle] = useState("bg-transparent ");
   const [educationStyle, setEducationStyle] = useState("bg-transparent ");
   const [skillsArr, setSkillsArr] = useState([]);
@@ -54,6 +54,10 @@ function EmployeePage() {
     setPasswordChanged(user.passwordChanged);
   }, [user]);
 
+  useEffect(() => {
+    textareaHeight()
+    textareaHeight2()
+  },[about])
   const getUser = () => {
     setLoading(true);
     axios
@@ -123,7 +127,7 @@ function EmployeePage() {
 
   const cancelEditAction = () => {
     seteditMode(true);
-    setYearsStyle("bg-transparent w-[2vh]");
+    setYearsStyle("bg-transparent ");
     setAboutStyle("bg-transparent");
     setEducationStyle("bg-transparent");
     setYears(user.yearsOfExperience || "");
@@ -251,11 +255,13 @@ function EmployeePage() {
       ) : null}
       <Nav />
 
-      <div className="flex  border-2 border-black justify-center p-5 items-center  max-sm:flex-col max-sm:justify-center">
+      <div className="flex gap-6 flex-col justify-center p-8 items-center lg:flex-row lg:items-start">
       
 
-        <div className="flex  lg:flex-col max-sm:flex   justify-start  items-center p-12  w-auto  shadow-xl bg-[#30465e] pt-10 rounded-lg  h-fit max-sm:justify-center max-sm:w-[100%] max-sm:mb-3 ">
-          <div className="flex justify-center items-center bg-slate-200  rounded-full">
+        <div className="flex w-full flex-col justify-start items-start lg:justify-center lg:items-center lg:w-[30vw] p-5  shadow-xl bg-secondary  rounded-lg  h-fit  ">
+          <div className="flex items-start lg:flex-col lg:items-center">
+            
+          <div className="flex justify-center items-center bg-slate-100  rounded-full">
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -271,27 +277,30 @@ function EmployeePage() {
               </svg>
             </div>
           </div>
-          <div className="flex flex-col justify-center  ">
-            <h2 className="font-title mt-4 text-center  text-white font-bold text-[4vh]">
+          <div className="flex flex-col justify-start px-5 lg:text-center lg:my-4">
+            <h2 className="font-title  text-white font-bold text-xl">
               {user.name}
             </h2>
 
-            <h1 className="font-text font-semibold text-accent text-center">
+            <h1 className="font-text font-semibold text-accent">
               {user.positionTitle}
             </h1>
-            <h1 className="font-text  text-accent text-center ">
+            <h1 className="font-text  text-accent ">
               {user?.department?.name}
             </h1>
-            <div className="mt-3 ml-3">
-              <h2 className="font-text text-center text-accent">
-                <span className=" font-title font-bold  text-white text-[2.3vh]">
+            <div className="my-2">
+              <h2 className="font-text text-accent">
+                <span className=" font-title font-bold  text-white text-sm">
                   Manager{" "}
                 </span>
                 <br></br>
                 {user?.department?.manager?.name}
               </h2>
             </div>
+            </div>
           </div>
+
+        
         </div>
 
         <div className="flex flex-col w-full ">
@@ -299,14 +308,16 @@ function EmployeePage() {
           {!passwordChanged ? (
             <div
               role="alert"
-              className="alert border-2 border-warning lg:m-2 bg-white "
+              className="alert rounded-lg flex flex-col items-start border-2 border-warning lg:m-2 bg-white "
             >
+              <div className="flex items-start">
+
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 shrink-0 stroke-current text-warning"
                 fill="none"
                 viewBox="0 0 24 24"
-              >
+                >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -314,9 +325,10 @@ function EmployeePage() {
                   d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                 />
               </svg>
-              <span>You must update you password and add your data down</span>
+              <span className="text-left mx-2">You must update you password and add your data down</span>
+              </div>
               <button
-                className="btn btn-ghost text-secondary"
+                className="btn btn-ghost text-secondary self-end"
                 onClick={() =>
                   document.getElementById("passwordDialog").showModal()
                 }
@@ -329,18 +341,18 @@ function EmployeePage() {
           )}
 
           <dialog id="passwordDialog" className="modal">
-            <div className="modal-box flex flex-col items-center bg-white w-[58vh]">
+            <div className="modal-box flex flex-col items-center bg-white">
               <form method="dialog">
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                   ✕
                 </button>
               </form>
-              <h3 className=" font-bold text-[3vh] font-title text-secondary mb-4">
+              <h3 className="font-bold text-xl text-secondary ">
                 Update your password
               </h3>
               <label className="form-control w-full max-w-xs">
                 <div className="label">
-                  <span className="label-text font-title text-accent font-bold text-[2.5vh] ">Enter new password:</span>
+                  <span className="label-text font-title text-accent font-bold text-lg ">Enter new password:</span>
                 </div>
                 <input
                   value={newPassword}
@@ -351,7 +363,7 @@ function EmployeePage() {
               </label>
               <label className="form-control w-full max-w-xs">
                 <div className="label">
-                  <span className="label-text font-title text-accent font-bold text-[2.5vh]">Confirm password:</span>
+                  <span className="label-text font-title text-accent font-bold text-lg">Confirm password:</span>
                 </div>
                 <input
                   value={confirmPassword}
@@ -371,81 +383,33 @@ function EmployeePage() {
               <h1 className="font-title font-bold text-accent text-[4vh]">
                 {user.name}
               </h1>
+              {!editMode ? <></> :
+              
               <svg
-                onClick={editaction}
+              onClick={editaction}
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                className="icon icon-tabler icons-tabler-outline icon-tabler-pencil text-secondary"
+                className="icon icon-tabler icons-tabler-outline icon-tabler-pencil text-base-300 hover:cursor-pointer"
               >
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
                 <path d="M13.5 6.5l4 4" />
               </svg>
 
-              {open && (
-                <div className="fixed inset-0  flex items-center justify-center bg-black bg-opacity-70 z-50">
-                  <div className="flex flex-col gap-2  bg-white p-10 rounded-lg shadow-lg max-w-md w-full">
-                    <h1 className="font-title text-secondary font-bold text-[3.5vh]">
-                      Edit profile
-                    </h1>
-                    <label className="font-title text-accent font-bold">
-                      Estimated Salary:
-                    </label>
-                    <input
-                      type="text"
-                      className="input input-bordered w-full "
-                    />
-                    <label className="font-title text-accent font-bold">
-                      skills:
-                    </label>
-                    <div className="dropdown">
-                      <div
-                        tabIndex={0}
-                        role="button"
-                        className="btn m-1 w-full "
-                      >
-                        {" "}
-                        Define your skills
-                      </div>
-                      <ul
-                        tabIndex={0}
-                        className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-                      >
-                        <li>
-                          <a>Item 1</a>
-                        </li>
-                        <li>
-                          <a>Item 2</a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="flex justify-end gap-2 ">
-                      <button
-                        onClick={() => setOpen(false)}
-                        className="btn bg-[#30465e] text-white mt-3 w-[12vh] "
-                      >
-                        Cancel
-                      </button>
-                      <button className="btn btn-accent text-white mt-3 w-[12vh] ">
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
+}
+             
             </div>
 
-            <div className="flex flex-col justify-around h-auto gap-3">
-              <h2 className="font-text mb-4 ">
-                <span className="font-bold font-title text-secondary text-[2.8vh]">
-                  Experience:
+            <h2 className="font-text  ">
+                <span className="font-bold font-title text-secondary text-lg">
+                  Experience
                 </span>{" "}
                 <input
                   placeholder="Not added yet"
@@ -456,19 +420,20 @@ function EmployeePage() {
                   }}
                   disabled={editMode}
                   className={yearsStyle}
-                  name=""
-                  id=""
-                />{" "}
-                years
+                 
+                />
+                
               </h2>
-            </div>
-            <h2 className="font-bold font-title text-secondary text-[2.8vh]">
-              About me:
+        
+        
+
+            <h2 className="font-bold font-title text-secondary text-lg mt-2 ">
+              About me
             </h2>
             <textarea
               placeholder="Not added yet"
               ref={textareaRef}
-              rows={4}
+             
               value={about}
               onChange={(e) => {
                 setAbout(e.target.value);
@@ -477,15 +442,18 @@ function EmployeePage() {
               className={aboutStyle}
               disabled={editMode}
               style={{ resize: "none" }}
-            ></textarea>
+              ></textarea>
+             
 
-            <h2 className="font-bold font-title text-secondary text-[2.8vh] ">
-              Education:
+     
+
+            <h2 className="font-bold font-title text-secondary text-lg mt-2 ">
+              Education
             </h2>
             <textarea
               placeholder="Not added yet"
               ref={textareaRef2}
-              rows={4}
+              
               value={education}
               onChange={(e) => {
                 setEducation(e.target.value);
@@ -494,12 +462,13 @@ function EmployeePage() {
               className={educationStyle}
               disabled={editMode}
               style={{ resize: "none" }}
-            ></textarea>
+              ></textarea>
+          
 
-            <div className="flex flex-wrap my-4 items-center mt-7 ">
+            <div className="flex flex-wrap  items-center my-2 ">
               <p>
-                <span className="font-bold font-title text-secondary text-[2.8vh]">
-                  Skills:
+                <span className="font-bold font-title text-secondary text-lg">
+                  Skills
                 </span>{" "}
               </p>
               <select
@@ -563,7 +532,7 @@ function EmployeePage() {
 
               <button
                 onClick={saveEditAction}
-                className="btn btn-outline btn-secondary btn-sm"
+                className="btn  btn-secondary btn-sm"
               >
                 Save
               </button>

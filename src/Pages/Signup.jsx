@@ -53,7 +53,7 @@ function Signup() {
 
   return (
     <div>
-      <div className=" lg:w-full h-screen flex max-sm:justify-center  lg:flex-col justify-center items-center lg:items-end ">
+      <div className=" w-full justify-center h-screen flex items-center lg:flex-col md:justify-end md:items-end lg:items-end p-10">
         <Link to={`/`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -72,8 +72,8 @@ function Signup() {
           </svg>
         </Link>
 
-        <div className="z-10 flex justify-end md:absolute sm:absolute my-10  max-md:top-1 max-md:right-6 sm:top-1 sm:right-10 md:top-1 md:right-10 lg:top-[5vh] lg:right-[5vh] max-sm:right-16 max-sm:top-10   lg:w-full ">
-          <div className="card bg-secondary  p-10 flex max-sm:w-[37vh] lg:flex-col  relative sm:w-[67vh] max-md:w-[67vh] md:w-[76vh] lg:w-[96vh]  ">
+        <div className="z-10 flex justify-end  my-10  md:absolute md:top-28">
+          <div className="card bg-secondary  p-10 flex w-[60vw] max-sm:w-[70vw] md:w-[60vw] lg:w-[40vw] flex-col     ">
             <h1 className="font-title font-bold max-sm:ml-5  lg:ml-7  text-white mb-4 text-[5vh]">
               Signup
             </h1>
@@ -84,9 +84,9 @@ function Signup() {
             >
               {warningText}
             </p>
-            <div className="flex flex-col items-center gap-3">
-              <div className="flex gap-3">
-                <label className="input input-bordered flex items-center gap-2  ">
+            <div className="flex flex-col items-center gap-3 ">
+           
+                <label className="input input-bordered flex items-center gap-2  w-full">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
@@ -99,14 +99,14 @@ function Signup() {
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
                     type="text"
-                    className="grow lg:w-[69vh] max-lg:w-[80vh] max-sm:w-[20vh] max-md:w-[50vh]  md:w-[57vh] "
+                    className="grow "
                     placeholder="Company name"
                   />
                 </label>
-              </div>
+           
 
-              <div className="flex max-sm:flex-col  gap-3">
-                <label className="input input-bordered flex items-center gap-2 ">
+              <div className="flex flex-col md:flex-row  gap-3 w-full">
+                <label className="input input-bordered flex items-center gap-2 w-full">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
@@ -119,12 +119,12 @@ function Signup() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     type="text"
-                    className="grow max-sm:w-[20vh] lg:w-[30vh] max-md:w-[20vh] md:w-[23vh]"
+                    className="grow w-full"
                     placeholder="Name"
                   />
                 </label>
 
-                <label className="input input-bordered flex items-center gap-2  ">
+                <label className="input input-bordered flex items-center gap-2 w-full ">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
@@ -138,13 +138,13 @@ function Signup() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     type="text"
-                    className="grow max-sm:w-[20vh] lg:w-[30vh] max-md:w-[20vh] md:w-[23vh]"
+                    className="grow w-full"
                     placeholder="Email"
                   />
                 </label>
               </div>
-              <div className="flex gap-3  max-sm:flex-col">
-                <label className="input input-bordered flex items-center gap-2 ">
+              <div className="flex flex-col md:flex-row  gap-3 w-full">
+                <label className="input input-bordered flex items-center gap-2 w-full">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
@@ -161,12 +161,12 @@ function Signup() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
-                    className="grow max-sm:w-[20vh] lg:w-[30vh] max-md:w-[20vh] md:w-[23vh]"
+                    className="grow w-full"
                     placeholder="password"
                   />
                 </label>
 
-                <label className="input input-bordered flex items-center gap-2  ">
+                <label className="input input-bordered flex items-center gap-2 w-full ">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
@@ -183,7 +183,7 @@ function Signup() {
                     value={confirm}
                     onChange={(e) => setConfirm(e.target.value)}
                     type="password"
-                    className="grow max-sm:w-[20vh]  lg:w-[30vh] max-md:w-[20vh] md:w-[23vh]"
+                    className="grow w-full"
                     placeholder="Confirm password"
                   />
                 </label>
@@ -191,7 +191,7 @@ function Signup() {
 
               <button
                 onClick={signupAction}
-                className="btn font-title font-bold text-lg btn-accent m-2  lg:w-[30vh] max-md:w-[30vh] md:w-[30vh] max-sm:w-[30vh] sd:w-[30vh]  "
+                className="btn font-title font-bold text-lg btn-accent w-full md:btn-wide my-2  "
               >
                 Signup
               </button>
@@ -200,7 +200,7 @@ function Signup() {
         </div>
         <Link
           to={`/admin/${sessionStorage.getItem("accountId")}`}
-          className=" flex items-center m-4 self-start mx-6 my-10 max-md:self-center md:self-center absolute max-sm:hidden lg:left-10   lg:bottom-14 max-md:left-14 max-md:bottom-2 md:left-14 md:bottom-10 z-20"
+          className="hidden md:flex items-center m-4 self-start mx-6 my-10 max-md:self-center md:self-center absolute  lg:left-10   lg:bottom-14 max-md:left-14 max-md:bottom-2 md:left-14 md:bottom-10 z-20"
         >
           <span className="font-title font-semibold mx-1 text-5xl text-white ">
             MergeNet
@@ -208,7 +208,7 @@ function Signup() {
           <img src={logo} alt="logo" className="w-[30px]" />
         </Link>
 
-        <div className="custom-shape-divider-bottom-1729943384 max-sm:hidden max-md:block md:block">
+        <div className="custom-shape-divider-bottom-1729943384 hidden  md:block">
           <svg
             data-name="Layer 1"
             xmlns="http://www.w3.org/2000/svg"

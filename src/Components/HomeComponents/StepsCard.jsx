@@ -2,7 +2,7 @@ import React from 'react'
 
 function StepsCard(props) {
   return (
-    <div>
+    <div className='shadow'>
     <div className="flex items-center">
               <p className="font-bold text-2xl m-4 text-accent">{props.number}</p>
      {props.icon}

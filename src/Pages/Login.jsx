@@ -3,12 +3,16 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "/logo.png";
 
-const LoginAPI = `http://localhost:3000/login`;
+const LoginAPI = `https://final-project-backend-bqbl.onrender.com/login`;
+const emailAPI = `http://localhost:3000/temporaryPassword`
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [sendEmail, setSendEmail] = useState('')
   const [warningText, setWarningText] = useState("");
+  const [warningText2, setWarningText2] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const loginAction = () => {
@@ -47,9 +51,36 @@ function Login() {
     }
   };
 
+
+  const SendEmailAction = () => {
+    if (sendEmail != '') {
+      setLoading(true)
+      setWarningText2('')
+      axios.post(emailAPI, {
+        email: sendEmail
+      }).then(res => {
+        console.log(res);
+        setWarningText2('')
+        setSendEmail('')
+        document.getElementById("changepassword").close();
+      }).catch(err => {
+        setWarningText2(err.response.data.msg)
+      }).finally(() => {
+          setLoading(false);
+        });
+    }
+    setWarningText2('Enter your email')
+  }
   return (
     <div>
-      <div className=" lg:w-full h-screen flex max-sm:justify-center  lg:flex-col justify-center items-center lg:items-end ">
+        {loading ? (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+            <span className="loading loading-dots bg-accent"></span>
+          </div>
+        </div>
+      ) : null}
+      <div className="w-full justify-center h-screen flex items-center lg:flex-col md:justify-end md:items-end lg:items-end p-10">
         <Link to={`/`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -68,12 +99,12 @@ function Login() {
           </svg>
         </Link>
 
-        <div className="z-10 flex justify-end md:absolute sm:absolute my-10  max-md:top-1 max-md:right-6 sm:top-1 sm:right-10 md:top-1 md:right-10 lg:top-[5vh] lg:right-[5vh] max-sm:right-16 max-sm:top-10   lg:w-full ">
-          <div className="card bg-secondary  p-10 flex  lg:flex-col  relative max-sm:w-[50vh] sm:w-[50vh] max-md:w-[50vh]  md:w-[60vh] lg:w-[70vh]  ">
+        <div className="z-10 flex justify-end my-10 md:absolute md:top-28 ">
+          <div className="card bg-secondary  p-10 flex w-[60vw] max-sm:w-[70vw] md:w-[60vw] lg:w-[40vw] flex-col  ">
            
-            <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-col items-center gap-3 ">
              
-              <div className="flex flex-col gap-3  max-sm:flex-col">
+              <div className="flex flex-col gap-3  w-full lg:w-[20vw] max-sm:flex-col ">
                 <h1 className="font-title font-bold max-sm:text-center  self-start text-white mb-4 text-[5vh]">
                   Log in
                 </h1>
@@ -120,13 +151,27 @@ function Login() {
                   onClick={() =>
                     document.getElementById("changepassword").showModal()
                   }
-                  className="  self-end text-[2vh] flex  text-white justify-start w-[95%] cursor-pointer "
+                  className="   text-[2vh] flex text-white justify-start cursor-pointer hover:text-accent"
                 >
                   Forgot Password?
                 </h1>
+                <p className="text-error">{warningText}</p>
+              <button
+                onClick={loginAction}
+                className="btn font-title font-bold text-lg btn-accent my-2 w-full "
+              >
+                Log in
+              </button>
               </div>
 
               <dialog id="changepassword" className="modal ">
+              {loading ? (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+            <span className="loading loading-dots bg-accent"></span>
+          </div>
+        </div>
+      ) : null}
                 <div className="modal-box w-[60vh]  p-10 flex flex-col bg-white justify-center items-center">
                   <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -134,42 +179,38 @@ function Login() {
                     </button>
                   </form>
                   <h3 className="font-title font-bold text-lg text-secondary">
-                    change password!
+                    Password Reset
                   </h3>
-                  <label className="font-text text-accent mt-3 mb-3">
+                  <label className="font-title text-accent my-3">
                     Enter your email to receive the new password
                   </label>
 
                   <input
+                    value={sendEmail}
+                    onChange={(e) => setSendEmail(e.target.value)}
                     type="Email"
                     className="input input-bordered w-full max-w-xs"
                   />
-
-                  <button className=" btn btn-secondary text-white mt-3 ">
-                    Save
+                  <p className="text-error text-sm">{warningText2}</p>
+                  <button onClick={SendEmailAction} className=" btn btn-secondary text-white mt-3 ">
+                    Send Email
                   </button>
                 </div>
               </dialog>
-<p className="text-error">{warningText}</p>
-              <button
-                onClick={loginAction}
-                className="btn font-title font-bold text-lg btn-accent m-2  lg:w-[20vh] max-md:w-[20vh] md:w-[20vh] max-sm:w-[20vh] sd:w-[20vh]  "
-              >
-                Log in
-              </button>
+
             </div>
           </div>
         </div>
         <Link
           to={`/admin/${sessionStorage.getItem("accountId")}`}
-          className=" flex items-center m-4 self-start mx-6 my-10 max-md:self-center md:self-center absolute max-sm:hidden lg:left-10   lg:bottom-14 max-md:left-14 max-md:bottom-2 md:left-14 md:bottom-10 z-20"
+          className="hidden md:flex items-center m-4 self-start mx-6 my-10 max-md:self-center md:self-center absolute  lg:left-10   lg:bottom-14 max-md:left-14 max-md:bottom-2 md:left-14 md:bottom-10 z-20"
         >
           <span className="font-title font-semibold mx-1 text-5xl text-white ">
             MergeNet
           </span>
           <img src={logo} alt="logo" className="w-[30px]" />
         </Link>
-        <div className="custom-shape-divider-bottom-1729943384 max-sm:hidden max-md:block md:block">
+        <div className="custom-shape-divider-bottom-1729943384 hidden  md:block">
           <svg
             data-name="Layer 1"
             xmlns="http://www.w3.org/2000/svg"
