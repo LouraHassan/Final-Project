@@ -14,8 +14,10 @@ function Login() {
   const loginAction = () => {
     setLoading(true);
     if (email == "" || password == "") {
-      setWarningText("");
+      setWarningText("Please fill al the fields");
     } else {
+      setWarningText("");
+
       axios
         .post(LoginAPI, {
           email: email,
@@ -67,14 +69,9 @@ function Login() {
 
         <div className="z-10 flex justify-end md:absolute sm:absolute my-10  max-md:top-1 max-md:right-6 sm:top-1 sm:right-10 md:top-1 md:right-10 lg:top-[5vh] lg:right-[5vh] max-sm:right-16 max-sm:top-10   lg:w-full ">
           <div className="card bg-secondary  p-10 flex  lg:flex-col  relative max-sm:w-[50vh] sm:w-[50vh] max-md:w-[50vh]  md:w-[60vh] lg:w-[70vh]  ">
-            <p
-              className={`text-error text-sm self-start ${
-                warningText != "" ? "p-4" : "p-2"
-              }`}
-            >
-              {warningText}
-            </p>
+           
             <div className="flex flex-col items-center gap-3">
+             
               <div className="flex flex-col gap-3  max-sm:flex-col">
                 <h1 className="font-title font-bold max-sm:text-center  self-start text-white mb-4 text-[5vh]">
                   Log in
@@ -167,7 +164,7 @@ function Login() {
                   </button>
                 </div>
               </dialog>
-
+<p className="text-error">{warningText}</p>
               <button
                 onClick={loginAction}
                 className="btn font-title font-bold text-lg btn-accent m-2  lg:w-[20vh] max-md:w-[20vh] md:w-[20vh] max-sm:w-[20vh] sd:w-[20vh]  "

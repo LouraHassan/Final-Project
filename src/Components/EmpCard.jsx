@@ -31,7 +31,7 @@ function EmpCard(props) {
   }
   return (
     <>
-      <div className='bg-secondary text-secondary-content p-4 rounded-lg flex flex-col items-center  '>
+      <div className='bg-secondary text-secondary-content p-4 rounded-lg flex flex-col justify-between '>
       {loading ? (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
@@ -39,8 +39,8 @@ function EmpCard(props) {
           </div>
         </div>
       ) : null}
-       <div className="flex justify-center gap-3 relative -top-10  border-2 border-black">
-          <div className="avatar bg-secondary border-2 border-accent rounded-full">
+       <div className="flex items-center gap-3 border-2 border-black">
+          <div className="avatar bg-secondary border-2 border-accent  rounded-full">
            
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -56,18 +56,18 @@ function EmpCard(props) {
               </svg>
          
           </div>
+            <p className="font-bold text-xl">{props.name}</p>
       </div>
-            <div className="font-bold text-xl my-2 border-2 border-black">{props.name}</div>
-      <p className='font-text my-2 '>Experience: {props.years} years</p>
+      <p className='font-title my-2 '>Experience: {props.years} years</p>
       <div className='flex flex-wrap'>
-        <p className='font-text my-2'>Skills: </p>
+        <p className='font-title my-2'>Skills: </p>
         {skills &&skills.map(skill => {
           return ( <SkillTip text={skill} editMode={true}></SkillTip>)
         })}
        
 
       </div>
-      <button className='btn btn-accent  self-end' onClick={() => setIsDialogOpen(true)}>Assign</button>
+      <button className='btn btn-accent my-2' onClick={() => setIsDialogOpen(true)}>Assign</button>
 
     </div>
     {isDialogOpen && (

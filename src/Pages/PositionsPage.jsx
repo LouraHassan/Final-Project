@@ -521,7 +521,7 @@ function PositionsPage() {
                   </button>
                 </form>
                 <h3 className="font-bold text-xl text-secondary">
-              Adding New Department
+              Deleting Position
             </h3>
                 <p className="py-4">
                   Are you sure from deleting this position?
