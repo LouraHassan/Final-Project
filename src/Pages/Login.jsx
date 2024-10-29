@@ -122,14 +122,14 @@ function Login() {
                   onClick={() =>
                     document.getElementById("changepassword").showModal()
                   }
-                  className="  self-end text-[2vh] flex  text-white justify-start w-[95%] cursor-pointer hover:text-blue-800"
+                  className="  self-end text-[2vh] flex  text-white justify-start w-[95%] cursor-pointer "
                 >
                   Forgot Password?
                 </h1>
               </div>
 
               <dialog id="changepassword" className="modal ">
-                <div className="modal-box w-[60vh]  p-10 flex flex-col justify-around justify-center items-center">
+                <div className="modal-box w-[60vh]  p-10 flex flex-col bg-white justify-center items-center">
                   <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                       ✕
@@ -138,31 +138,16 @@ function Login() {
                   <h3 className="font-title font-bold text-lg text-secondary">
                     change password!
                   </h3>
-                  <label className="font-text text-accent mt-3">
-                    Password:
+                  <label className="font-text text-accent mt-3 mb-3">
+                    Enter your email to receive the new password
                   </label>
+
                   <input
-                    className="h-9 border-2 border-gray"
-                    type="password"
-                    name=""
-                    id=""
-                  />
-                  <label className="font-text text-accent">New Password:</label>
-                  <input
-                    className="h-9 border-2 border-gray"
-                    type="password"
-                    name=""
-                    id=""
+                    type="Email"
+                    className="input input-bordered w-full max-w-xs"
                   />
 
-                  <label className="font-text text-accent">New Password:</label>
-                  <input
-                    className="h-9 border-2 border-gray"
-                    type="password"
-                    name=""
-                    id=""
-                  />
-                  <button className=" btn btn-secondary text-white mt-3">
+                  <button className=" btn btn-secondary text-white mt-3 ">
                     Save
                   </button>
                 </div>
@@ -198,7 +183,6 @@ function Login() {
               class="shape-fill"
             ></path>
           </svg>
-
         </div>
       </div>
     </div>
