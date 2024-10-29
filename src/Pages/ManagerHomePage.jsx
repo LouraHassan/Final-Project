@@ -296,7 +296,7 @@ function ManagerHomePage() {
 
       <div className="flex flex-col  p-5 items-center w-full lg:flex-row  lg:items-start  ">
         <div className="flex    max-md:flex-col max-md:w-full  md:w-[100%] lg:w-[23%]  ">
-          <div className="flex lg:justify-start p-5 lg:px-5 lg:py-16  md:flex-row  md:w-[100%] lg:flex-col  border justify-start items-center   shadow-2xl bg-secondary  rounded-xl  md:h-fit    ">
+          <div className="flex lg:justify-start p-5 lg:px-5 lg:py-16  md:flex-row  md:w-[100%] lg:flex-col  border justify-start items-center   shadow-2xl bg-secondary  rounded-lg  md:h-fit    ">
 
             <div className="flex justify-center items-center bg-slate-200 rounded-full">
               <svg
@@ -405,7 +405,7 @@ function ManagerHomePage() {
                   }
                   className=" btn btn-sm md:btn-md bg-secondary text-white "
                 >
-                  New Post
+                  New Position
                 </button>
               </div>
               <div className="grid lg:grid-cols-3  w-full  gap-4 mt-4">
@@ -550,7 +550,7 @@ function ManagerHomePage() {
                     type="text"
                     value={newSalary}
                     onChange={(e) => setNewSalary(e.target.value)}
-                    className="input input-bordered p-2  lg:w-[33vh] w-full"
+                    className="input input-bordered p-2   w-full"
                   />
                 </div>
               </div>
@@ -576,7 +576,7 @@ function ManagerHomePage() {
                     id=""
                     value={jobType}
                     onChange={(e) => setJobType(e.target.value)}
-                    className="select select-bordered lg:w-[33vh] w-full"
+                    className="select select-bordered  w-full"
                   >
                     <option value={"Not-specified"}>Select type</option>
                     <option value={"Full-Time"}> Full-Time</option>
@@ -586,24 +586,10 @@ function ManagerHomePage() {
               </div>
 
               <label className="font-title text-accent font-bold my-1">
-                Key Responsibilities:
-              </label>
-              <textarea
-                placeholder="Not added yet"
-                ref={textareaRef}
-                rows={4}
-                value={newKey}
-                onChange={(e) => {
-                  setNewKey(e.target.value);
-                  textareaHeight();
-                }}
-                className="textarea resize-none textarea-bordered  w-full max-w-m"
-              ></textarea>
-              <label className="font-title text-accent font-bold my-1">
                 Job Overview:
               </label>
               <textarea
-                placeholder="Not added yet"
+               
                 ref={textareaRef2}
                 rows={4}
                 value={newOverview}
@@ -612,6 +598,20 @@ function ManagerHomePage() {
                   textareaHeight2();
                 }}
                 className="textarea resize-none textarea-bordered   w-full max-w-m"
+              ></textarea>
+              <label className="font-title text-accent font-bold my-1">
+                Requirements:
+              </label>
+              <textarea
+               
+                ref={textareaRef}
+                rows={4}
+                value={newKey}
+                onChange={(e) => {
+                  setNewKey(e.target.value);
+                  textareaHeight();
+                }}
+                className="textarea resize-none textarea-bordered  w-full max-w-m"
               ></textarea>
               <div className="flex flex-col w-full">
                 <label className="font-title text-accent font-bold my-1">
@@ -746,155 +746,7 @@ function ManagerHomePage() {
           </div>
         </div>
       </dialog>
-      <dialog id="Newposition" className="modal  ">
-        {loading ? (
-          <div className="fixed inset-0 flex items-center justify-center  z-50 bg-black bg-opacity-50  ">
-            <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
-              <span className="loading loading-dots bg-accent"></span>
-            </div>
-          </div>
-        ) : null}
-        <div className="modal-box  flex items-start flex-col justify-around  p-7 bg-white md:w-11/12  md:max-w-2xl">
-          <form method="dialog  ">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-              ✕
-            </button>
-          </form>
-          <h3 className="font-bold self-center text-[3vh] font-title text-secondary mb-4 ">
-            Create New Position
-          </h3>
-          <div className="flex  w-full md:gap-8 flex-col md:flex-row">
-            <div className="flex flex-col md:w-full">
-              <label className="font-title text-accent font-bold my-1">
-                Position Name:{" "}
-              </label>
-              <input
-                type="text"
-                value={newPosition}
-                onChange={(e) => setNewPosition(e.target.value)}
-                className="input input-bordered p-2  w-full"
-              />
-            </div>
-
-            <div className="flex flex-col md:w-full">
-              <label className="font-title text-accent font-bold my-1">
-                Estimated Salary:
-              </label>
-              <input
-                type="text"
-                value={newSalary}
-                onChange={(e) => setNewSalary(e.target.value)}
-                className="input input-bordered p-2  lg:w-[33vh] w-full"
-              />
-            </div>
-          </div>
-
-          <div className="flex  w-full md:gap-8 flex-col md:flex-row">
-            <div className="flex flex-col md:w-full">
-              <label className="font-title text-accent font-bold my-1 ">
-                Years Of Experience :
-              </label>
-              <input
-                type="text"
-                value={newExperience}
-                onChange={(e) => setNewExperience(e.target.value)}
-                className="input input-bordered p-2  w-full"
-              />
-            </div>
-            <div className="flex flex-col md:w-full">
-              <label className="font-title text-accent font-bold my-1">
-                Job-Type:
-              </label>
-              <select
-                name=""
-                id=""
-                value={jobType}
-                onChange={(e) => setJobType(e.target.value)}
-                className="select select-bordered lg:w-[33vh] w-full"
-              >
-                <option value={"Not-specified"}>Select type</option>
-                <option value={"Full-Time"}> Full-Time</option>
-                <option value={"Part-Time"}>Part-Time</option>
-              </select>
-            </div>
-          </div>
-
-          <label className="font-title text-accent font-bold my-1">
-            Key Responsibilities:
-          </label>
-          <textarea
-            placeholder="Not added yet"
-            ref={textareaRef}
-            rows={4}
-            value={newKey}
-            onChange={(e) => {
-              setNewKey(e.target.value);
-              textareaHeight();
-            }}
-            className="textarea resize-none textarea-bordered  w-full max-w-m"
-          ></textarea>
-          <label className="font-title text-accent font-bold my-1">
-            Job Overview:
-          </label>
-          <textarea
-            placeholder="Not added yet"
-            ref={textareaRef2}
-            rows={4}
-            value={newOverview}
-            onChange={(e) => {
-              setNewOverview(e.target.value);
-              textareaHeight2();
-            }}
-            className="textarea resize-none textarea-bordered   w-full max-w-m"
-          ></textarea>
-          <div className="flex flex-col w-full">
-            <label className="font-title text-accent font-bold my-1">
-              Skills:
-            </label>
-            <select
-              name="skills"
-              value={skillInput}
-              onChange={(e) => {
-                const selectedSkill = e.target.value;
-                setSkillInput(selectedSkill);
-                setSkills([selectedSkill, ...skills]);
-                setSkillInput("");
-              }}
-              className="select select-bordered  "
-            >
-              {skillsOptions &&
-                skillsOptions.map((skill) => {
-                  return <option value={skill}>{skill}</option>;
-                })}
-              <option value="">Select Skills</option>
-            </select>
-            <div className="flex flex-wrap my-3">
-              {skills.map((el) => {
-                const handleDelete = () => {
-                  handleDelete2(el);
-                };
-                return <SkillTip text={el} onDelete={handleDelete}></SkillTip>;
-              })}
-            </div>
-          </div>
-          <p>{warningText}</p>
-
-          <div className="flex self-end justify-end absulote bottom-2 bg-white mt-6">
-            <button
-              className="btn btn-secondary btn-outline text-white p-4 mr-2"
-              onClick={closeEmpDialog}
-            >
-              Cancel
-            </button>
-            <button
-              className="btn btn-secondary  text-white p-4 "
-              onClick={addPositionAction}
-            >
-              Post Position
-            </button>
-          </div>
-        </div>
-      </dialog>
+    
     </div>
   );
 }

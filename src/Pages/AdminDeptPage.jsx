@@ -147,7 +147,10 @@ function AdminDeptPage() {
                   }
                 })
               ) : (
+                  <td>
+
                 <p>No employees available</p>
+                  </td>
               )}
              
             </tbody>

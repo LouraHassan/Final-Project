@@ -4,10 +4,9 @@ function DepCard(props) {
   return (
     <Link
       to={`/admin/department/${props.id}`}
-      className="flex flex-col justify-between p-5 bg-white shadow-md  rounded-md"
+      className="flex flex-col justify-between p-5 bg-white shadow-md my-2 rounded-lg"
     >
       <div className="flex flex-col">
-        <h2 className="text-accent">Department</h2>
         <h1 className="text-secondary font-bold text-lg">{props.name}</h1>
       </div>
       <div className="flex flex-wrap justify-between">

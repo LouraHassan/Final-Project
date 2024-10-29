@@ -3,7 +3,7 @@ import React from "react";
 function SkillTip(props) {
   return (
     <div className="flex items-center">
-      <p className="p-2 w-fit rounded-full text-secondary m-1 bg-base-100 text-xs flex items-center">
+      <p className="p-2 w-fit rounded-lg text-secondary m-1 bg-base-100 text-xs flex items-center">
               {props.text}
               {props.editMode ? (
         <></>

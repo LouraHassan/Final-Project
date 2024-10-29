@@ -1,4 +1,4 @@
-import React from "react";
+import {useState} from "react";
 import Footer from "../Components/Footer";
 import HomeNav from "../Components/HomeNav";
 import { Link } from "react-router-dom";
@@ -6,15 +6,13 @@ import logo from "/logo.png";
 import axios from "axios";
 
 function Home() {
-  let [senderEmail, setSenderEmail] = React.useState("")
-  let [contactTitle, setContactTitle] = React.useState("")
-  let [msg, setMsg] = React.useState("")
-  let [senderName, setSenderName] = React.useState("")
-
+  let [senderEmail, setSenderEmail] = useState("")
+  let [contactTitle, setContactTitle] = useState("")
+  let [msg, setMsg] = useState("")
+  let [senderName, setSenderName] = useState("")
+const [warningText, setWarningText] = useState('')
 
   function sendEmail() {
-   
-   
       var data = {
         service_id: 'service_s8jk25h',
         template_id: 'template_rz2zfss',
@@ -38,6 +36,8 @@ function Home() {
         setMsg("")
         setSenderName("")
         axios.post("https://api.emailjs.com/api/v1.0/email/send", data).then(res => console.log(res))
+      } else {
+        setWarningText('Please fill all the fields')
       }
     
   }
@@ -48,9 +48,9 @@ function Home() {
       <div
         className="lg:w-full h-screen flex flex-col justify-center items-center"
       >
-        <div className="z-10 flex flex-col items-center justify-between my-10 absolute top-24 left-10 lg:w-[70vw]">
+        <div className="z-10 flex flex-col items-center justify-between my-10 absolute top-12 left-5 md:top-24 md:left-10 lg:w-[70vw]">
           <p className="text-4xl text-left mx-2 md:mx-6 md:text-5xl text-secondary my-5">Streamline Employee Placement Across Departments After Mergers</p>
-          <p className="text-xl text-left mx-6 md:text-2xl text-accent my-4 font-semibold">Manage employee roles, track department needs, and optimize talent allocation seamlessly</p>
+          <p className="text-xl text-left mx-6 md:text-2xl text-accent my-2 md:my-4 font-semibold">Manage employee roles, track department needs, and optimize talent allocation seamlessly</p>
         </div>
         <Link to={`/signup`} className="btn self-start mx-6 my-10 btn-accent btn-lg md:self-center absolute left-10 bottom-20 md:bottom-10 z-20">Start Now!</Link>
 
@@ -535,7 +535,8 @@ function Home() {
             rows={8}
             style={{ resize: "none" }}
           />
-          <br />
+          
+          <p className="text-error my-2">{warningText}</p>
           <button className="btn btn-accent btn-wide" onClick={sendEmail}>Send</button>
         </div>
       </div>

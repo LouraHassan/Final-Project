@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 function PositionCard({ Position, Department, Experience, onEdit, id, skills }) {
   const [skillsArr , setSkillsArr] = useState()
   return (
-    <div className="flex flex-col justify-around  p-5 bg-white rounded-md shadow-md">
+    <div className="flex flex-col justify-around  p-5 bg-white rounded-lg shadow-md">
       <div className="flex justify-between">
-        <h1 className="text-secondary font-bold text-[3vh] ">
+        <h1 className="text-secondary font-bold text-2xl ">
           {Position} {/* عرض اسم الوظيفة */}
         </h1>
         {/* إضافة زر التعديل */}
@@ -16,17 +16,17 @@ function PositionCard({ Position, Department, Experience, onEdit, id, skills }) 
       <br />
 
       <div className="flex flex-col justify-around  h-auto">
-        <h2 className="text-[2vh] mb-2">
-          <span className="font-text text-[2vh] font-bold ">Department:</span>{" "}
-          {Department || "Project Management"} {/* عرض القسم */}
+        <h2 className=" font-title text-lg my-1">
+          <span className="  font-bold ">Department:</span>{" "}
+          {Department} {/* عرض القسم */}
         </h2>
-        <h2 className="text-[2vh]">
-          <span className="font-text text-[2vh] font-bold">Experience: </span>
-          {Experience || "2 years"} {/* عرض الخبرة */}
+        <h2 className=" font-title text-lg my-1">
+          <span className=" font-bold">Experience: </span>
+          {Experience} {/* عرض الخبرة */}
         </h2>
 
-        <div className="flex flex-wrap my-4 items-center">
-          <p>Skills: </p>
+        <div className="flex flex-wrap  items-center">
+          <p className="font-title text-lg my-1 font-bold">Skills: </p>
           {skills && skills.map(skill => {
             return (<SkillTip text={skill}   editMode={true}></SkillTip>)
           })}
