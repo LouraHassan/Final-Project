@@ -197,20 +197,7 @@ function EmployeePage() {
     }
   };
 
-  const dismissAction = (reqId) => {
-    setLoading(true);
-    axios
-      .put(updateAPI + reqId, {
-        accountId: id,
-      })
-      .then((res) => {
-        console.log(res.data);
-        getNotifications();
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
+
   const retryAction = () => {
     location.reload()
 }
@@ -509,11 +496,7 @@ function EmployeePage() {
                     ></SkillTip>
                   );
                 })}
-              {/* <SkillTip text="Critical-thinking"></SkillTip>
-            <SkillTip text="team-work"></SkillTip>
-            <SkillTip text="Critical-thinking"></SkillTip>
-            <SkillTip text="Critical-thinking"></SkillTip>
-            <SkillTip text="Critical-thinking"></SkillTip> */}
+             
             </div>
 
             <br></br>

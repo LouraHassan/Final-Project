@@ -428,7 +428,6 @@ function PositionsPage() {
               style={{ resize: "none" }}
             ></textarea>
 
-            {/* <p className="font-text w-[90%]">{position.description}</p> */}
             <h1 className="font-title font-bold  text-lg mt-4  text-secondary">
               Requirements:
             </h1>
@@ -445,7 +444,6 @@ function PositionsPage() {
               style={{ resize: "none" }}
             ></textarea>
 
-            {/* <p className="font-text w-[90%]">{position.requirments}</p> */}
 
             <div className="flex flex-wrap my-4 items-center">
               <p>
@@ -511,12 +509,7 @@ function PositionsPage() {
               ) : (
                 <></>
               )}
-              {/* <button
-              onClick={()=>document.getElementById('deletePositionDialog').showModal()}
-              className="btn btn-outline btn-error btn-sm"
-            >
-              Delete
-            </button> */}
+            
               <dialog id="deletePositionDialog" className="modal">
                 {loading ? (
                   <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

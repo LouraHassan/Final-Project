@@ -177,10 +177,7 @@ function AdminDeptPage() {
                   ></PositionCard>)
                 }
               })}
-            {/* <PositionCard></PositionCard>
-            <PositionCard></PositionCard>
-            <PositionCard></PositionCard>
-            <PositionCard></PositionCard> */}
+          
           </div>
         </div>
             </div>
@@ -214,29 +211,7 @@ function AdminDeptPage() {
               </div>
             </div> : <></>
           }
-          {/* <div className="overflow-x-auto w-full md:w-[80vw] bg-white md:self-center md:m-4 shadow-md shadow-gray-300 rounded-lg">
-            <table className="table">
-              <thead>
-                <tr className="font-title text-lg">
-                  <th>Employee Name</th>
-                  <th>Position</th>
-                </tr>
-              </thead>
-              <tbody>
-            {department.employees?.length > 0 ? (
-                department.employees.map((employee) => {
-                 
-                    if(employee.excess){
-                      return <EmpList key={employee._id} name={employee.name} position={employee.positionTitle || 'position not defined'} />;
-                  }
-                })
-              ) : (
-                <p>No employees available</p>
-              )}
-             
-              </tbody>
-            </table>
-          </div> */}
+        
       </div>
     </div>
   );
@@ -244,5 +219,4 @@ function AdminDeptPage() {
 
 export default AdminDeptPage;
 
-// token for admin,
-// all departments, notifications,
+

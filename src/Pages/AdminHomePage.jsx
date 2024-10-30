@@ -1,35 +1,19 @@
 import { useEffect, useState } from "react";
 import EmpList from "../Components/EmpList";
-import Select from "react-select";
-import EmpCard from "../Components/EmpCard";
+
 import DepCard from "../Components/DepCard";
 import Nav from "../Components/Nav";
 import { useParams } from "react-router-dom";
 import axios, { all } from "axios";
-import { Chart as ChartJS } from "chart.js/auto";
 import { Pie, Bar } from "react-chartjs-2";
 const AccountsAPI = `https://final-project-backend-bqbl.onrender.com/account/`;
-const createAccountsAPI = `https://final-project-backend-bqbl.onrender.com/createAccount?company=${sessionStorage.getItem(
-  "company"
-)}`;
-const managersAPI = `https://final-project-backend-bqbl.onrender.com/account/type/manager?company=${sessionStorage.getItem(
-  "company"
-)}`;
-const employeeAPI = `https://final-project-backend-bqbl.onrender.com/account/type/employee?company=${sessionStorage.getItem(
-  "company"
-)}`;
-const CreateDeptAPI = `https://final-project-backend-bqbl.onrender.com/department?company=${sessionStorage.getItem(
-  "company"
-)}`;
-const DepartmentsAPI = `https://final-project-backend-bqbl.onrender.com/department?company=${sessionStorage.getItem(
-  "company"
-)}`;
-const AllPositionsAPI = `https://final-project-backend-bqbl.onrender.com/company/${sessionStorage.getItem(
-  "company"
-)}/position`;
-const AllNotificationsAPI = `https://final-project-backend-bqbl.onrender.com/company/${sessionStorage.getItem(
-  "company"
-)}/notification`;
+const createAccountsAPI = `https://final-project-backend-bqbl.onrender.com/createAccount?company=`;
+const managersAPI = `https://final-project-backend-bqbl.onrender.com/account/type/manager?company=`;
+const employeeAPI = `https://final-project-backend-bqbl.onrender.com/account/type/employee?company=`;
+const CreateDeptAPI = `https://final-project-backend-bqbl.onrender.com/department?company=`;
+const DepartmentsAPI = `https://final-project-backend-bqbl.onrender.com/department?company=`;
+const AllPositionsAPI = `https://final-project-backend-bqbl.onrender.com/company/`;
+const AllNotificationsAPI = `https://final-project-backend-bqbl.onrender.com/company/`;
 export default function AdminHomePage() {
   const { id } = useParams();
   const [user, setUser] = useState();
@@ -95,7 +79,7 @@ export default function AdminHomePage() {
   const getManagers = () => {
     setLoading(true);
     axios
-      .get(managersAPI, {
+      .get(managersAPI+sessionStorage.getItem("company"), {
         headers: {
           Authorization: sessionStorage.getItem("token"),
         },
@@ -122,7 +106,7 @@ export default function AdminHomePage() {
   const getEmployee = () => {
     setLoading(true);
     axios
-      .get(employeeAPI, {
+      .get(employeeAPI+sessionStorage.getItem("company"), {
         headers: {
           Authorization: sessionStorage.getItem("token"),
         },
@@ -148,7 +132,7 @@ export default function AdminHomePage() {
   const getDepartments = () => {
     setLoading(true);
     axios
-      .get(DepartmentsAPI, {
+      .get(DepartmentsAPI+sessionStorage.getItem("company"), {
         headers: {
           Authorization: sessionStorage.getItem("token"),
         },
@@ -173,14 +157,14 @@ export default function AdminHomePage() {
   };
 
   const getAllPositions = () => {
-    axios.get(AllPositionsAPI).then((res) => {
+    axios.get(`${AllPositionsAPI+sessionStorage.getItem("company")}/positions`).then((res) => {
       console.log(res);
       setAllPositions(res.data.filter((el) => el.status == false));
     });
   };
 
   const getAllNotifications = () => {
-    axios.get(AllNotificationsAPI).then((res) => {
+    axios.get(`${AllNotificationsAPI+sessionStorage.getItem("company")}/notification`).then((res) => {
       console.log(res);
       setAllNotifications(res.data);
     });
@@ -217,7 +201,7 @@ export default function AdminHomePage() {
       setLoading(true);
       axios
         .post(
-          CreateDeptAPI,
+          CreateDeptAPI+sessionStorage.getItem("company"),
           {
             name: deptName,
             manager: manager,
@@ -263,7 +247,7 @@ export default function AdminHomePage() {
 
       axios
         .post(
-          createAccountsAPI,
+          createAccountsAPI+sessionStorage.getItem("company"),
           {
             name: name,
             email: email,
@@ -301,7 +285,7 @@ export default function AdminHomePage() {
       setLoading(true);
       axios
         .post(
-          createAccountsAPI,
+          createAccountsAPI+sessionStorage.getItem("company"),
           {
             name: name,
             department: department,

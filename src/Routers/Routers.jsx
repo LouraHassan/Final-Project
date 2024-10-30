@@ -6,11 +6,10 @@ import App from "../App";
 import Home from "../Pages/Home";
 import AdminHomePage from "../Pages/AdminHomePage";
 import AdminDeptPage from "../Pages/AdminDeptPage";
-import AdminPositionPage from "../Pages/AdminPositionPage";
 import Signup from "../Pages/Signup";
 import EmployeePage from "../Pages/EmployeePage";
-import Signup2 from "../Pages/Signup";
 import ResetPasswordPage from "../Pages/ResetPasswordPage";
+import ErrorPage from "../Pages/ErrorPage";
 
 
 const Router = createBrowserRouter([
@@ -18,8 +17,10 @@ const Router = createBrowserRouter([
 
     {
         path: '/',
-        element: <Home></Home>
+        element: <Home></Home>,
+        errorElement: <ErrorPage></ErrorPage>
     },
+
     {
         path: '/signup',
         element: <Signup></Signup>
@@ -36,10 +37,7 @@ const Router = createBrowserRouter([
         path: '/admin/department/:id',
         element: <AdminDeptPage></AdminDeptPage>
     },
-    {
-        path: '/admin/position',
-        element: <AdminPositionPage></AdminPositionPage>
-    },
+  
     {
       path: '/Login',
       element: <Login/>

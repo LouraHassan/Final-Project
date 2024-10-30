@@ -8,9 +8,9 @@ function PositionCard({ Position, Department, Experience, onEdit, id, skills }) 
     <div className="flex flex-col justify-around  p-5 bg-white rounded-lg shadow-md">
       <div className="flex justify-between">
         <h1 className="text-secondary font-bold text-2xl ">
-          {Position} {/* عرض اسم الوظيفة */}
+          {Position} 
         </h1>
-        {/* إضافة زر التعديل */}
+      
        
       </div>
       <br />
@@ -18,11 +18,11 @@ function PositionCard({ Position, Department, Experience, onEdit, id, skills }) 
       <div className="flex flex-col justify-around  h-auto">
         <h2 className=" font-title text-lg my-1">
           <span className="  font-bold ">Department:</span>{" "}
-          {Department} {/* عرض القسم */}
+          {Department} 
         </h2>
         <h2 className=" font-title text-lg my-1">
           <span className=" font-bold">Experience: </span>
-          {Experience} {/* عرض الخبرة */}
+          {Experience} 
         </h2>
 
         <div className="flex flex-wrap  items-center">

@@ -210,21 +210,7 @@ function ManagerHomePage() {
     setWarningText2("");
     document.getElementById("Newposition").close();
   };
-  const dismissAction = (reqId) => {
-    setLoading(true);
-
-    axios
-      .put(updateAPI + reqId, {
-        accountId: id,
-      })
-      .then((res) => {
-        console.log(res.data);
-        getNotifications();
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
+ 
 
   const handleDelete2 = (skillToDelete) => {
     setSkills((prevSkills) =>
