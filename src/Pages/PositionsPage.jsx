@@ -71,25 +71,31 @@ function PositionsPage() {
   }, [position]);
 
   useEffect(() => {
-    textareaHeight()
-    textareaHeight2()
-  },[description])
+    textareaHeight();
+    textareaHeight2();
+  }, [description]);
   const getPosition = () => {
     setLoading(true);
 
-    axios.get(positionAPI + id).then((res) => {
-      console.log(res);
-      setPosition(res.data);
-      setNetworkError(false)
-    }).catch(err => {
-      if (!err.response || err.code === 'ERR_CONNECTION_REFUSED' || err.code === "ERR_BAD_RESPONSE") {
-          setNetworkError(true)
-      }
-
-  }).finally(() => {
-      setLoading(false);
-    })
-
+    axios
+      .get(positionAPI + id)
+      .then((res) => {
+        console.log(res);
+        setPosition(res.data);
+        setNetworkError(false);
+      })
+      .catch((err) => {
+        if (
+          !err.response ||
+          err.code === "ERR_CONNECTION_REFUSED" ||
+          err.code === "ERR_BAD_RESPONSE"
+        ) {
+          setNetworkError(true);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const getAllPositions = () => {
@@ -217,7 +223,7 @@ function PositionsPage() {
       .then((res) => {
         console.log(res);
         setEditMode(true);
-        setEditModeSelect('bg-transparent')
+        setEditModeSelect("bg-transparent");
         setDepartmentStyle("bg-transparent");
         setExperienceStyle("bg-transparent w-[2vw]");
         setDescriptionStyle("bg-transparent");
@@ -236,19 +242,18 @@ function PositionsPage() {
     );
   };
   const retryAction = () => {
-    location.reload()
-}
+    location.reload();
+  };
   return (
     <div>
-
-       {loading ? (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
-        <span className="loading loading-dots bg-accent"></span>
-      </div>
-    </div>
+      {loading ? (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+            <span className="loading loading-dots bg-accent"></span>
+          </div>
+        </div>
       ) : null}
-       {networkError ? (
+      {networkError ? (
         <div className="fixed inset-0 flex items-center justify-center z-40 bg-secondary ">
           <div className="text-center w-[80vw] p-5 md:w-[50vw] lg:w-[30vw] bg-white rounded-lg flex flex-col items-center">
             <svg
@@ -270,365 +275,367 @@ function PositionsPage() {
               <path d="M3.515 9.515a12 12 0 0 1 3.544 -2.455m3.101 -.92a12 12 0 0 1 10.325 3.374" />
               <path d="M3 3l18 18" />
             </svg>
-            <p className="text-error text-lg m-4 font-semibold">Oops! No Internet Connection</p>
-                      <p className="text-neutral m-1">We couldn’t connect to the internet.</p>
-                      <p className="text-neutral m-1"> Please check your connection and click the button to try again.</p>
-                      <button onClick={retryAction} className="btn btn-accent my-5 btn-wide">Retry</button>
-
+            <p className="text-error text-lg m-4 font-semibold">
+              Oops! No Internet Connection
+            </p>
+            <p className="text-neutral m-1">
+              We couldn’t connect to the internet.
+            </p>
+            <p className="text-neutral m-1">
+              {" "}
+              Please check your connection and click the button to try again.
+            </p>
+            <button
+              onClick={retryAction}
+              className="btn btn-accent my-5 btn-wide"
+            >
+              Retry
+            </button>
           </div>
         </div>
       ) : null}
       <Nav />
-      <div className="flex flex-col p-10 md:px-16 justify-center items-center ">
-        <div className="flex flex-col md:flex-row w-full md:justify-between md:w-[80vw] gap-4">
-        <div className="flex flex-col  bg-white p-8 lg:w-[50vw] gap-4 justify-around rounded-lg shadow-lg ">
-          <div className="flex justify-between">
-            <h1 className="font-title font-bold text-secondary text-2xl">
-              {position.title}
-            </h1>
-            {isManager && editMode ? (
-              <svg
-                onClick={editAction}
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                className="icon icon-tabler icons-tabler-outline icon-tabler-pencil text-base-300 hover:cursor-pointer"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-                <path d="M13.5 6.5l4 4" />
-              </svg>
-            ) : (
-              <></>
-            )}
-          </div>
+      <div className="flex flex-col p-8 md:px-16 justify-center items-center ">
+        <div className="flex flex-col md:flex-col  lg:flex-row w-full md:justify-between md:w-[80vw] gap-4">
+          <div className="flex flex-col  bg-white p-8 lg:w-[60vw] md:w-full  gap-4 justify-around rounded-lg shadow-lg ">
+            <div className="flex justify-between">
+              <h1 className="font-title font-bold text-secondary text-2xl">
+                {position.title}
+              </h1>
+              {isManager && editMode ? (
+                <svg
+                  onClick={editAction}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  className="icon icon-tabler icons-tabler-outline icon-tabler-pencil text-base-300 hover:cursor-pointer"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                  <path d="M13.5 6.5l4 4" />
+                </svg>
+              ) : (
+                <></>
+              )}
+            </div>
 
-          <div className="flex flex-col  ">
-            <h2 className="font-text  my-2">
-              <span className="font-bold font-title text-lg  text-secondary  ">
-                Department:{" "}
-              </span>
-              <input
-                placeholder="Not added yet"
-                type="text"
-                value={department}
-                onChange={(e) => {
-                  setDepartment(e.target.value);
-                }}
-                disabled={editMode}
-                className={departmentStyle}
-                name=""
-                id=""
-              />
+            <div className="flex flex-col  ">
+              <h2 className="font-text  my-2">
+                <span className="font-bold font-title text-lg  text-secondary  ">
+                  Department:{" "}
+                </span>
+                <input
+                  placeholder="Not added yet"
+                  type="text"
+                  value={department}
+                  onChange={(e) => {
+                    setDepartment(e.target.value);
+                  }}
+                  disabled={editMode}
+                  className={departmentStyle}
+                  name=""
+                  id=""
+                />
+              </h2>
+              <h2 className="font-text my-2">
+                <span className="font-bold font-title text-lg   text-secondary">
+                  Job Type:{" "}
+                </span>
+                <select
+                  name=""
+                  id=""
+                  value={jobType}
+                  onChange={(e) => setJobType(e.target.value)}
+                  className={editModeSelect}
+                  disabled={editMode}
+                  style={
+                    editMode
+                      ? {
+                          color: "black",
+                          opacity: 1,
+                          appearance: "none",
+                          WebkitAppearance: "none",
+                          MozAppearance: "none",
+                          background: "none",
+                          paddingRight: "1rem",
+                        }
+                      : {}
+                  }
+                >
+                  <option value={"Not-specified"}>Select type</option>
+                  <option value={"Full-Time"}> Full-Time</option>
+                  <option value={"Part-Time"}>Part-Time</option>
+                </select>
+              </h2>
+              <h2 className="font-text my-2">
+                <span className="font-bold font-title text-lg  text-secondary ">
+                  Experience:
+                </span>{" "}
+                <input
+                  placeholder="Not added yet"
+                  type="text"
+                  value={experience}
+                  onChange={(e) => {
+                    setExperience(e.target.value);
+                  }}
+                  disabled={editMode}
+                  className={experienceStyle}
+                  name=""
+                  id=""
+                />
+                {/* {position.experienceYears}  */}
+                years
+              </h2>
+              <h2 className="font-text my-2">
+                <span className="font-bold font-title text-lg  text-secondary ">
+                  Estimated Salary:{" "}
+                </span>
+                <input
+                  placeholder="Not added yet"
+                  type="text"
+                  value={salary}
+                  onChange={(e) => {
+                    setSalary(e.target.value);
+                  }}
+                  disabled={editMode}
+                  className={salaryStyle}
+                  name=""
+                  id=""
+                />
+                {/* {position.expectedSalary}  */}
+                SR
+              </h2>
+            </div>
+
+            <h2 className="font-title  font-bold  text-lg my-2 text-secondary ">
+              Job overview:
             </h2>
-            <h2 className="font-text my-2">
-              <span className="font-bold font-title text-lg   text-secondary">
-                Job Type:{" "}
-              </span>
-              <select
-                name=""
-                id=""
-                value={jobType}
-                onChange={(e) => setJobType(e.target.value)}
-                className={editModeSelect}
-                disabled={editMode}
-                style={
-                  editMode
-                    ? {
-                        color: "black",
-                        opacity: 1,
-                        appearance: "none",
-                        WebkitAppearance: "none",
-                        MozAppearance: "none",
-                        background: "none",
-                        paddingRight: "1rem",
-                      }
-                    : {}
-                }
-              >
-                <option value={"Not-specified"}>Select type</option>
-                <option value={"Full-Time"}> Full-Time</option>
-                <option value={"Part-Time"}>Part-Time</option>
-              </select>
-            </h2>
-            <h2 className="font-text my-2">
-              <span className="font-bold font-title text-lg  text-secondary ">
-                Experience:
-              </span>{" "}
-              <input
-                placeholder="Not added yet"
-                type="text"
-                value={experience}
-                onChange={(e) => {
-                  setExperience(e.target.value);
-                }}
-                disabled={editMode}
-                className={experienceStyle}
-                name=""
-                id=""
-              />
-              {/* {position.experienceYears}  */}
-              years
-            </h2>
-            <h2 className="font-text my-2">
-              <span className="font-bold font-title text-lg  text-secondary ">
-                Estimated Salary:{" "}
-              </span>
-              <input
-                placeholder="Not added yet"
-                type="text"
-                value={salary}
-                onChange={(e) => {
-                  setSalary(e.target.value);
-                }}
-                disabled={editMode}
-                className={salaryStyle}
-                name=""
-                id=""
-              />
-              {/* {position.expectedSalary}  */}
-              SR
-            </h2>
-          </div>
 
-          <h2 className="font-title  font-bold  text-lg my-2 text-secondary ">
-            Job overview:
-          </h2>
-
-          <textarea
-            placeholder="Not added yet"
-            ref={textareaRef}
-            
-            value={description}
-            onChange={(e) => {
-              setDescription(e.target.value);
-              textareaHeight();
-            }}
-            className={descriptionStyle}
-            disabled={editMode}
-            style={{ resize: "none" }}
-          ></textarea>
-
-          {/* <p className="font-text w-[90%]">{position.description}</p> */}
-          <h1 className="font-title font-bold  text-lg mt-4  text-secondary">
-            Requirements:
-          </h1>
-          <textarea
-            placeholder="Not added yet"
-            ref={textareaRef2}
-          
-            value={requirments}
-            onChange={(e) => {
-              setRequirments(e.target.value);
-              textareaHeight2();
-            }}
-            className={requirmentsStyle}
-            disabled={editMode}
-            style={{ resize: "none" }}
-          ></textarea>
-
-          {/* <p className="font-text w-[90%]">{position.requirments}</p> */}
-
-          <div className="flex flex-wrap my-4 items-center">
-            <p>
-              <span className="font-bold font-title text-lg  text-secondary">
-                Skills:
-              </span>{" "}
-            </p>
-            <select
-              name="skills"
-              value={skillInput}
+            <textarea
+              placeholder="Not added yet"
+              ref={textareaRef}
+              value={description}
               onChange={(e) => {
-                const selectedSkill = e.target.value;
-                setSkillInput(selectedSkill);
-
-                if (selectedSkill) {
-                  setSkillsArr((prevSkills) => [selectedSkill, ...prevSkills]);
-                  setSkillInput("");
-                }
+                setDescription(e.target.value);
+                textareaHeight();
               }}
-              className={
-                editMode ? `hidden` : `select select-bordered w-full my-2`
-              }
-            >
-              {skillsOptions.map((skill) => {
-                return <option value={skill}>{skill}</option>;
-              })}
-              <option value="">Select Skills</option>
-            </select>
-            {skillsArr &&
-              skillsArr.map((skill) => {
-                const handleDelete = () => {
-                  handleDelete2(skill);
-                };
+              className={descriptionStyle}
+              disabled={editMode}
+              style={{ resize: "none" }}
+            ></textarea>
 
-                return (
-                  <SkillTip
-                    text={skill}
-                    onDelete={handleDelete}
-                    editMode={editMode}
-                  ></SkillTip>
-                );
-              })}
-          </div>
-          <div
-            className={`md:self-end ${
-              editMode ? "hidden" : " flex "
-            }`}
-          >
-            <button
-              onClick={cancelEditAction}
-              className="btn btn-outline btn-accent btn-sm mx-2"
-            >
-              cancel
-            </button>
-            {!position.status ? (
-              <button
-                onClick={() =>
-                  document.getElementById("deletePositionDialog").showModal()
+            {/* <p className="font-text w-[90%]">{position.description}</p> */}
+            <h1 className="font-title font-bold  text-lg mt-4  text-secondary">
+              Requirements:
+            </h1>
+            <textarea
+              placeholder="Not added yet"
+              ref={textareaRef2}
+              value={requirments}
+              onChange={(e) => {
+                setRequirments(e.target.value);
+                textareaHeight2();
+              }}
+              className={requirmentsStyle}
+              disabled={editMode}
+              style={{ resize: "none" }}
+            ></textarea>
+
+            {/* <p className="font-text w-[90%]">{position.requirments}</p> */}
+
+            <div className="flex flex-wrap my-4 items-center">
+              <p>
+                <span className="font-bold font-title text-lg  text-secondary">
+                  Skills:
+                </span>{" "}
+              </p>
+              <select
+                name="skills"
+                value={skillInput}
+                onChange={(e) => {
+                  const selectedSkill = e.target.value;
+                  setSkillInput(selectedSkill);
+
+                  if (selectedSkill) {
+                    setSkillsArr((prevSkills) => [
+                      selectedSkill,
+                      ...prevSkills,
+                    ]);
+                    setSkillInput("");
+                  }
+                }}
+                className={
+                  editMode ? `hidden` : `select select-bordered w-full my-2`
                 }
-                className="btn btn-outline btn-error btn-sm mx-2"
               >
-                Delete
+                {skillsOptions.map((skill) => {
+                  return <option value={skill}>{skill}</option>;
+                })}
+                <option value="">Select Skills</option>
+              </select>
+              {skillsArr &&
+                skillsArr.map((skill) => {
+                  const handleDelete = () => {
+                    handleDelete2(skill);
+                  };
+
+                  return (
+                    <SkillTip
+                      text={skill}
+                      onDelete={handleDelete}
+                      editMode={editMode}
+                    ></SkillTip>
+                  );
+                })}
+            </div>
+            <div className={`md:self-end ${editMode ? "hidden" : " flex "}`}>
+              <button
+                onClick={cancelEditAction}
+                className="btn btn-outline btn-accent btn-sm mx-2"
+              >
+                cancel
               </button>
-            ) : (
-              <></>
-            )}
-            {/* <button
+              {!position.status ? (
+                <button
+                  onClick={() =>
+                    document.getElementById("deletePositionDialog").showModal()
+                  }
+                  className="btn btn-outline btn-error btn-sm mx-2"
+                >
+                  Delete
+                </button>
+              ) : (
+                <></>
+              )}
+              {/* <button
               onClick={()=>document.getElementById('deletePositionDialog').showModal()}
               className="btn btn-outline btn-error btn-sm"
             >
               Delete
             </button> */}
               <dialog id="deletePositionDialog" className="modal">
-              {loading ? (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-              <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
-                <span className="loading loading-dots bg-accent"></span>
-              </div>
-            </div>
-          ) : null}
-              <div className="modal-box flex flex-col items-center bg-white">
-                <form method="dialog">
-                  <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                    ✕
+                {loading ? (
+                  <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+                      <span className="loading loading-dots bg-accent"></span>
+                    </div>
+                  </div>
+                ) : null}
+                <div className="modal-box flex flex-col items-center bg-white">
+                  <form method="dialog">
+                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                      ✕
+                    </button>
+                  </form>
+                  <h3 className="font-bold text-xl text-secondary">
+                    Deleting Position
+                  </h3>
+                  <p className="py-4">
+                    Are you sure from deleting this position?
+                  </p>
+                  <button className="btn  btn-error" onClick={deleteAction}>
+                    Delete Position
                   </button>
-                </form>
-                <h3 className="font-bold text-xl text-secondary">
-              Deleting Position
-            </h3>
-                <p className="py-4">
-                  Are you sure from deleting this position?
-                </p>
-                <button
-                  className="btn  btn-error"
-                  onClick={deleteAction}
-                >
-                  Delete Position
-                </button>
-              </div>
-            </dialog>
-            <button
-              onClick={saveEditAction}
-              className="btn  btn-secondary btn-sm mx-2"
-            >
-              Save
-            </button>
-          </div>
-          <br></br>
+                </div>
+              </dialog>
+              <button
+                onClick={saveEditAction}
+                className="btn  btn-secondary btn-sm mx-2"
+              >
+                Save
+              </button>
+            </div>
+            <br></br>
           </div>
           {!isManager ? (
-        <div className="flex flex-col  lg:w-[30vw]">
-          <h1 className="font-title font-bold text-xl border-2 text-secondary my-2">
-            Best match employees
-          </h1>
-          <div className="grid gap-4 my-4">
-            {bestEmp &&
-              bestEmp.map((emp, index) => {
-                if (emp) {
-                  return (
-                    <EmpCard
-                      key={index}
-                      id={emp?._id}
-                      positionId={position?._id}
-                      name={emp.name}
-                      years={emp.yearsOfExperience}
-                      skills={emp.skills}
-                      pPosition={emp.positionTitle}
-                      nPosition={position.title}
-                      department={position?.department?.name}
-                      manager={position?.department?.manager?.name}
-                    ></EmpCard>
-                  );
-                }
-              })}
-          </div>
-        </div>
-      ) : (
-        <div className="w-full lg:w-[30vw] flex flex-col items-center ">
-            <p className="self-start text-xl font-title font-bold text-secondary my-2">
+            <div className="flex flex-col  lg:w-[30vw]">
+              <h1 className="font-title font-bold text-xl border-2 text-secondary my-2">
+                Best match employees
+              </h1>
+              <div className="grid gap-4 my-4">
+                {bestEmp &&
+                  bestEmp.map((emp, index) => {
+                    if (emp) {
+                      return (
+                        <EmpCard
+                          key={index}
+                          id={emp?._id}
+                          positionId={position?._id}
+                          name={emp.name}
+                          years={emp.yearsOfExperience}
+                          skills={emp.skills}
+                          pPosition={emp.positionTitle}
+                          nPosition={position.title}
+                          department={position?.department?.name}
+                          manager={position?.department?.manager?.name}
+                        ></EmpCard>
+                      );
+                    }
+                  })}
+              </div>
+            </div>
+          ) : (
+            <div className="w-full lg:w-[30vw] md:w-[45vh] flex flex-col items-center ">
+              <p className="self-start text-2xl font-title font-bold text-secondary my-2">
                 Other open positions
               </p>
-            <div className="grid  gap-3 ">
+              <div className="grid  gap-3  max-md:w-full">
+                {positionArr.map((el, index) => {
+                  if (!el.status) {
+                    if (el._id != position._id) {
+                      return (
+                        <PositionCard
+                          key={index}
+                          id={el._id}
+                          Position={el.title}
+                          Department={el.department.name}
+                          Experience={el.experienceYears}
+                          skills={el?.skills || ""}
+                        ></PositionCard>
+                      );
+                    }
+                  }
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {!isManager ? (
+          <div className="w-full md:w-[80vw] flex flex-col items-center my-4">
+            <p className="self-start text-xl font-title font-bold text-secondary my-2">
+              Other open positions
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 ">
               {positionArr.map((el, index) => {
                 if (!el.status) {
                   if (el._id != position._id) {
                     return (
                       <PositionCard
-                      key={index}
-                      id={el._id}
-                      Position={el.title}
-                      Department={el.department.name}
-                      Experience={el.experienceYears}
-                      skills={el?.skills || ""}
+                        key={index}
+                        id={el._id}
+                        Position={el.title}
+                        Department={el.department.name}
+                        Experience={el.experienceYears}
+                        skills={el?.skills || ""}
                       ></PositionCard>
                     );
                   }
                 }
               })}
             </div>
-  
-              </div>
-          )}
-        
-        </div>
-
-        {!isManager ? (
-          
-          <div className="w-full md:w-[80vw] flex flex-col items-center my-4">
-        <p className="self-start text-xl font-title font-bold text-secondary my-2">
-            Other open positions
-          </p>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 ">
-          {positionArr.map((el, index) => {
-            if (!el.status) {
-              if (el._id != position._id) {
-                return (
-                  <PositionCard
-                  key={index}
-                  id={el._id}
-                  Position={el.title}
-                  Department={el.department.name}
-                  Experience={el.experienceYears}
-                  skills={el?.skills || ""}
-                  ></PositionCard>
-                );
-              }
-            }
-          })}
-        </div>
-
           </div>
-        ): <></>}
-     
+        ) : (
+          <></>
+        )}
       </div>
-      </div>
+    </div>
   );
 }
 

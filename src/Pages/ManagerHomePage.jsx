@@ -292,7 +292,8 @@ function ManagerHomePage() {
           </div>
         </div>
       ) : null}
-      <Nav/>
+      <Nav />
+
 
       <div className="flex gap-6 flex-col justify-center p-8 items-center lg:flex-row lg:items-start">
         <div className="flex w-full justify-start items-start lg:flex-col lg:justify-center lg:items-center lg:w-[30vw] p-5  shadow-xl bg-secondary  rounded-lg  h-fit  ">
@@ -322,40 +323,49 @@ function ManagerHomePage() {
               </div>
           </div>
 
+        
+          <div className="flex flex-col lg:justify-center p-5  max-sm:w-[36vh]">
+            <h2 className="font-title mt-4 lg:text-center  text-white font-bold text-xl">
+              {user?.name}
+            </h2>
+            <div className="mt-3">
+              <h1 className="font-text text-accent lg:text-center">
+                {user?.department?.name}
+              </h1>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col w-full  lg:w-[75vw] md:w-[100%]  ">
+        <div className="flex flex-col w-full  lg:w-[75vw] md:w-[100%]   ">
           <div className="flex items-center  justify-between w-full my-4 lg:w-[75vw]">
-
-
-          <h2 className="font-title font-bold text-secondary md:text-xl">
-            Number of employees: {user?.department?.employees?.length || 0}
+            <h2 className="font-title font-bold text-secondary md:text-xl">
+              Number of employees: {user?.department?.employees?.length || 0}
             </h2>
             <button
-            className="btn btn-outline btn-secondary self-end btn-sm md:btn-md"
-            onClick={() =>
-              document.getElementById("employeeAccountDialog").showModal()
-            }
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              className="icon icon-tabler icons-tabler-outline icon-tabler-user-plus hidden md:block"
+              className="btn btn-outline btn-secondary self-end btn-sm md:btn-md"
+              onClick={() =>
+                document.getElementById("employeeAccountDialog").showModal()
+              }
             >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-              <path d="M16 19h6" />
-              <path d="M19 16v6" />
-              <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
-            </svg>
-            Create Employee account
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="icon icon-tabler icons-tabler-outline icon-tabler-user-plus hidden md:block"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                <path d="M16 19h6" />
+                <path d="M19 16v6" />
+                <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+              </svg>
+              Create Employee account
+            </button>
           </div>
           <div className="flex justify-center">
             <div className="overflow-x-auto  bg-slate-100 lg:self-center w-full shadow-md shadow-gray-300 rounded-lg">
@@ -389,50 +399,48 @@ function ManagerHomePage() {
                 </tbody>
               </table>
             </div>
-          </div>
-       {" "}
-            <div className="flex flex-col my-4 ">
-              <div className="flex justify-between items-center">
-                <h1 className="font-title font-bold md:text-xl text-secondary">
-                  Posted Positions
-                </h1>
+          </div>{" "}
+          <div className="flex flex-col my-4 ">
+            <div className="flex justify-between items-center">
+              <h1 className="font-title font-bold md:text-xl text-secondary">
+                Posted Positions
+              </h1>
 
-                <button
-                  onClick={() =>
-                    document.getElementById("Newposition").showModal()
+              <button
+                onClick={() =>
+                  document.getElementById("Newposition").showModal()
+                }
+                className=" btn btn-sm md:btn-md bg-secondary text-white "
+              >
+                New Position
+              </button>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3  w-full  gap-4 mt-4">
+              {}
+              {user.department &&
+              user.department.positions &&
+              user.department.positions.length > 0 ? (
+                user.department.positions.map((position, index) => {
+                  if (!position.status) {
+                    return (
+                      <PositionCard
+                        key={index}
+                        id={position._id}
+                        Position={position.title}
+                        Department={user.department.name}
+                        Experience={position.experienceYears}
+                        skills={position?.skills || ""}
+                      />
+                    );
                   }
-                  className=" btn btn-sm md:btn-md bg-secondary text-white "
-                >
-                  New Position
-                </button>
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3  w-full  gap-4 mt-4">
-                {}
-                {user.department &&
-                user.department.positions &&
-                user.department.positions.length > 0 ? (
-                  user.department.positions.map((position, index) => {
-                    if (!position.status) {
-                      return (
-                        <PositionCard
-                          key={index}
-                          id={position._id}
-                          Position={position.title}
-                          Department={user.department.name}
-                          Experience={position.experienceYears}
-                          skills={position?.skills || ""}
-                        />
-                      );
-                    }
-                  })
-                ) : (
-                  <p>No positions yet</p>
-                )}
-              </div>
+                })
+              ) : (
+                <p>No positions yet</p>
+              )}
+            </div>
           </div>
           <dialog id="employeeAccountDialog" className="modal w-[]">
-         
-            <div className="modal-box flex flex-col items-center bg-white w-[58vh] ">
+            <div className="modal-box flex flex-col items-center bg-white w-[58vh] max-sm:w-[50vh]  ">
               <form method="dialog">
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                   ✕
@@ -587,7 +595,6 @@ function ManagerHomePage() {
                 Job Overview:
               </label>
               <textarea
-               
                 ref={textareaRef2}
                 rows={4}
                 value={newOverview}
@@ -601,7 +608,6 @@ function ManagerHomePage() {
                 Requirements:
               </label>
               <textarea
-               
                 ref={textareaRef}
                 rows={4}
                 value={newKey}
@@ -665,7 +671,6 @@ function ManagerHomePage() {
       </div>
 
       <dialog id="employeeAccountDialog" className="modal w-[]">
-     
         <div className="modal-box flex flex-col items-center bg-white w-[58vh] ">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -744,7 +749,6 @@ function ManagerHomePage() {
           </div>
         </div>
       </dialog>
-    
     </div>
   );
 }
