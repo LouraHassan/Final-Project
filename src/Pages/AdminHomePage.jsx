@@ -5,6 +5,7 @@ import DepCard from "../Components/DepCard";
 import Nav from "../Components/Nav";
 import { useParams } from "react-router-dom";
 import axios, { all } from "axios";
+import { Chart as ChartJS } from "chart.js/auto";
 import { Pie, Bar } from "react-chartjs-2";
 const AccountsAPI = `https://final-project-backend-bqbl.onrender.com/account/`;
 const createAccountsAPI = `https://final-project-backend-bqbl.onrender.com/createAccount?company=`;
