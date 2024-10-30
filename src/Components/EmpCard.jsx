@@ -108,7 +108,7 @@ function EmpCard(props) {
             <div className="flex">
               <button
                 className="btn btn-outline btn-accent lg:w-[10vw] m-2"
-                onClick={() => setIsDialogOpen(false)}
+                onClick={() =>  document.getElementById("confirmDialog").close() }
               >
                 Cancel
               </button>

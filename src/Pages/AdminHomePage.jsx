@@ -9,28 +9,19 @@ import axios, { all } from "axios";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Pie, Bar } from "react-chartjs-2";
 const AccountsAPI = `http://localhost:3000/account/`;
-const createAccountsAPI = `http://localhost:3000/createAccount?company=${sessionStorage.getItem(
-  "company"
-)}`;
-const managersAPI = `http://localhost:3000/account/type/manager?company=${sessionStorage.getItem(
-  "company"
-)}`;
-const employeeAPI = `http://localhost:3000/account/type/employee?company=${sessionStorage.getItem(
-  "company"
-)}`;
-const CreateDeptAPI = `http://localhost:3000/department?company=${sessionStorage.getItem(
-  "company"
-)}`;
-const DepartmentsAPI = `http://localhost:3000/department?company=${sessionStorage.getItem(
-  "company"
-)}`;
-const AllPositionsAPI = `http://localhost:3000/company/${sessionStorage.getItem(
-  "company"
-)}/position`;
-const AllNotificationsAPI = `http://localhost:3000/company/${sessionStorage.getItem(
-  "company"
-)}/notification`;
+const createAccountsAPI = `http://localhost:3000/createAccount?company=`;
+const managersAPI = `http://localhost:3000/account/type/manager?company=`;
+const employeeAPI = `http://localhost:3000/account/type/employee?company=`;
+const CreateDeptAPI = `http://localhost:3000/department?company=`;
+const DepartmentsAPI = `http://localhost:3000/department?company=`;
+
+
+const AllPositionsAPI = `http://localhost:3000/company/`;
+const AllNotificationsAPI = `http://localhost:3000/company/`;
 export default function AdminHomePage() {
+  console.log(sessionStorage.getItem(
+    "company"
+  ));
   const { id } = useParams();
   const [user, setUser] = useState();
   const [managerArr, setManagerArr] = useState([]);
@@ -52,8 +43,9 @@ export default function AdminHomePage() {
 
   const [deptName, setDeptName] = useState("");
   const [manager, setManager] = useState("");
-  useEffect(() => {
-    getUser();
+  useEffect( () => {
+     getUser();
+    console.log(sessionStorage.getItem('company'));
   }, []);
   useEffect(() => {
     getManagers();
@@ -63,9 +55,7 @@ export default function AdminHomePage() {
     getAllNotifications();
   }, [user]);
 
-  useEffect(() => {
-    console.log(manager);
-  }, [manager]);
+ 
   const getUser = () => {
     setLoading(true);
     axios
@@ -93,9 +83,15 @@ export default function AdminHomePage() {
       });
   };
   const getManagers = () => {
+    console.log(sessionStorage.getItem(
+      "company"
+    ));
+    
+    console.log(managersAPI);
+    
     setLoading(true);
     axios
-      .get(managersAPI, {
+      .get(managersAPI+sessionStorage.getItem("company"), {
         headers: {
           Authorization: sessionStorage.getItem("token"),
         },
@@ -122,7 +118,7 @@ export default function AdminHomePage() {
   const getEmployee = () => {
     setLoading(true);
     axios
-      .get(employeeAPI, {
+      .get(employeeAPI+sessionStorage.getItem("company"), {
         headers: {
           Authorization: sessionStorage.getItem("token"),
         },
@@ -148,7 +144,7 @@ export default function AdminHomePage() {
   const getDepartments = () => {
     setLoading(true);
     axios
-      .get(DepartmentsAPI, {
+      .get(DepartmentsAPI+sessionStorage.getItem("company"), {
         headers: {
           Authorization: sessionStorage.getItem("token"),
         },
@@ -173,14 +169,14 @@ export default function AdminHomePage() {
   };
 
   const getAllPositions = () => {
-    axios.get(AllPositionsAPI).then((res) => {
+    axios.get(`${AllPositionsAPI+sessionStorage.getItem('company')}/position`).then((res) => {
       console.log(res);
       setAllPositions(res.data.filter((el) => el.status == false));
     });
   };
 
   const getAllNotifications = () => {
-    axios.get(AllNotificationsAPI).then((res) => {
+    axios.get(`${AllNotificationsAPI+sessionStorage.getItem("company")}/notification`).then((res) => {
       console.log(res);
       setAllNotifications(res.data);
     });
@@ -217,7 +213,7 @@ export default function AdminHomePage() {
       setLoading(true);
       axios
         .post(
-          CreateDeptAPI,
+          CreateDeptAPI+sessionStorage.getItem("company"),
           {
             name: deptName,
             manager: manager,
@@ -263,7 +259,7 @@ export default function AdminHomePage() {
 
       axios
         .post(
-          createAccountsAPI,
+          createAccountsAPI+sessionStorage.getItem("company"),
           {
             name: name,
             email: email,
@@ -301,7 +297,7 @@ export default function AdminHomePage() {
       setLoading(true);
       axios
         .post(
-          createAccountsAPI,
+          createAccountsAPI+sessionStorage.getItem("company"),
           {
             name: name,
             department: department,

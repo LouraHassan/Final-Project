@@ -26,6 +26,7 @@ function Nav() {
     navigate(`/`);
   };
 
+  const notificationAPI2 = `http://localhost:3000/getNotifications/${accountId}`;
   useEffect(() => {
     const notificationAPI = `http://localhost:3000/getNotifications/${accountId}`;
     getNotifications(notificationAPI);
@@ -50,7 +51,7 @@ function Nav() {
       })
       .then((res) => {
         console.log(res.data);
-        getNotifications(notificationAPI);
+        getNotifications(notificationAPI2);
       })
       .finally(() => {
         // setLoading(false);
