@@ -308,7 +308,7 @@ function EmployeePage() {
           {!passwordChanged ? (
             <div
               role="alert"
-              className="alert rounded-lg flex flex-col items-start border-2 border-warning lg:m-2 bg-white "
+              className="alert rounded-lg flex flex-col lg:flex-row lg:items-center lg:justify-between items-start border-2 border-warning lg:my-2 bg-white "
             >
               <div className="flex items-start">
 

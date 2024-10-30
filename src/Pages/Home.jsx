@@ -52,9 +52,9 @@ function Home() {
   return (
     <div className="w-full">
       <HomeNav></HomeNav>
-      <div className="p-5 md:p-10 w-full h-screen justify-center md:h-[88vh] flex flex-col  md:justify-center items-center">
-        <div className="z-10 flex flex-col items-center md:items-start justify-between md:my-10 md:absolute  md:top-24 md:left-10 lg:w-[70vw]">
-          <p className="text-3xl text-center md:text-left font-semibold md:text-5xl text-secondary my-10">
+      <div className="p-8 md:p-10 w-full h-[90vh] justify-around  md:h-[88vh] flex flex-col  md:justify-center items-center">
+        <div className="z-10 flex flex-col  items-center md:items-start justify-between md:my-10 md:absolute  md:top-24 md:left-10 lg:w-[70vw]">
+          <p className="text-4xl text-center md:text-left font-semibold md:text-5xl text-secondary my-10">
             Streamline Employee Placement Across Departments After Mergers
           </p>
           <p className="text-xl text-center md:text-left md:w-[50vw] md:text-2xl text-accent my-2 md:my-4 ">

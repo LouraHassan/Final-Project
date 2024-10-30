@@ -312,7 +312,7 @@ function ManagerHomePage() {
               </svg>
             </div>
             <div className="flex flex-col lg:justify-center p-5  max-sm:w-[36vh]">
-              <h2 className="font-title mt-4 lg:text-center  text-white font-bold text-xl">
+              <h2 className="font-title lg:mt-4 lg:text-center  text-white font-bold text-xl">
                 {user?.name}
               </h2>
               <div className="mt-3">
