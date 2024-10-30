@@ -8,26 +8,26 @@ import { useParams } from "react-router-dom";
 import axios, { all } from "axios";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Pie, Bar } from "react-chartjs-2";
-const AccountsAPI = `http://localhost:3000/account/`;
-const createAccountsAPI = `http://localhost:3000/createAccount?company=${sessionStorage.getItem(
+const AccountsAPI = `https://final-project-backend-bqbl.onrender.com/account/`;
+const createAccountsAPI = `https://final-project-backend-bqbl.onrender.com/createAccount?company=${sessionStorage.getItem(
   "company"
 )}`;
-const managersAPI = `http://localhost:3000/account/type/manager?company=${sessionStorage.getItem(
+const managersAPI = `https://final-project-backend-bqbl.onrender.com/account/type/manager?company=${sessionStorage.getItem(
   "company"
 )}`;
-const employeeAPI = `http://localhost:3000/account/type/employee?company=${sessionStorage.getItem(
+const employeeAPI = `https://final-project-backend-bqbl.onrender.com/account/type/employee?company=${sessionStorage.getItem(
   "company"
 )}`;
-const CreateDeptAPI = `http://localhost:3000/department?company=${sessionStorage.getItem(
+const CreateDeptAPI = `https://final-project-backend-bqbl.onrender.com/department?company=${sessionStorage.getItem(
   "company"
 )}`;
-const DepartmentsAPI = `http://localhost:3000/department?company=${sessionStorage.getItem(
+const DepartmentsAPI = `https://final-project-backend-bqbl.onrender.com/department?company=${sessionStorage.getItem(
   "company"
 )}`;
-const AllPositionsAPI = `http://localhost:3000/company/${sessionStorage.getItem(
+const AllPositionsAPI = `https://final-project-backend-bqbl.onrender.com/company/${sessionStorage.getItem(
   "company"
 )}/position`;
-const AllNotificationsAPI = `http://localhost:3000/company/${sessionStorage.getItem(
+const AllNotificationsAPI = `https://final-project-backend-bqbl.onrender.com/company/${sessionStorage.getItem(
   "company"
 )}/notification`;
 export default function AdminHomePage() {

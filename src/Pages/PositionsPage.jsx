@@ -6,14 +6,14 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import EmpCard from "../Components/EmpCard";
-const positionAPI = `http://localhost:3000/position/`;
-const allPositionsAPI = `http://localhost:3000/position/department/${sessionStorage.getItem(
+const positionAPI = `https://final-project-backend-bqbl.onrender.com/position/`;
+const allPositionsAPI = `https://final-project-backend-bqbl.onrender.com/position/department/${sessionStorage.getItem(
   "department"
 )}`;
-const SkillsOptionsAPI = `http://localhost:3000/skills`;
-const deletePositionAPI = `http://localhost:3000/position/`;
-const updateAPI = `http://localhost:3000/position/`;
-const bestEmpAPI = `http://localhost:3000/chat/`;
+const SkillsOptionsAPI = `https://final-project-backend-bqbl.onrender.com/skills`;
+const deletePositionAPI = `https://final-project-backend-bqbl.onrender.com/position/`;
+const updateAPI = `https://final-project-backend-bqbl.onrender.com/position/`;
+const bestEmpAPI = `https://final-project-backend-bqbl.onrender.com/chat/`;
 function PositionsPage() {
   console.log(sessionStorage.getItem("department"));
   const textareaRef = useRef(null);

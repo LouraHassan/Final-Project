@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-const signupAPI = `http://localhost:3000/signup`;
-const companyAPI = `http://localhost:3000/company`;
+const signupAPI = `https://final-project-backend-bqbl.onrender.com/signup`;
+const companyAPI = `https://final-project-backend-bqbl.onrender.com/company`;
 import logo from "/logo.png";
 
 function Signup() {

@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "/logo.png";
 
 const LoginAPI = `https://final-project-backend-bqbl.onrender.com/login`;
-const emailAPI = `http://localhost:3000/temporaryPassword`;
+const emailAPI = `https://final-project-backend-bqbl.onrender.com/temporaryPassword`;
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");

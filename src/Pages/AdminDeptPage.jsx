@@ -4,7 +4,7 @@ import Nav from "../Components/Nav";
 import PositionCard from "../Components/PositionCard";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-const DepartmentAPI = `http://localhost:3000/department/id/`;
+const DepartmentAPI = `https://final-project-backend-bqbl.onrender.com/department/id/`;
 function AdminDeptPage() {
   const { id } = useParams();
   const [department, setDepartment] = useState([]);

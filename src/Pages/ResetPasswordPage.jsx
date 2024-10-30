@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios';
-const updatePasswordAPI = `http://localhost:3000/changePassword`;
+const updatePasswordAPI = `https://final-project-backend-bqbl.onrender.com/changePassword`;
 function ResetPasswordPage() {
   const {token} = useParams()
   const navigate = useNavigate()

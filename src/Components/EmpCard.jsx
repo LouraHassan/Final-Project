@@ -2,7 +2,7 @@ import {useState} from 'react'
 import SkillTip from './SkillTip'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-const AssignEmpAPI = `http://localhost:3000/fillPosition?company=${sessionStorage.getItem("company")}`
+const AssignEmpAPI = `https://final-project-backend-bqbl.onrender.com/fillPosition?company=${sessionStorage.getItem("company")}`
 function EmpCard(props) {
   const navigate = useNavigate()
   const [skills, setSkills] = useState(props.skills)

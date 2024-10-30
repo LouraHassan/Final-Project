@@ -7,20 +7,20 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import SkillTip from "../Components/SkillTip";
 import NotificationCard from "../Components/NotificationCard";
-const AccountsAPI = `http://localhost:3000/account/`;
-const AddPositionAPI = `http://localhost:3000/position?company=${sessionStorage.getItem(
+const AccountsAPI = `https://final-project-backend-bqbl.onrender.com/account/`;
+const AddPositionAPI = `https://final-project-backend-bqbl.onrender.com/position?company=${sessionStorage.getItem(
   "company"
 )}`;
-const SkillsOptionsAPI = `http://localhost:3000/skills`;
-const createAccountsAPI = `http://localhost:3000/createAccount/manager?company=${sessionStorage.getItem(
+const SkillsOptionsAPI = `https://final-project-backend-bqbl.onrender.com/skills`;
+const createAccountsAPI = `https://final-project-backend-bqbl.onrender.com/createAccount/manager?company=${sessionStorage.getItem(
   "company"
 )}`;
-const updateAPI = `http://localhost:3000/request/`;
-const updatePasswordAPI = `http://localhost:3000/account/changepassword/`;
+const updateAPI = `https://final-project-backend-bqbl.onrender.com/request/`;
+const updatePasswordAPI = `https://final-project-backend-bqbl.onrender.com/account/changepassword/`;
 
 function ManagerHomePage() {
   const { id } = useParams();
-  const notificationAPI = `http://localhost:3000/getNotifications/${id}`;
+  const notificationAPI = `https://final-project-backend-bqbl.onrender.com/getNotifications/${id}`;
   const [user, setUser] = useState([]);
   const textareaRef = useRef();
   const textareaRef2 = useRef();

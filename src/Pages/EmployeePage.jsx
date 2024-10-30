@@ -5,15 +5,15 @@ import SkillTip from "../Components/SkillTip";
 import { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-const AccountsAPI = `http://localhost:3000/account/`;
-const SkillsOptionsAPI = `http://localhost:3000/skills`;
-const updatePasswordAPI = `http://localhost:3000/account/changepassword/`;
-const updateEmpAPI = `http://localhost:3000/account/`;
-const updateAPI = `http://localhost:3000/request/`;
+const AccountsAPI = `https://final-project-backend-bqbl.onrender.com/account/`;
+const SkillsOptionsAPI = `https://final-project-backend-bqbl.onrender.com/skills`;
+const updatePasswordAPI = `https://final-project-backend-bqbl.onrender.com/account/changepassword/`;
+const updateEmpAPI = `https://final-project-backend-bqbl.onrender.com/account/`;
+const updateAPI = `https://final-project-backend-bqbl.onrender.com/request/`;
 
 function EmployeePage() {
   const { id } = useParams();
-  const notificationAPI = `http://localhost:3000/getNotifications/${id}`;
+  const notificationAPI = `https://final-project-backend-bqbl.onrender.com/getNotifications/${id}`;
   const [user, setUser] = useState([]);
   const [open, setOpen] = useState(false);
   const [editMode, seteditMode] = useState(true);

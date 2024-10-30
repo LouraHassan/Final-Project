@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "/logo.png";
 import NotificationCard from "./NotificationCard";
 import axios from "axios";
-const updateAPI = `http://localhost:3000/request/`;
+const updateAPI = `https://final-project-backend-bqbl.onrender.com/request/`;
 
 function Nav() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ function Nav() {
   };
 
   useEffect(() => {
-    const notificationAPI = `http://localhost:3000/getNotifications/${accountId}`;
+    const notificationAPI = `https://final-project-backend-bqbl.onrender.com/getNotifications/${accountId}`;
     getNotifications(notificationAPI);
   }, [accountId]);
   const getNotifications = (api) => {
