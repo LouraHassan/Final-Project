@@ -53,12 +53,12 @@ function EmpList(props) {
          
           </div>
           <div>
-            <div className="font-bold text-neutral">{props.name}</div>
+            <div className="font-bold font-text text-lg text-neutral">{props.name}</div>
           </div>
         </div>
       </td>
       <td className="p-2 md:p-4">
-        <p className="font-text">{props.position}</p>
+        <p className="font-text text-lg">{props.position}</p>
           </td>
           
           <td className={`flex items-center flex-col md:flex-row ${isManager ? '' : 'hidden'}`}>{isReassignible}

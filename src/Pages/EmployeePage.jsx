@@ -71,7 +71,7 @@ function EmployeePage() {
         setUser(res.data);
         setNetworkError(false)
       }).catch(err => {
-        if (!err.response || err.code === 'ERR_CONNECTION_REFUSED' || err.code === "ERR_BAD_RESPONSE") {
+        if (!err.response || err.code === 'ERR_CONNECTION_REFUSED' || err.code === "ERR_BAD_RESPONSE" || err.code === 'ERR_INTERNET_DISCONNECTED') {
             setNetworkError(true)
         }
 
@@ -308,7 +308,7 @@ function EmployeePage() {
           {!passwordChanged ? (
             <div
               role="alert"
-              className="alert rounded-lg flex flex-col lg:flex-row lg:items-center lg:justify-between items-start border-2 border-warning lg:my-2 bg-white "
+              className="alert rounded-lg flex flex-col lg:flex-row lg:items-center lg:justify-between items-start border-2 border-warning mb-2 bg-white "
             >
               <div className="flex items-start">
 
@@ -328,7 +328,7 @@ function EmployeePage() {
               <span className="text-left mx-2">You must update your password and add your data bellow</span>
               </div>
               <button
-                className="btn btn-ghost text-secondary self-end"
+                className="btn btn-ghost hover:btn-ghost text-secondary self-end"
                 onClick={() =>
                   document.getElementById("passwordDialog").showModal()
                 }
@@ -409,7 +409,7 @@ function EmployeePage() {
 
             <h2 className="font-text  ">
                 <span className="font-bold font-title text-secondary text-lg">
-                  Experience
+                  Years of experience
                 </span>{" "}
                 <input
                   placeholder="Not added yet"

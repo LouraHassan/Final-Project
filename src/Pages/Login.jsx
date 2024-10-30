@@ -14,6 +14,7 @@ function Login() {
   const [warningText2, setWarningText2] = useState("");
 
   const [loading, setLoading] = useState(false);
+  const [networkError, setNetworkError] = useState(false);
 
   const loginAction = () => {
     setLoading(true);
@@ -28,6 +29,7 @@ function Login() {
           password: password,
         })
         .then((res) => {
+          setNetworkError(false)
           console.log(res);
           sessionStorage.setItem("accountId", res.data.id);
           sessionStorage.setItem("accountType", res.data.accountType);
@@ -44,6 +46,9 @@ function Login() {
           }
         })
         .catch((err) => {
+          if (!err.response || err.message === "Network Error" || ['ERR_CONNECTION_REFUSED', 'ERR_INTERNET_DISCONNECTED'].includes(err.code)) {
+            setNetworkError(true)
+        }
           setWarningText(err.response.data.msg);
         })
         .finally(() => {

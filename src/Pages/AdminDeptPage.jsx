@@ -90,7 +90,7 @@ function AdminDeptPage() {
       ) : null}
       <Nav></Nav>
       <div className="p-10 flex flex-col items-center">
-        <p className="font-title text-2xl text-neutral font-bold self-start md:self-auto mb-4">{department.name}</p>
+        <p className="font-title text-2xl text-secondary font-bold self-start lg:self-center lg:w-[80vw] mb-4">{department.name}</p>
         <div className="self-center flex flex-col md:flex-row md:justify-between items-center md:w-[80vw] w-full">
           <div className="m-2 self-start">
             <p className="text-accent font-title text-lg">Manager</p>

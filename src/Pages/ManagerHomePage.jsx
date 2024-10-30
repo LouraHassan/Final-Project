@@ -16,6 +16,7 @@ const createAccountsAPI = `http://localhost:3000/createAccount/manager?company=$
   "company"
 )}`;
 const updateAPI = `http://localhost:3000/request/`;
+const updatePasswordAPI = `http://localhost:3000/account/changepassword/`;
 
 function ManagerHomePage() {
   const { id } = useParams();
@@ -43,6 +44,9 @@ function ManagerHomePage() {
   const [newOverview, setNewOverview] = useState("");
   // const [isDialogOpen, setIsDialogOpen] = useState(false);
   // const [editIndex, setEditIndex] = useState(null);
+  const [passwordChanged, setPasswordChanged] = useState();
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [warningText, setWarningText] = useState("");
   const [warningText2, setWarningText2] = useState("");
   const [loading, setLoading] = useState(false);
@@ -53,6 +57,9 @@ function ManagerHomePage() {
     getOptions();
     getNotifications();
   }, []);
+  useEffect(() => {
+    setPasswordChanged(user.passwordChanged);
+  },[user])
   const getUser = () => {
     setLoading(true);
     axios
@@ -242,6 +249,33 @@ function ManagerHomePage() {
   const retryAction = () => {
     location.reload();
   };
+
+  const updatePasswordAction = () => {
+    setLoading(true);
+    if (newPassword == "" || confirmPassword == "") {
+    } else {
+      axios
+        .put(
+          updatePasswordAPI + id,
+          {
+            user_password: newPassword,
+          },
+          {
+            headers: {
+              Authorization: sessionStorage.getItem("token"),
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          document.getElementById("passwordDialog").close();
+          getUser();
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  };
   return (
     <div>
       {loading ? (
@@ -294,38 +328,24 @@ function ManagerHomePage() {
       ) : null}
       <Nav />
 
-
       <div className="flex gap-6 flex-col justify-center p-8 items-center lg:flex-row lg:items-start">
         <div className="flex w-full justify-start items-start lg:flex-col lg:justify-center lg:items-center lg:w-[30vw] p-5  shadow-xl bg-secondary  rounded-lg  h-fit  ">
-
-            <div className="flex justify-center items-center bg-slate-100 rounded-full">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="90"
-                height="90"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="icon icon-tabler icons-tabler-filled icon-tabler-user text-accent"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
-                <path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
-              </svg>
-            </div>
-            <div className="flex flex-col lg:justify-center p-5  max-sm:w-[36vh]">
-              <h2 className="font-title lg:mt-4 lg:text-center  text-white font-bold text-xl">
-                {user?.name}
-              </h2>
-              <div className="mt-3">
-                <h1 className="font-text text-accent lg:text-center">
-                  {user?.department?.name}
-                </h1>
-              </div>
+          <div className="flex justify-center items-center bg-slate-100 rounded-full">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="90"
+              height="90"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="icon icon-tabler icons-tabler-filled icon-tabler-user text-accent"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
+              <path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
+            </svg>
           </div>
-
-        
           <div className="flex flex-col lg:justify-center p-5  max-sm:w-[36vh]">
-            <h2 className="font-title mt-4 lg:text-center  text-white font-bold text-xl">
+            <h2 className="font-title lg:mt-4 lg:text-center  text-white font-bold text-xl">
               {user?.name}
             </h2>
             <div className="mt-3">
@@ -336,6 +356,78 @@ function ManagerHomePage() {
           </div>
         </div>
         <div className="flex flex-col w-full  lg:w-[75vw] md:w-[100%]   ">
+        {!passwordChanged ? (
+            <div
+              role="alert"
+              className="alert rounded-lg flex flex-col lg:flex-row lg:items-center lg:justify-between items-start border-2 border-warning lg:my-2 bg-white "
+            >
+              <div className="flex items-start">
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 shrink-0 stroke-current text-warning"
+                fill="none"
+                viewBox="0 0 24 24"
+                >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
+              </svg>
+              <span className="text-left mx-2">You must update your password and add your data bellow</span>
+              </div>
+              <button
+                className="btn btn-ghost text-secondary self-end "
+                onClick={() =>
+                  document.getElementById("passwordDialog").showModal()
+                }
+              >
+                Update password
+              </button>
+            </div>
+          ) : (
+            <></>
+          )}
+           <dialog id="passwordDialog" className="modal">
+            <div className="modal-box flex flex-col items-center bg-white">
+              <form method="dialog">
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                  ✕
+                </button>
+              </form>
+              <h3 className="font-bold text-xl text-secondary ">
+                Update your password
+              </h3>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text font-title text-accent font-bold text-lg ">Enter new password:</span>
+                </div>
+                <input
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  type="password"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text font-title text-accent font-bold text-lg">Confirm password:</span>
+                </div>
+                <input
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  type="password"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </label>
+
+              <button className="btn btn-secondary mt-5 " onClick={updatePasswordAction}>
+                Update password
+              </button>
+            </div>
+          </dialog>
           <div className="flex items-center  justify-between w-full my-4 lg:w-[75vw]">
             <h2 className="font-title font-bold text-secondary md:text-xl">
               Number of employees: {user?.department?.employees?.length || 0}
@@ -410,8 +502,24 @@ function ManagerHomePage() {
                 onClick={() =>
                   document.getElementById("Newposition").showModal()
                 }
-                className=" btn btn-sm md:btn-md bg-secondary text-white "
+                className=" btn btn-sm md:btn-md bg-accent text-white "
               >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  className="icon icon-tabler icons-tabler-outline icon-tabler-plus hidden md:block"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M12 5l0 14" />
+                  <path d="M5 12l14 0" />
+                </svg>
                 New Position
               </button>
             </div>
@@ -550,7 +658,7 @@ function ManagerHomePage() {
 
                 <div className="flex flex-col md:w-full">
                   <label className="font-title text-accent font-bold my-1">
-                    Estimated Salary:
+                    Estimated Salary in SAR:
                   </label>
                   <input
                     type="text"
@@ -564,7 +672,7 @@ function ManagerHomePage() {
               <div className="flex  w-full md:gap-8 flex-col md:flex-row">
                 <div className="flex flex-col md:w-full">
                   <label className="font-title text-accent font-bold my-1 ">
-                    Years Of Experience :
+                    Years of experience :
                   </label>
                   <input
                     type="text"

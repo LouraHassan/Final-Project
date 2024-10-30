@@ -61,7 +61,7 @@ export default function AdminHomePage() {
     getDepartments();
     getAllPositions();
     getAllNotifications();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     console.log(manager);
@@ -339,7 +339,6 @@ export default function AdminHomePage() {
     location.reload();
   };
 
-  //! ADD PIE APPEARANCE LOGIC
   return (
     <div>
       {loading ? (

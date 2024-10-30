@@ -15,6 +15,8 @@ function Signup() {
   const [confirm, setConfirm] = useState("");
   const [warningText, setWarningText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [networkError, setNetworkError] = useState(false);
+
   const signupAction = () => {
     setLoading(true);
     if (

@@ -10,6 +10,7 @@ import AdminPositionPage from "../Pages/AdminPositionPage";
 import Signup from "../Pages/Signup";
 import EmployeePage from "../Pages/EmployeePage";
 import Signup2 from "../Pages/Signup";
+import ResetPasswordPage from "../Pages/ResetPasswordPage";
 
 
 const Router = createBrowserRouter([
@@ -60,6 +61,10 @@ const Router = createBrowserRouter([
     path: '/Employee',
     element: <EmployeePage/>
 },
+{
+    path: '/changePassword/:token',
+    element: <ResetPasswordPage/>
+}
 
 
 

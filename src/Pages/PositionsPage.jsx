@@ -42,10 +42,10 @@ function PositionsPage() {
   const [editModeSelect, setEditModeSelect] = useState("bg-transparent");
   const [departmentStyle, setDepartmentStyle] = useState("bg-transparent ");
   const [experienceStyle, setExperienceStyle] = useState(
-    "bg-transparent w-fit"
+    "bg-transparent"
   );
   const [descriptionStyle, setDescriptionStyle] = useState("bg-transparent ");
-  const [salaryStyle, setSalaryStyle] = useState("bg-transparent w-fit");
+  const [salaryStyle, setSalaryStyle] = useState("bg-transparent");
   const [requirmentsStyle, setRequirmentsStyle] = useState("bg-transparent ");
 
   const [skillsOptions, setSkillsOptions] = useState([]);
@@ -166,9 +166,9 @@ function PositionsPage() {
     setEditModeInput("bg-transparent");
     setEditModeSelect("bg-transparent");
     setDepartmentStyle("bg-transparent ");
-    setExperienceStyle("bg-transparent w-[2vw]");
+    setExperienceStyle("bg-transparent");
     setDescriptionStyle("bg-transparent");
-    setSalaryStyle("bg-transparent w-[6vw]");
+    setSalaryStyle("bg-transparent");
     setRequirmentsStyle("bg-transparent");
 
     setJobType(position.jobType);
@@ -375,7 +375,7 @@ function PositionsPage() {
               </h2>
               <h2 className="font-text my-2">
                 <span className="font-bold font-title text-lg  text-secondary ">
-                  Experience:
+                  Years of experience:
                 </span>{" "}
                 <input
                   placeholder="Not added yet"
@@ -384,17 +384,16 @@ function PositionsPage() {
                   onChange={(e) => {
                     setExperience(e.target.value);
                   }}
+                  
                   disabled={editMode}
                   className={experienceStyle}
-                  name=""
-                  id=""
+                 aria-label="Experience in years"
                 />
-                {/* {position.experienceYears}  */}
-                years
+              
               </h2>
               <h2 className="font-text my-2">
                 <span className="font-bold font-title text-lg  text-secondary ">
-                  Estimated Salary:{" "}
+                  Estimated Salary in SAR:{" "}
                 </span>
                 <input
                   placeholder="Not added yet"
@@ -408,8 +407,7 @@ function PositionsPage() {
                   name=""
                   id=""
                 />
-                {/* {position.expectedSalary}  */}
-                SR
+              
               </h2>
             </div>
 
@@ -558,7 +556,7 @@ function PositionsPage() {
               <h1 className="font-title font-bold text-xl border-2 text-secondary my-2">
                 Best match employees
               </h1>
-              <div className="grid gap-4 my-4">
+              <div className="grid md:grid-cols-2 lg:grid-cols-1 gap-4 my-4">
                 {bestEmp &&
                   bestEmp.map((emp, index) => {
                     if (emp) {
@@ -582,6 +580,7 @@ function PositionsPage() {
             </div>
           ) : (
             <div className="w-full lg:w-[30vw] md:w-[45vh] flex flex-col items-center ">
+              
               <p className="self-start text-2xl font-title font-bold text-secondary my-2">
                 Other open positions
               </p>
