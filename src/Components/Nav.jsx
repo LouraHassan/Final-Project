@@ -25,6 +25,7 @@ function Nav() {
 
     navigate(`/`);
   };
+  const notificationAPI2 = `https://final-project-backend-bqbl.onrender.com/getNotifications/${accountId}`;
 
   useEffect(() => {
     const notificationAPI = `https://final-project-backend-bqbl.onrender.com/getNotifications/${accountId}`;
@@ -50,7 +51,7 @@ function Nav() {
       })
       .then((res) => {
         console.log(res.data);
-        getNotifications(notificationAPI);
+        getNotifications(notificationAPI2);
       })
       .finally(() => {
         // setLoading(false);
