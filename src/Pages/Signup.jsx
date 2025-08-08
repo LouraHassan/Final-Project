@@ -18,7 +18,7 @@ function Signup() {
   const [networkError, setNetworkError] = useState(false);
 
   const signupAction = () => {
-    setLoading(true);
+   
     if (
       name == "" ||
       company == "" ||
@@ -27,9 +27,11 @@ function Signup() {
       confirm == ""
     ) {
       setWarningText("Please fill all the fields first");
+      
     } else if (confirm != password) {
       setWarningText("Password doesn't match");
     } else {
+      setLoading(true);
       setWarningText("");
       axios
         .post(signupAPI, {
