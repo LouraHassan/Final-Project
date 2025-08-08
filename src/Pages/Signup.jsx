@@ -55,6 +55,13 @@ function Signup() {
 
   return (
     <div>
+       {loading ? (
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="p-4 w-[10vw] flex flex-col items-center justify-center bg-secondary rounded-lg">
+        <span className="loading loading-dots bg-accent"></span>
+      </div>
+    </div>
+      ) : null}
       <div className=" w-full justify-center h-screen flex items-center lg:flex-col md:justify-end md:items-end lg:items-end p-10">
         <Link to={`/`}>
           <svg
