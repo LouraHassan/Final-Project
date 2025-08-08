@@ -111,7 +111,7 @@ function ManagerHomePage() {
         setLoading(false);
       });
   };
-
+//
   console.log(notifications);
   const CreateEmployee = () => {
     if (name == "" || email == "" || password == "" || position == "") {
