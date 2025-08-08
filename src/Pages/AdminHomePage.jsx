@@ -649,68 +649,72 @@ export default function AdminHomePage() {
               </div>
             ) : null}
             <div className="modal-box flex flex-col items-center bg-white">
-              <form method="dialog">
-                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                  ✕
-                </button>
-              </form>
-              <h3 className="font-bold text-xl text-secondary">
-                Creating Manager Account
-              </h3>
-              <div className=" flex flex-col items-center m-5">
-                <label className="form-control w-full max-w-xs">
-                  <div className="label">
-                    <span className="label-text font-title text-accent font-bold text-lg">
-                      Name
-                    </span>
-                  </div>
-                  <input
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    type="text"
-                    className="input input-bordered w-full "
-                  />
-                </label>
+              <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        CreateManager();
+      }}
+      className="flex flex-col items-center"
+    >
+      <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" type="button" onClick={() => document.getElementById("managerAccountDialog").close()}>
+        ✕
+      </button>
+      <h3 className="font-bold text-xl text-secondary">
+        Creating Manager Account
+      </h3>
+      <div className=" flex flex-col items-center m-5">
+        <label className="form-control w-full max-w-xs">
+          <div className="label">
+            <span className="label-text font-title text-accent font-bold text-lg">
+              Name
+            </span>
+          </div>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            type="text"
+            className="input input-bordered w-full "
+          />
+        </label>
 
-                <label className="form-control w-full max-w-xs">
-                  <div className="label">
-                    <span className="label-text font-title text-accent font-bold text-lg">
-                      Email
-                    </span>
-                  </div>
-                  <input
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    type="text"
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                </label>
-                <label className="form-control w-full max-w-xs">
-                  <div className="label">
-                    <span className="label-text font-title text-accent font-bold text-lg">
-                      Password
-                    </span>
-                  </div>
-                  <form method="dialog">
-                    <input
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      type="password"
-                      className="input input-bordered w-full max-w-xs"
-                    />
-                  </form>
-                </label>
-                <p className="text-error text-sm m-4">{warningText2}</p>
+        <label className="form-control w-full max-w-xs">
+          <div className="label">
+            <span className="label-text font-title text-accent font-bold text-lg">
+              Email
+            </span>
+          </div>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            className="input input-bordered w-full max-w-xs"
+          />
+        </label>
+        <label className="form-control w-full max-w-xs">
+          <div className="label">
+            <span className="label-text font-title text-accent font-bold text-lg">
+              Password
+            </span>
+          </div>
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            className="input input-bordered w-full max-w-xs"
+          />
+        </label>
+        <p className="text-error text-sm m-4">{warningText2}</p>
 
-                <button
-                  onClick={CreateManager}
-                  className="btn btn-secondary btn-wide m-4"
-                >
-                  Create account
-                </button>
-              </div>
-            </div>
-          </dialog>
+        <button
+          type="submit"
+          className="btn btn-secondary btn-wide m-4"
+        >
+          Create account
+        </button>
+      </div>
+    </form>
+  </div>
+</dialog>
 
           <dialog id="employeeAccountDialog" className="modal">
             {loading ? (
